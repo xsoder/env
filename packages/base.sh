@@ -1,4 +1,5 @@
 sudo pacman -S firefox --noconfirm
+sudo pacman -S dunst --noconfirm
 sudo pacman -S git --noconfirm
 sudo pacman -S copyq --noconfirm
 sudo pacman -S hyprpaper --noconfirm

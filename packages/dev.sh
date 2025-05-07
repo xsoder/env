@@ -7,3 +7,6 @@ sudo pacman -S git --noconfirm --needed
 sudo pacman -S fzf --noconfirm --needed
 sudo pacman -S luarocks --noconfirm --needed
 sudo pacman -S fuse2 --noconfirm --needed
+sudo pacman -S nodejs --noconfirm --needed
+sudo pacman -S npm --noconfirm --needed
+sudo pacman -S docker --noconfirm --needed
