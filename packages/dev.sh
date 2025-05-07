@@ -1,0 +1,9 @@
+#!/bin/bash
+sudo pacman -S neovim --noconfirm --needed
+sudo pacman -S tmux --noconfirm --needed
+sudo pacman -S cmake --noconfirm --needed
+sudo pacman -S gcc --noconfirm --needed
+sudo pacman -S git --noconfirm --needed
+sudo pacman -S fzf --noconfirm --needed
+sudo pacman -S luarocks --noconfirm --needed
+sudo pacman -S fuse2 --noconfirm --needed

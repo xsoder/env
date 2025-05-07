@@ -1,0 +1,148 @@
+#!/usr/bin/bash
+
+set -e
+
+CONFIG_DIR="$HOME/.config"
+PACKAGES_DIR="$HOME/devenv/packages"
+DOTFILES_DIR="$HOME/devenv"
+
+copy_dotfiles() {
+    echo "[*] Copying dotfiles..."
+
+    mkdir -p "$CONFIG_DIR"
+
+    for item in "$DOTFILES_DIR"/dotfiles/*; do
+        filename="$(basename "$item")"
+
+        if [[ -d "$item" ]]; then
+            # Handle directories
+            target="$CONFIG_DIR/$filename"
+            if [[ -e "$target" ]]; then
+                echo "[!] Removing existing config directory: $target"
+                rm -rf "$target"
+            fi
+            echo "[+] Copying $filename to $CONFIG_DIR"
+            cp -r "$item" "$target"
+        else
+            # Handle all regular files, including hidden ones
+            target="$HOME/$filename"
+            if [[ -e "$target" ]]; then
+                echo "[!] Removing existing file: $target"
+                rm -f "$target"
+            fi
+            echo "[+] Copying $filename to $HOME"
+            cp "$item" "$target"
+        fi
+    done
+
+    # Explicitly handle hidden files and directories
+    for item in "$DOTFILES_DIR"/dotfiles/.*; do
+        # Skip . and .. references
+        [[ "$(basename "$item")" == "." || "$(basename "$item")" == ".." ]] && continue
+
+        filename="$(basename "$item")"
+
+        if [[ -d "$item" ]]; then
+            # Handle hidden directories
+            target="$HOME/$filename"
+            if [[ -e "$target" ]]; then
+                echo "[!] Removing existing hidden directory: $target"
+                rm -rf "$target"
+            fi
+            echo "[+] Copying hidden directory $filename to $HOME"
+            cp -r "$item" "$target"
+        else
+            # Handle hidden files
+            target="$HOME/$filename"
+            if [[ -e "$target" ]]; then
+                echo "[!] Removing existing hidden file: $target"
+                rm -f "$target"
+            fi
+            echo "[+] Copying hidden file $filename to $HOME"
+            cp "$item" "$target"
+        fi
+    done
+
+    echo "[✓] Dotfiles copied successfully."
+    hyprctl reload
+}
+
+install_packages() {
+    category="$1"
+
+    case "$category" in
+        base|dev|utility)
+            script="$PACKAGES_DIR/$category.sh"
+            if [[ -x "$script" ]]; then
+                echo "[*] Running $script..."
+                "$script"
+            else
+                echo "[X] Error: $script not found or not executable"
+                exit 1
+            fi
+            ;;
+        *)
+            echo "[X] Invalid package category. Use: base, dev, or utility"
+            exit 1
+            ;;
+    esac
+}
+
+list_packages() {
+    category="$1"
+    pkg_file="$PACKAGES_DIR/$category.sh"
+
+    if [[ -f "$pkg_file" ]]; then
+        echo "[*] Listing packages in category: $category"
+        echo "-------------------------------------"
+
+        # Extract package names from the file
+        packages=$(grep -E "^sudo pacman -S |^paru -S " "$pkg_file" |
+                  sed 's/sudo pacman -S \(.*\) --noconfirm/\1/' |
+                  sed 's/paru -S \(.*\) --noconfirm/\1/' |
+                  sed 's/--needed //')
+
+        # Check each package and show installation status
+        while read -r pkg; do
+            # Handle package groups and options
+            clean_pkg=$(echo "$pkg" | awk '{print $1}' | tr -d '-')
+
+            # Check if package is installed
+            if pacman -Qi "$clean_pkg" &>/dev/null || paru -Qi "$clean_pkg" &>/dev/null; then
+                echo "$pkg [installed]"
+            else
+                echo "$pkg [not installed]"
+            fi
+        done <<< "$packages"
+
+        echo "-------------------------------------"
+    else
+        echo "[!] Package list not found: $pkg_file"
+        exit 1
+    fi
+}
+
+# --- Main logic ---
+case "$1" in
+    copy)
+        copy_dotfiles
+        ;;
+    install)
+        if [[ -z "$2" ]]; then
+            echo "[X] Please provide a package category: base, dev, or utility"
+            exit 1
+        fi
+        install_packages "$2"
+        ;;
+    list)
+        if [[ -z "$2" ]]; then
+            echo "[X] Please provide a package category: base, dev, or utility"
+            exit 1
+        fi
+        list_packages "$2"
+        ;;
+    *)
+        echo "Usage: $0 {copy|install|list} [base|dev|utility]"
+        exit 1
+        ;;
+esac
