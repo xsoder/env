@@ -29,3 +29,4 @@ This will show u all the arguments you are supposed to use
 bash script
 ```
 Have fun and don't submit PR or any contrubution this is how I do my things for dotifiles
+
