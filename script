@@ -52,8 +52,8 @@ copy_dotfiles() {
             echo "[+] Copying hidden directory $filename to $HOME"
             cp -r "$item" "$target"
         else
-            # Handle hidden files
             target="$HOME/$filename"
+            # Handle hidden files
             if [[ -e "$target" ]]; then
                 echo "[!] Removing existing hidden file: $target"
                 rm -f "$target"

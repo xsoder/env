@@ -1,4 +1,5 @@
 # Todo for my config
+- [] Make a rust tui app for this instead of a bunch of script
 Things to do in this setup
 1. Confugure scripts to make my life easier -- done fully
 2. Tmux and neovim and zsh configuration

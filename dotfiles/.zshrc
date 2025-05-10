@@ -124,10 +124,7 @@ alias ccg="~/scripts/cpp.sh"
 alias packages="~/scripts/package.sh"
 alias vim="nvim"
 alias rm="rm -rf"
-alias love="~/packages/love.AppImage"
 alias dev="bash ~/devenv/script"
 alias DEV="cd ~/devenv"
 alias luamake="/home/csode/packages/lua-language-server/3rd/luamake/luamake"
-if command -v tmux &> /dev/null && [ -z "$TMUX" ]; then
-  tmux attach-session -t main || tmux new-session -s main
-fi
+. "$HOME/.cargo/env"

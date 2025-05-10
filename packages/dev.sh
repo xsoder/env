@@ -10,3 +10,8 @@ sudo pacman -S fuse2 --noconfirm --needed
 sudo pacman -S nodejs --noconfirm --needed
 sudo pacman -S npm --noconfirm --needed
 sudo pacman -S docker --noconfirm --needed
+paru -S love --noconfirm --needed
+sudo pacman -S qemu --noconfirm --needed
+sudo pacman -S virtio-win --noconfirm --needed
+sudo pacman -S edk2-ovmf --noconfirm --needed
+sudo pacman -S go --noconfirm --needed

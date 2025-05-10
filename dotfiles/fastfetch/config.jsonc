@@ -74,49 +74,49 @@ fastfetch --config hyde/*.jsonc
       "type": "custom",
       "format": "└──────────────────────────────────────────┘"
     },
-    // {
-    //   "type": "custom",
-    //   "format": "┌──────────────────────────────────────────┐"
-    // },
-    // {
-    //   "type": "cpu",
-    //   "format": "{1} @ {7}",
-    //   "key": "   CPU",
-    //   "keyColor": "blue"
-    // },
-    // {
-    //   "type": "gpu",
-    //   "format": "{1} {2}",
-    //   "key": "  󰊴 GPU",
-    //   "keyColor": "blue"
-    // },
-    // {
-    //   "type": "gpu",
-    //   "format": "{3}",
-    //   "key": "   GPU Driver",
-    //   "keyColor": "magenta"
-    // },
-    // {
-    //   "type": "memory",
-    //   "key": "   Memory ",
-    //   "keyColor": "magenta"
-    // },
-    // {
-    //   "type": "disk",
-    //   "key": "  󱦟 OS Age ",
-    //   "folders": "/",
-    //   "keyColor": "red",
-    //   "format": "{days} days"
-    // },
-    // {
-    //   "type": "uptime",
-    //   "key": "  󱫐 Uptime ",
-    //   "keyColor": "red"
-    // },
-    // {
-    //   "type": "custom",
-    //   "format": "└──────────────────────────────────────────┘"
-    // },
+    {
+      "type": "custom",
+      "format": "┌──────────────────────────────────────────┐"
+    },
+    {
+      "type": "cpu",
+      "format": "{1} @ {7}",
+      "key": "   CPU",
+      "keyColor": "blue"
+    },
+    {
+      "type": "gpu",
+      "format": "{1} {2}",
+      "key": "  󰊴 GPU",
+      "keyColor": "blue"
+    },
+    {
+      "type": "gpu",
+      "format": "{3}",
+      "key": "   GPU Driver",
+      "keyColor": "magenta"
+    },
+    {
+      "type": "memory",
+      "key": "   Memory ",
+      "keyColor": "magenta"
+    },
+    {
+      "type": "disk",
+      "key": "  󱦟 OS Age ",
+      "folders": "/",
+      "keyColor": "red",
+      "format": "{days} days"
+    },
+    {
+      "type": "uptime",
+      "key": "  󱫐 Uptime ",
+      "keyColor": "red"
+    },
+    {
+      "type": "custom",
+      "format": "└──────────────────────────────────────────┘"
+    },
     {
       "type": "colors",
       "paddingLeft": 2,

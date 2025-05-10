@@ -79,7 +79,7 @@ return {
 
                 ["lua_ls"] = function()
                     local lspconfig = require("lspconfig")
-                    local love_api_path = vim.fn.expand('~/.local/share/love-api/love.lua')
+                    local love_api_path = vim.fn.expand('~/.local/share/love-api/love_api.lua')
 
                     lspconfig.lua_ls.setup({
                         capabilities = capabilities,
@@ -94,7 +94,7 @@ return {
                                 },
                                 workspace = {
                                     library = {
-                                        [vim.fn.expand('~/.local/share/love-api')] = true,
+                                        love_api_path,
                                     },
                                     checkThirdParty = false,
                                 },

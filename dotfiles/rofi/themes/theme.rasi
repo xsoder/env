@@ -19,7 +19,7 @@
 #window {
     border:  2;
     padding: 8;
-    width:   30em;  /* Narrower width for a more square layout */
+    width:   50em;  /* Narrower width for a more square layout */
 }
 
 #mainbox {

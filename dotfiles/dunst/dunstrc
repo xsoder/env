@@ -3,8 +3,6 @@
     follow = mouse
     width = (0,300)
     height = (0, 300)
-    origin = center
-    offset = (960, 960)
     shrink = yes
     transparency = 10
     padding = 8
