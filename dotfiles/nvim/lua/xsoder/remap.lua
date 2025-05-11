@@ -82,5 +82,3 @@ end)
 vim.keymap.set("n", "<leader>o", ":Ex<CR>", { silent = true })
 vim.keymap.set("n", "<leader>q", ":q!<CR>", { silent = true })
 vim.keymap.set("n", "<leader>w", ":w!<CR>", { silent = true })
-
-
