@@ -7,8 +7,6 @@
     "pulseaudio",
     "backlight",
     "battery",
-    "cpu",
-    "memory",
     "tray",
     "custom/lock",
   ],

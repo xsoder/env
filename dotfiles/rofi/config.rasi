@@ -1,7 +1,117 @@
-configuration {
-    modi: "window,drun,ssh,combi";
-    font: "JetBrains mono 12";
-    combi-modi: "window,drun,ssh";
-}
-@theme "~/.config/rofi/themes/theme.rasi"
+/**
+ * Rose Pine Dark Theme for Rofi - No White Elements
+ */
 
+configuration {
+    modi: "drun,run";
+    font: "JetBrains mono 12";
+    show-icons: false;
+    icon-theme: "Papirus-Dark";
+    display-drun: "Apps";
+    drun-display-format: "{name}";
+    disable-history: false;
+}
+
+* {
+    /* Rose Pine Colors - Dark Purple Palette Only */
+    base: #191724;
+    surface: #1f1d2e;
+    overlay: #26233a;
+    dark-overlay: #191724;
+    muted: #6e6a86;
+    subtle: #908caa;
+    text: #e0def4;
+    iris: #c4a7e7;
+    highlight-low: #21202e;
+    highlight-med: #403d52;
+    highlight-high: #524f67;
+
+    /* No white elements at all */
+    background-color: transparent;
+    text-color: @text;
+
+    margin: 0;
+    padding: 0;
+    spacing: 0;
+}
+
+window {
+    transparency: "real";
+    background-color: rgba(25, 23, 36, 0.85);
+    border: 2px;
+    border-color: @iris;
+    border-radius: 8px;
+    width: 30%;
+}
+
+mainbox {
+    background-color: transparent;
+    padding: 12px;
+}
+
+inputbar {
+    background-color: @overlay;
+    border-radius: 8px;
+    padding: 12px;
+    margin: 0px 0px 12px 0px;
+    children: [prompt, entry];
+}
+
+prompt {
+    background-color: transparent;
+    text-color: @iris;
+    padding: 0 12px 0 0;
+}
+
+entry {
+    background-color: transparent;
+    text-color: @text;
+    placeholder: "Search...";
+    placeholder-color: @muted;
+}
+
+listview {
+    background-color: transparent;
+    border: 0;
+    padding: 8px 0;
+    columns: 1;
+    lines: 6;
+    scrollbar: false;
+}
+
+element {
+    background-color: transparent;
+    border-radius: 8px;
+    padding: 12px;
+    margin: 4px 0;
+}
+
+element-icon {
+    size: 24px;
+    margin: 0 12px 0 0;
+}
+
+element-text {
+    background-color: transparent;
+    vertical-align: 0.5;
+}
+
+element normal.normal {
+    background-color: transparent;
+    text-color: @text;
+}
+
+element alternate.normal {
+    background-color: transparent;
+    text-color: @text;
+}
+
+element selected {
+    background-color: @iris;
+    border: 1px;
+    border-color: @iris;
+}
+
+element-text selected {
+    text-color: @iris;
+}

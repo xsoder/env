@@ -1,52 +1,66 @@
 [global]
-    monitor = 0
-    follow = mouse
-    width = (0,300)
-    height = (0, 300)
-    shrink = yes
-    transparency = 10
-    padding = 8
-    horizontal_padding = 8
-    frame_width = 2
-    enable_recursive_icon_lookup = true
-    icon_theme = "Adwaita"
-    icon_position = left
-    ignore_dbusclose = false
-    separator_height = 2
-    sort = yes
-    idle_threshold = 120
-    font = Monospace 12
-    line_height = 0
-    markup = full
-    format = "%s\n%b"
-    alignment = center
-    vertical_alignment = center
-    show_age_threshold = 60
-    word_wrap = yes
-    ignore_newline = no
-    stack_duplicates = true
-    hide_duplicate_count = false
-    show_indicators = yes
-    min_icon_size = 32
-    max_icon_size = 64
-    sticky_history = yes
-    history_length = 20
-    dmenu = emacsclient -c -e '(ivy-read "Run command: " obarray)'
+# Appearance
+font = Monospace 10
+frame_width = 2
+frame_color = "#6e6a86"
+separator_color = frame
+corner_radius = 10
+padding = 8
+horizontal_padding = 8
+
+# Transparency
+transparency = 15  # roughly 85% opacity
+
+# Timeouts
+timeout = 5
+idle_threshold = 120
+
+# Notification position
+geometry = "300x5-30+50"
+origin = center
+
+# Progress bar (optional)
+progress_bar = true
+progress_bar_height = 4
+progress_bar_min_width = 150
+progress_bar_max_width = 300
+progress_bar_corner_radius = 3
+progress_bar_frame_width = 1
+
+# Icons (optional)
+icon_position = left
+max_icon_size = 64
+
+# History
+history_length = 20
+
+# Startup script (optional)
+startup_notification = false
+
+# Word wrap
+word_wrap = true
+ellipsis = "..."
+
+# Close/open/urgency binds (optional)
+mouse_left_click = close_current
+mouse_middle_click = do_action
+mouse_right_click = close_all
 
 [urgency_low]
-    background = "#040404"
-    foreground = "#0ac30a"
-    frame_color = "#089e08"
-    timeout = 10
+frame_color = "#6e6a86"
+background = "#1e1e2e"
+foreground = "#cdd6f4"
+timeout = 4
 
 [urgency_normal]
-    background = "#041a04"
-    foreground = "#eec900"
-    frame_color = "#eead0e"
-    timeout = 10
+frame_color = "#6e6a86"
+background = "#1e1e2e"
+foreground = "#cdd6f4"
+timeout = 6
 
 [urgency_critical]
-    background = "#060606"
-    foreground = "#ff1500"
-    frame_color = "#ff4500"
-    timeout = 0
+frame_color = "#f38ba8"
+background = "#1e1e2e"
+foreground = "#f38ba8"
+timeout = 0
+
