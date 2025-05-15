@@ -15,3 +15,4 @@ sudo pacman -S qemu --noconfirm --needed
 sudo pacman -S virtio-win --noconfirm --needed
 sudo pacman -S edk2-ovmf --noconfirm --needed
 sudo pacman -S fish --noconfirm --needed
+paru -S windsurf --noconfirm --needed
