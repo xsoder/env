@@ -16,19 +16,17 @@ copy_dotfiles() {
         filename="$(basename "$item")"
 
         if [[ -d "$item" ]]; then
-            # Handle directories
             target="$CONFIG_DIR/$filename"
-            if [[ -e "$target" ]]; then
-                echo "[!] Removing existing config directory: $target"
+            if [[ -e "$target" || -L "$target" ]]; then
+                echo "[!] Removing existing config directory or link: $target"
                 rm -rf "$target"
             fi
             echo "[+] Copying $filename to $CONFIG_DIR"
             cp -r "$item" "$target"
         else
-            # Handle all regular files, including hidden ones
             target="$HOME/$filename"
-            if [[ -e "$target" ]]; then
-                echo "[!] Removing existing file: $target"
+            if [[ -e "$target" || -L "$target" ]]; then
+                echo "[!] Removing existing file or link: $target"
                 rm -f "$target"
             fi
             echo "[+] Copying $filename to $HOME"
@@ -38,25 +36,22 @@ copy_dotfiles() {
 
     # Explicitly handle hidden files and directories
     for item in "$DOTFILES_DIR"/dotfiles/.*; do
-        # Skip . and .. references
         [[ "$(basename "$item")" == "." || "$(basename "$item")" == ".." ]] && continue
 
         filename="$(basename "$item")"
 
         if [[ -d "$item" ]]; then
-            # Handle hidden directories
             target="$HOME/$filename"
-            if [[ -e "$target" ]]; then
-                echo "[!] Removing existing hidden directory: $target"
+            if [[ -e "$target" || -L "$target" ]]; then
+                echo "[!] Removing existing hidden directory or link: $target"
                 rm -rf "$target"
             fi
             echo "[+] Copying hidden directory $filename to $HOME"
             cp -r "$item" "$target"
         else
             target="$HOME/$filename"
-            # Handle hidden files
-            if [[ -e "$target" ]]; then
-                echo "[!] Removing existing hidden file: $target"
+            if [[ -e "$target" || -L "$target" ]]; then
+                echo "[!] Removing existing hidden file or link: $target"
                 rm -f "$target"
             fi
             echo "[+] Copying hidden file $filename to $HOME"
@@ -65,6 +60,61 @@ copy_dotfiles() {
     done
 
     echo "[✓] Dotfiles copied successfully."
+}
+
+link_dotfiles() {
+    echo "[*] Creating symlinks for dotfiles..."
+
+    mkdir -p "$CONFIG_DIR"
+
+    for item in "$DOTFILES_DIR"/dotfiles/*; do
+        filename="$(basename "$item")"
+
+        if [[ -d "$item" ]]; then
+            target="$CONFIG_DIR/$filename"
+            if [[ -e "$target" || -L "$target" ]]; then
+                echo "[!] Removing existing config directory or link: $target"
+                rm -rf "$target"
+            fi
+            echo "[+] Linking $filename to $CONFIG_DIR"
+            ln -s "$item" "$target"
+        else
+            target="$HOME/$filename"
+            if [[ -e "$target" || -L "$target" ]]; then
+                echo "[!] Removing existing file or link: $target"
+                rm -f "$target"
+            fi
+            echo "[+] Linking $filename to $HOME"
+            ln -s "$item" "$target"
+        fi
+    done
+
+    # Handle hidden dotfiles as well
+    for item in "$DOTFILES_DIR"/dotfiles/.*; do
+        [[ "$(basename "$item")" == "." || "$(basename "$item")" == ".." ]] && continue
+
+        filename="$(basename "$item")"
+
+        if [[ -d "$item" ]]; then
+            target="$HOME/$filename"
+            if [[ -e "$target" || -L "$target" ]]; then
+                echo "[!] Removing existing hidden directory or link: $target"
+                rm -rf "$target"
+            fi
+            echo "[+] Linking hidden directory $filename to $HOME"
+            ln -s "$item" "$target"
+        else
+            target="$HOME/$filename"
+            if [[ -e "$target" || -L "$target" ]]; then
+                echo "[!] Removing existing hidden file or link: $target"
+                rm -f "$target"
+            fi
+            echo "[+] Linking hidden file $filename to $HOME"
+            ln -s "$item" "$target"
+        fi
+    done
+
+    echo "[✓] Symlinks created successfully."
 }
 
 install_packages() {
@@ -96,18 +146,14 @@ list_packages() {
         echo "[*] Listing packages in category: $category"
         echo "-------------------------------------"
 
-        # Extract package names from the file
         packages=$(grep -E "^sudo pacman -S |^paru -S " "$pkg_file" |
                   sed 's/sudo pacman -S \(.*\) --noconfirm/\1/' |
                   sed 's/paru -S \(.*\) --noconfirm/\1/' |
                   sed 's/--needed //')
 
-        # Check each package and show installation status
         while read -r pkg; do
-            # Handle package groups and options
             clean_pkg=$(echo "$pkg" | awk '{print $1}' | tr -d '-')
 
-            # Check if package is installed
             if pacman -Qi "$clean_pkg" &>/dev/null || paru -Qi "$clean_pkg" &>/dev/null; then
                 echo "$pkg [installed]"
             else
@@ -127,6 +173,9 @@ case "$1" in
     copy)
         copy_dotfiles
         ;;
+    link)
+        link_dotfiles
+        ;;
     install)
         if [[ -z "$2" ]]; then
             echo "[X] Please provide a package category: base, dev, or utility"
@@ -142,7 +191,8 @@ case "$1" in
         list_packages "$2"
         ;;
     *)
-        echo "Usage: $0 {copy|install|list} [base|dev|utility]"
+        echo "Usage: $0 {copy|link|install|list} [base|dev|utility]"
         exit 1
         ;;
 esac
+

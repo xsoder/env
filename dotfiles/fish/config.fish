@@ -11,8 +11,19 @@ set -x GIT_TERMINAL_PROMPT 1
 set -x GIT_ASKPASS git-credential-manager-core
 set -x PATH $HOME/.npm-global/bin $PATH
 set -x PATH $HOME/packages/zig $PATH
-
+set -x FZF_DEFAULT_OPTS "--height=15 \
+  --layout=reverse \
+  --border \
+  --margin=1,2 \
+  --prompt='❯ ' \
+  --pointer='➤' \
+  --marker='✓' \
+  --color=fg:#e0def4,bg:-1,hl:#9ccfd8,border:#908caa \
+  --color=fg+:#c4a7e7,bg+:-1,hl+:#c4a7e7 \
+  --color=info:#c4a7e7,prompt:#ebbcba,pointer:#f6c177 \
+  --color=marker:#31748f,spinner:#f6c177,header:#9ccfd8"
 fish_vi_key_bindings
+function fish_greeting; end
 
 # Aliases
 alias cpp '~/scripts/cpp.sh'
@@ -22,6 +33,9 @@ alias packages '~/scripts/package.sh'
 alias vim 'nvim'
 alias rm 'rm -rf'
 alias dev 'bash ~/devenv/script'
+alias hypr_reload 'hyprctl reload'
+alias shell_reload 'source ~/.config/fish/config.fish'
+alias tmux_reload 'tmux source-file ~/.tmux.conf'
 alias DEV 'cd ~/devenv'
 alias luamake '/home/csode/packages/lua-language-server/3rd/luamake/luamake'
 
