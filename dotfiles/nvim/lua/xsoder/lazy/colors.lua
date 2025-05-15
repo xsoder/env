@@ -1,5 +1,5 @@
 function ColorMyPencils(color)
-    color = color or "rose-pine"
+    color = color or "rose"
     vim.cmd.colorscheme(color)
 end
 
@@ -100,6 +100,14 @@ return {
             ColorMyPencils();
         end
     },
-
+        {
+        dir = vim.fn.stdpath("config") .. "/colors", -- load local theme
+        name = "rose",
+        lazy = false,
+        priority = 1000,
+        config = function()
+            ColorMyPencils("rose")
+        end
+    }
 
 }

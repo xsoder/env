@@ -2,6 +2,10 @@
 
 ![Screenshot 1](img.png)
 ![Screenshot 2](img2.png)
+![Screenshot 3](img3.png)
+![Screenshot 4](img4.png)
+![Screenshot 5](img5.png)
+![Screenshot 6](img6.png)
 
 A personal dotfile manager for a Wayland-based development environment, featuring Hyprland as the window manager.
 

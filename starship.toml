@@ -1,71 +1,36 @@
 [username]
-style_user = "green bold"
-style_root = "red bold"
-format = "[$user]($style) "
+style_user = "#c4a7e7 bold"  # iris
+style_root = "#eb6f92 bold"  # love
+format = "[$user]($style)"
 disabled = false
 show_always = true
 
 [hostname]
 ssh_only = false
-format = 'on [$hostname](bold purple) '
+format = "@[$hostname](bold #31748f) "  # pine
 trim_at = "."
-disabled = true
+disabled = false
 
-# Replace the "❯" symbol in the prompt with "➜"
-[character]                            # The name of the module we are configuring is "character"
-success_symbol = "[❯](bold white)"     # The "success_symbol" segment is being set to "➜" with the color "bold green"
-error_symbol = "[✗](bold red)"
-#  
-# configure directory
+[character]
+success_symbol = "[❯](bold #e0def4)"  # text
+error_symbol = "[✗](bold #eb6f92) "   # love
+
 [directory]
-read_only = " "
+read_only = ""  # no lock icon
 truncation_length = 10
-truncate_to_repo = true # truncates directory to root folder if in github repo
-style = "bold normal blue"
+truncate_to_repo = true
+style = "bold #31748f"  # pine
 
 [cmd_duration]
 min_time = 4
 show_milliseconds = false
 disabled = false
-style = "bold normal red"
+style = "bold #f6c177"  # gold
 
 [docker_context]
-symbol = " "
-format = "via [$symbol$context]($style) "
-style = "blue bold"
-only_with_files = true
-detect_files = ["docker-compose.yml", "docker-compose.yaml", "Dockerfile"]
-detect_folders = []
-disabled = false
+disabled = true
 
 [git_branch]
-symbol = " "
-
-[golang]
-symbol = " "
-
-[nim]
-symbol = " "
-
-[nix_shell]
-symbol = " "
-
-[package]
-symbol = "󰏗 "
-[python]
-symbol = " "
-#pyenv_version_name = true
-format = 'via [${symbol}python (${version} )(\($virtualenv\) )]($style)'
-style = "bold yellow"
-pyenv_prefix = "venv "
-python_binary = ["./venv/bin/python", "python", "python3", "python2"]
-detect_extensions = ["py"]
-version_format = "v${raw}"
-
-[rust]
-symbol = " "
-
-[nodejs]
-format = "via [ Node.js $version](bold green) "
-detect_files = ["package.json", ".node-version"]
-detect_folders = ["node_modules"]
+symbol = ""  # no icon
+format = "[git:$branch]($style) "
+style = "bold #9ccfd8"  # foam

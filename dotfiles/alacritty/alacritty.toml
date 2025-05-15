@@ -1,37 +1,48 @@
 # $HOME/.config/alacritty/alacritty.toml
-# by Rito Ghosh 2023-10-06
-
-# Alacritty now uses TOML formatting for its config files.
-# This is a simple example.
-
-# There are the specification here: https://github.com/alacritty/alacritty/blob/master/extra/man/alacritty.5.scd
-# It is not obvious how it translates to TOML. But it is extremely straightforward.
-
-# example: WINDOW, COLORS, etc. are tables, and should be represented as [window], [colors], respectively.
-# specifics of variables go under them. e.g.- look under "dynamic_padding" under-
-# https://github.com/alacritty/alacritty/blob/master/extra/man/alacritty.5.scd#window
-# write `dynamic_padding = true` (without backticks -`) under the table [window]
-# for variables with multiple values, use "dotted keys". Like setting `padding.x = 5` under [window].
-# This is simple. If not clear, do several trials and errors.
-
-# Below is my initial set-up. The TOML homepage (https://toml.io/en/v1.0.0) was very helpful in figuring this out.
-# I put the file alacritty.toml in $HOME/.config/alacritty. However it can be kept anywhere among the places mentioned in
-# https://github.com/alacritty/alacritty/tree/master#configuration
+# Rosé Pine Moon inspired theme
 
 [window]
-
-
-padding.x = 10
-padding.y = 10
+padding.x = 0
+padding.y = 0
 dynamic_padding = false
-decorations = "Full"
-decorations_theme_variant = "Dark" # "Dark"
+decorations = "full"
+startup_mode = "Maximized"
+opacity = 0.95
 
 [font]
-
 normal.family = "Iosevka"
 bold.family = "Iosevka"
 italic.family = "Iosevka"
 bold_italic.family = "Iosevka"
-
 size = 14
+
+[colors]
+# Default colors (match Vim's Normal bg/fg)
+primary.background = "#000000"  # Vim's Normal bg
+primary.foreground = "#e0def4"  # Vim's Normal fg
+
+# Normal colors (match terminal_ansi_colors in Vim)
+normal.black   = "#26233a"      # Overlay (darkest UI element)
+normal.red     = "#eb6f92"      # Love (error highlights)
+normal.green   = "#31748f"      # Pine (strings, keywords)
+normal.yellow  = "#f6c177"      # Gold (numbers, booleans)
+normal.blue    = "#9ccfd8"      # Foam (functions, types)
+normal.magenta = "#c4a7e7"      # Iris (special chars, markup)
+normal.cyan    = "#ebbcba"      # Rose (operators, delimiters)
+normal.white   = "#e0def4"      # Text (foreground)
+
+# Bright colors (lighter variants)
+bright.black   = "#6e6a86"      # Muted (comments, line numbers)
+bright.red     = "#eb6f92"      # Love (bright)
+bright.green   = "#31748f"      # Pine (bright)
+bright.yellow  = "#f6c177"      # Gold (bright)
+bright.blue    = "#9ccfd8"      # Foam (bright)
+bright.magenta = "#c4a7e7"      # Iris (bright)
+bright.cyan    = "#ebbcba"      # Rose (bright)
+bright.white   = "#e0def4"      # Text (bright)
+
+# Cursor & Selection (match Vim's Visual mode)
+cursor.text    = "#191724"      # Base bg
+cursor.cursor  = "#e0def4"      # Text fg
+selection.text = "#e0def4"      # Text fg
+selection.background = "#403d52" # Vim's Visual mode bg

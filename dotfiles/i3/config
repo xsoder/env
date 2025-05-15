@@ -17,7 +17,7 @@ exec --no-startup-id xrdb -merge ~/.Xresources
 
 
 set $refresh_i3status killall -SIGUSR1 i3status
-exec_always feh --bg-scale ~/devenv/wallpaper/main.jpg
+exec_always feh --bg-scale ~/devenv/wallpaper/moon.jpg
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% && $refresh_i3status
 bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10% && $refresh_i3status
 bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl set +10
@@ -141,19 +141,29 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
-# Color Scheme
-# class                   border      backgr.      text    indic.   child_border
-client.focused           #006699    #006699    #ffffff    #dddddd
-client.focused_inactive  #333333    #333333    #888888    #292d2e
-client.unfocused         #333333    #333333    #888888    #292d2e
-client.urgent            #2f343a    #900000    #ffffff    #900000
-client.placeholder       #000000    #0c0c0c    #ffffff    #000000
-client.background        #2B2C2B
+# Rose Pine Color Scheme
+# Define Rose Pine colors
+set $base    #191724
+set $surface #1f1d2e
+set $overlay #26233a
+set $text    #e0def4
+set $pine    #31748f
+set $rose    #ebbcba
+set $love    #eb6f92
+
+# class                   border      backgr.      text        indic.      child_border
+client.focused           #31748f    #31748f    #e0def4    #ebbcba    #31748f
+client.focused_inactive  #1f1d2e    #1f1d2e    #908caa    #26233a    #1f1d2e
+client.unfocused         #191724    #191724    #6e6a86    #191724    #191724
+client.urgent            #eb6f92    #eb6f92    #e0def4    #eb6f92    #eb6f92
+client.placeholder       #191724    #191724    #e0def4    #191724    #191724
+client.background        #191724
 
 bar {
         status_command i3status
 }
-for_window [class="firefox"]move to workspace $ws3
+
+for_window [class="zen-browser"]move to workspace $ws3
 for_window [class="virt-manager"]move to workspace $ws7
 for_window [class="obs"] move to workspace $ws9
 for_window [class="Gimp"]move to workspace $ws8
@@ -161,9 +171,9 @@ for_window [class="thunar"] move to workspace $ws6
 
 bindsym $mod+Shift+p workspace $ws8; exec gimp
 bindsym $mod+Shift+y workspace $ws10; exec pavucontrol
-bindsym $mod+b workspace $ws3; exec firefox
+bindsym $mod+b workspace $ws3; fullscreen enable, exec zen-browser
 bindsym $mod+Shift+f workspace $ws6; exec thunar
-bindsym $mod+Return ; exec alacritty
+bindsym $mod+Return ; exec kitty
 bindsym $mod+bracketleft workspace prev
 bindsym $mod+Tab focus next
 bindsym $mod+Shift+Tab focus prev
@@ -178,5 +188,5 @@ bindsym $mod+Shift+period exec --no-startup-id pkill screenkey
 bindsym $mod+Shift+t exec --no-startup-id ~/.local/bin/rofi_script_launcher.sh
 bindsym $mod+Shift+o exec --no-startup-id ~/scripts/power.sh
 for_window [class="Virt-viewer"] fullscreen enable, floating enable
-for_window [class="firefox"] fullscreen enable
-
+for_window [class="zen-browser"] fullscreen enable, workspace 3
+for_window [class="kitty"] fullscreen enable, workspace 1
