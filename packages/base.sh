@@ -1,3 +1,4 @@
+sudo pacman -S ripgrep
 sudo pacman -S firefox --noconfirm
 sudo pacman -S dunst --noconfirm
 sudo pacman -S git --noconfirm

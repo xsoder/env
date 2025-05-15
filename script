@@ -5,6 +5,7 @@ set -e
 CONFIG_DIR="$HOME/.config"
 PACKAGES_DIR="$HOME/devenv/packages"
 DOTFILES_DIR="$HOME/devenv"
+PACKAGE_MANAGER="paru"
 
 copy_dotfiles() {
     echo "[*] Copying dotfiles..."
@@ -64,7 +65,6 @@ copy_dotfiles() {
     done
 
     echo "[✓] Dotfiles copied successfully."
-    hyprctl reload
 }
 
 install_packages() {

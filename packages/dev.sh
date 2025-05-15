@@ -14,4 +14,4 @@ paru -S love --noconfirm --needed
 sudo pacman -S qemu --noconfirm --needed
 sudo pacman -S virtio-win --noconfirm --needed
 sudo pacman -S edk2-ovmf --noconfirm --needed
-sudo pacman -S go --noconfirm --needed
+sudo pacman -S fish --noconfirm --needed
