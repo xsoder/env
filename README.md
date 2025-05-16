@@ -1,39 +1,26 @@
 # Devenv
 
-![Screenshot 1](img.png)
-![Screenshot 2](img2.png)
 ![Screenshot 3](img3.png)
 ![Screenshot 4](img4.png)
 ![Screenshot 5](img5.png)
 ![Screenshot 6](img6.png)
 
-A personal dotfile manager for a Wayland-based development environment, featuring Hyprland as the window manager.
+Personal development setup using i3Wm tmux and setup I am planning to make this its own distro with some of my own utility. This setup sure does look bad but it is focused on productivity and not asthetics.
+I have recently been trying emacs I might switch we will never know.
 
-## Overview
-
-This repository contains my personal configuration files and scripts for setting up a development environment on Linux with Wayland. The setup includes:
-
-- [Hyprland](https://wiki.hyprland.org/) window manager
-- [Ghostty](https://ghostty.org/docs) terminal emulator
-- [Zsh](https://www.zsh.org/) shell with custom configuration
-- [Neovim](https://neovim.io/) text editor
-- Various development and utility tools
-
-## Features
-
-- [Hyprland](https://wiki.hyprland.org/)
-- [Zsh](https://www.zsh.org/)
-- [Neovim](https://neovim.io/)
-- [Waybar](https://github.com/Alexays/Waybar)
-- [Dunst](https://dunst-project.org/)
-- [CopyQ](https://hluk.github.io/CopyQ/)
-- [Fastfetch](https://github.com/dylanaraps/fastfetch)
-- [Rofi](https://github.com/davatorium/rofi)
+## ChangeLog
+From my previous setup certain things have changed which include my terminal, neovim config and more.
+As a recap this are the changes.
+- [x] Hyprland -> i3(reason webcam not working in wayland)
+- [x] ghostty -> kitty(reason being nice cursor trail)
+- [x] zsh -> fish(I love fish and it looked cool)
+- [x] neovim -> emacs(Not a full switch it is a temporary one but love it so far)
+- [x] rofi -> dmenu(I just love dmenu)
 
 ## Requirements
 
 - Arch Linux or Arch-based distribution
-- Wayland compositor support
+- Xorg support
 - Git
 - [Paru](https://github.com/Morganamilo/paru) (AUR helper)
 
@@ -64,6 +51,7 @@ The installation script supports several commands:
 - `bash script install dev` - Install development tools
 - `bash script install utility` - Install utility packages
 - `bash script copy` - Copy dotfiles to their respective locations
+- `bash script link` - Syslink dotfiles to their respective locations
 
 ## Configuration Structure
 
