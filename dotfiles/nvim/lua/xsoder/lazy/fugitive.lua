@@ -2,7 +2,7 @@ return {
     "tpope/vim-fugitive",
     config = function()
         vim.keymap.set("n", "<leader>gg", vim.cmd.Git)
-        vim.keymap.set("n", "<leader>gc", vim.cmd.Gwrite)
+        vim.keymap.set("n", "<leader>gw", vim.cmd.Gwrite)
         local xsoder = vim.api.nvim_create_augroup("xsoder", {})
 
         local autocmd = vim.api.nvim_create_autocmd

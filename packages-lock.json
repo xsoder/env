@@ -1,0 +1,5 @@
+{
+  "base": ["git", "neovim"],
+  "dev": [],
+  "utility": ["htop", "fzf", "ripgrep"]
+}
