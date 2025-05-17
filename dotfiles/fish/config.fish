@@ -40,3 +40,9 @@ alias luamake '/home/csode/packages/lua-language-server/3rd/luamake/luamake'
 if test -z "$DISPLAY"; and test "$XDG_VTNR" = "1"
     exec startx
 end
+if status is-interactive
+    if not set -q TMUX
+        tmux attach-session -t default 2>/dev/null; or tmux new-session -s default
+    end
+end
+

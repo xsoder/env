@@ -64,8 +64,6 @@ bindsym $mod+Shift+Right move right
 # split in horizontal orientation
 bindsym $mod+h split h
 
-# split in vertical orientation
-bindsym $mod+v split v
 
 # enter fullscreen mode for the focused container
 bindsym $mod+f fullscreen toggle
@@ -174,7 +172,7 @@ bindsym $mod+Shift+p workspace $ws8; exec gimp
 bindsym $mod+Shift+y workspace $ws10; exec pavucontrol
 bindsym $mod+b workspace $ws3; fullscreen enable, exec zen-browser
 bindsym $mod+Shift+f workspace $ws6; exec thunar
-bindsym $mod+Return ; exec kitty
+bindsym $mod+Return ; fullscreen enable;exec alacritty
 bindsym $mod+bracketleft workspace prev
 bindsym $mod+Tab focus next
 bindsym $mod+Shift+Tab focus prev
@@ -189,5 +187,6 @@ bindsym $mod+Shift+period exec --no-startup-id pkill screenkey
 bindsym $mod+Shift+t exec --no-startup-id ~/.local/bin/rofi_script_launcher.sh
 bindsym $mod+Shift+o exec --no-startup-id ~/scripts/power.sh
 for_window [class="Virt-viewer"] fullscreen enable, floating enable
-for_window [class="zen-browser"] fullscreen enable, workspace 3
-for_window [class="kitty"] fullscreen enable, workspace 1
+for_window [class="zen"] fullscreen enable, workspace 3
+for_window [class="Alacritty"] fullscreen enable, workspace 1
+bindsym $mod+v exec --no-startup-id rofi -show window

@@ -1,10 +1,6 @@
-/**
- * Rose Pine Dark Theme for Rofi - No White Elements
- */
-
 configuration {
-    modi: "drun,run";
-    font: "JetBrains mono 12";
+    modi: "drun,run,window";
+    font: "Iosevka 12";
     show-icons: false;
     icon-theme: "Papirus-Dark";
     display-drun: "Apps";
@@ -13,18 +9,9 @@ configuration {
 }
 
 * {
-    /* Rose Pine Colors - Dark Purple Palette Only */
-    base: #191724;
-    surface: #1f1d2e;
-    overlay: #26233a;
-    dark-overlay: #191724;
-    muted: #6e6a86;
-    subtle: #908caa;
-    text: #e0def4;
-    iris: #c4a7e7;
-    highlight-low: #21202e;
-    highlight-med: #403d52;
-    highlight-high: #524f67;
+    inherit: false;
+    base: #000000;
+    white: #ffffff;
 
     /* No white elements at all */
     background-color: transparent;
@@ -37,11 +24,18 @@ configuration {
 
 window {
     transparency: "real";
-    background-color: rgba(25, 23, 36, 0.85);
+    background-color: @base;
     border: 2px;
-    border-color: @iris;
+    border-color: @base;
     border-radius: 8px;
-    width: 30%;
+    width: 45%;
+    height: 30%;
+    location: south;
+    y-offset: -35px;
+    focused-border-color: @base;
+    focused-background-color: @base;
+    active-border-color: @base;  /* Ensure no active window color */
+    active-background-color: @base; /* Ensure no background color for active window */
 }
 
 mainbox {
@@ -50,7 +44,7 @@ mainbox {
 }
 
 inputbar {
-    background-color: @overlay;
+    background-color: @base;
     border-radius: 8px;
     padding: 12px;
     margin: 0px 0px 12px 0px;
@@ -58,60 +52,54 @@ inputbar {
 }
 
 prompt {
-    background-color: transparent;
-    text-color: @iris;
+    background-color: @base;
+    text-color: @white;
     padding: 0 12px 0 0;
 }
 
 entry {
-    background-color: transparent;
-    text-color: @text;
+    background-color: @base;
+    text-color: @base;
     placeholder: "Search...";
-    placeholder-color: @muted;
 }
 
 listview {
-    background-color: transparent;
+    background-color: @base;
     border: 0;
     padding: 8px 0;
     columns: 1;
-    lines: 6;
+    lines: 8;
     scrollbar: false;
 }
 
 element {
-    background-color: transparent;
+    background-color: @base;
+    foreground-color: @base;
     border-radius: 8px;
     padding: 12px;
     margin: 4px 0;
 }
 
-element-icon {
-    size: 24px;
-    margin: 0 12px 0 0;
-}
-
 element-text {
-    background-color: transparent;
     vertical-align: 0.5;
 }
 
 element normal.normal {
-    background-color: transparent;
-    text-color: @text;
+    background-color: @base;
+    text-color: @white;
 }
 
 element alternate.normal {
-    background-color: transparent;
-    text-color: @text;
+    background-color: @base;
+    text-color: @white;
 }
 
 element selected {
-    background-color: @iris;
+    background-color:@base ;
     border: 1px;
-    border-color: @iris;
+    border-color: @white;
 }
 
 element-text selected {
-    text-color: @iris;
+    text-color: @white;
 }
