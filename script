@@ -12,7 +12,6 @@ PACKAGES_JSON="$DOTFILES_DIR/packages.json"
 PACKAGES_LOCK="$DOTFILES_DIR/packages-lock.json"
 SUDO_PASS=""
 TMP_OUTPUT="/tmp/package-install-output.log"
-
 main() {
     trap 'cleanup' INT TERM
     dialog_box
@@ -65,25 +64,89 @@ validate_package_exists() {
 
 install_package() {
     local pkg="$1"
-    local fallback_to_pacman=false
+    if pacman -Qi "$pkg" &>/dev/null; then
+        echo "Package $pkg already installed - skipping" >> "$TMP_OUTPUT"
+        return 0
+    fi
 
-    if [[ "$PACKAGE_MANAGER" == "paru" ]] && command -v paru &>/dev/null; then
-        if ! paru -S --needed --noconfirm "$pkg" >>"$TMP_OUTPUT" 2>&1; then
-            fallback_to_pacman=true
-        fi
+    echo "Installing $pkg..." >> "$TMP_OUTPUT"
+    if command -v "$PACKAGE_MANAGER" &>/dev/null; then
+        printf '%s\n' "$SUDO_PASS" | sudo -S "$PACKAGE_MANAGER" -S --needed --noconfirm "$pkg" >> "$TMP_OUTPUT" 2>&1
     else
-        fallback_to_pacman=true
+        printf '%s\n' "$SUDO_PASS" | sudo -S pacman -S --needed --noconfirm "$pkg" >> "$TMP_OUTPUT" 2>&1
     fi
-
-    if $fallback_to_pacman; then
-        if ! pacman -S --needed --noconfirm "$pkg" >>"$TMP_OUTPUT" 2>&1; then
-            return 1
-        fi
-    fi
-
-    return 0
 }
 
+install_packages() {
+    local category
+    category=$(dialog --title "Install Category" \
+        --extra-button --extra-label "Go Back" \
+        --cancel-label "Exit" \
+        --menu "Choose category" "$HEIGHT" "$WIDTH" 0 \
+        1 "Base" \
+        2 "Dev" \
+        3 "Utility" \
+        4 "All" \
+        2>&1 >/dev/tty)
+
+    local status=$?
+    [[ $status -eq 3 ]] && show_package_menu && return
+    [[ $status -eq 1 ]] && clear && exit 0
+
+    local pkg_array=()
+    case "$category" in
+        1) mapfile -t pkg_array < <(jq -r '.base[]' "$PACKAGES_JSON") ;;
+        2) mapfile -t pkg_array < <(jq -r '.dev[]' "$PACKAGES_JSON") ;;
+        3) mapfile -t pkg_array < <(jq -r '.utility[]' "$PACKAGES_JSON") ;;
+        4) mapfile -t pkg_array < <(jq -r '.base[], .dev[], .utility[]' "$PACKAGES_JSON" | sort -u) ;;
+    esac
+
+    [[ ${#pkg_array[@]} -eq 0 ]] && dialog --title "Install Packages" --msgbox "No packages found in selected category." "$HEIGHT" "$WIDTH" && return
+
+    run_with_sudo true
+
+    local new_installed=()
+    for pkg in "${pkg_array[@]}"; do
+        if ! pacman -Qi "$pkg" &>/dev/null; then
+            new_installed+=("$pkg")
+        fi
+    done
+
+    if [[ ${#new_installed[@]} -eq 0 ]]; then
+        dialog --title "Install Packages" --msgbox "All packages already installed." "$HEIGHT" "$WIDTH"
+        return
+    fi
+
+    rm -f "$TMP_OUTPUT"
+    echo "Starting package installation..." > "$TMP_OUTPUT"
+
+    (
+        total=${#new_installed[@]}
+        current=0
+
+        echo "XXX"
+        echo "Preparing package installation..."
+        echo "XXX"
+        echo "0"
+
+        for pkg in "${new_installed[@]}"; do
+            current=$((current + 1))
+            progress=$((current * 100 / total))
+
+            echo "XXX"
+            echo "Installing $pkg ($current/$total)..."
+            echo "XXX"
+            echo "$progress"
+
+            install_package "$pkg"
+        done
+
+        echo "100"
+    ) | dialog --title "Installing Packages" --gauge "Please wait..." "$HEIGHT" "$WIDTH" 0
+
+    dialog --title "Installation Log" --textbox "$TMP_OUTPUT" "$HEIGHT" "$WIDTH"
+    dialog --title "Installation Complete" --msgbox "Package installation process finished." "$HEIGHT" "$WIDTH"
+}
 show_main_menu() {
     local choice
     choice=$(dialog --title "Linux system" \
@@ -161,82 +224,6 @@ add_package() {
     done
 }
 
-install_packages() {
-    local category
-    category=$(dialog --title "Install Category" \
-        --extra-button --extra-label "Go Back" \
-        --cancel-label "Exit" \
-        --menu "Choose category" "$HEIGHT" "$WIDTH" 0 \
-        1 "Base" \
-        2 "Dev" \
-        3 "Utility" \
-        2>&1 >/dev/tty)
-    local status=$?
-    [[ $status -eq 3 ]] && show_package_menu && return
-    [[ $status -eq 1 ]] && clear && exit 0
-    local key
-    case "$category" in
-        1) key="base" ;;
-        2) key="dev" ;;
-        3) key="utility" ;;
-    esac
-    mapfile -t pkg_array < <(jq -r ".${key}[]" "$PACKAGES_JSON")
-    [[ ${#pkg_array[@]} -eq 0 ]] && dialog --title "Install Packages" --msgbox "No packages found in $key" "$HEIGHT" "$WIDTH" && return
-
-    run_with_sudo true
-
-    local new_installed=()
-    for pkg in "${pkg_array[@]}"; do
-        if ! pacman -Qi "$pkg" &>/dev/null; then
-            new_installed+=("$pkg")
-        fi
-    done
-
-    if [[ ${#new_installed[@]} -eq 0 ]]; then
-        dialog --title "Install Packages" --msgbox "All packages already installed." "$HEIGHT" "$WIDTH"
-        return
-    fi
-
-    rm -f "$TMP_OUTPUT"
-
-    (
-        total=${#new_installed[@]}
-        current=0
-
-        echo "XXX"
-        echo "Preparing package installation..."
-        echo "XXX"
-        echo "0"
-
-        printf '%s\n' "$SUDO_PASS" | sudo -S pacman -Sy >>"$TMP_OUTPUT" 2>&1 || true
-        echo "10"
-        for pkg in "${new_installed[@]}"; do
-            current=$((current + 1))
-            progress=$((10 + (current * 80 / total)))
-
-            echo "XXX"
-            echo "Installing $pkg ($current/$total)..."
-            echo "XXX"
-            echo "$progress"
-
-            if ! install_package "$pkg"; then
-                echo "XXX"
-                echo "Failed to install $pkg"
-                echo "XXX"
-                continue
-            fi
-        done
-
-        echo "100"
-    ) | dialog --title "Installing Packages" --gauge "Please wait..." "$HEIGHT" "$WIDTH" 0
-    if grep -q -i -e "error" -e "warning" -e "failed" "$TMP_OUTPUT"; then
-        dialog --title "Installation Log" --textbox "$TMP_OUTPUT" "$HEIGHT" "$WIDTH"
-    else
-        dialog --title "Installation Complete" --msgbox "All packages installed successfully." "$HEIGHT" "$WIDTH"
-    fi
-}
-
-
 delete_package() {
     local data; data=$(jq '.' "$PACKAGES_LOCK")
     local category
@@ -272,10 +259,9 @@ delete_package() {
     [[ $? -ne 0 ]] && return
     local updated
     updated=$(jq --arg p "$del_pkg" ".${key} |= map(select(. != \$p))" <<< "$data")
-    printf '%s\n' "$updated" > "$PACKAGES_JSON"
-    dialog --title "Package Removed" --msgbox "'$del_pkg' removed from $key in packages.json" "$HEIGHT" "$WIDTH"
+    printf '%s\n' "$updated" > "$PACKAGES_LOCK"
+    dialog --title "Package Removed" --msgbox "'$del_pkg' removed from $key in packages-lock.json" "$HEIGHT" "$WIDTH"
 }
-
 update_lock() {
     if [[ ! -f "$PACKAGES_JSON" ]]; then
         dialog --title "Update Lock" --msgbox "packages.json not found" "$HEIGHT" "$WIDTH"
@@ -285,73 +271,80 @@ update_lock() {
     dialog --title "Update Lock" --msgbox "Lock file updated successfully" "$HEIGHT" "$WIDTH"
 }
 clean_packages() {
-    [[ -f "$PACKAGES_JSON" && -f "$PACKAGES_LOCK" ]] || {
-        dialog --title "Clean Packages" --msgbox "Missing package.json or lockfile" "$HEIGHT" "$WIDTH"
-        return
-    }
-
-    local json_pkgs lock_pkgs
-    json_pkgs=$(jq -r '.[] | .[]' "$PACKAGES_JSON")
-    lock_pkgs=$(jq -r '.[] | .[]' "$PACKAGES_LOCK")
-    local to_remove=()
-    while IFS= read -r pkg; do
-        if ! grep -qxF "$pkg" <<< "$lock_pkgs"; then
-            to_remove+=("$pkg")
-        fi
-    done <<< "$json_pkgs"
-
-    if [[ ${#to_remove[@]} -eq 0 ]]; then
-        dialog --title "Clean Packages" --msgbox "No packages to clean." "$HEIGHT" "$WIDTH"
+    if [[ ! -f "$PACKAGES_JSON" || ! -f "$PACKAGES_LOCK" ]]; then
+        dialog --title "Clean Packages" --msgbox "packages.json or packages-lock.json not found!" "$HEIGHT" "$WIDTH"
         return
     fi
 
-    dialog --title "Confirm Removal" \
-        --yesno "The following packages will be removed:\n\n$(printf '%s\n' "${to_remove[@]}")\n\nProceed?" \
-        "$HEIGHT" "$WIDTH" || return
+    local installed declared to_remove
+    declared=$(jq -r '.[] | .[]' "$PACKAGES_JSON" | sort -u)
+    installed=$(jq -r '.[] | .[]' "$PACKAGES_LOCK" | sort -u)
+
+    to_remove=$(comm -23 <(echo "$declared") <(echo "$installed"))
+
+    if [[ -z "$to_remove" ]]; then
+        dialog --title "Clean Packages" --msgbox "No unused packages to remove." "$HEIGHT" "$WIDTH"
+        return
+    fi
+
+    dialog --title "Confirm Removal" --yesno "These packages are in packages.json but not in lockfile:\n\n$to_remove\n\nRemove them?" "$HEIGHT" "$WIDTH"
+    local response=$?
+    if [[ $response -ne 0 ]]; then
+        return
+    fi
 
     run_with_sudo true
 
+    rm -f "$TMP_OUTPUT"
     (
-        echo "20"
-        echo "XXX"
-        echo "Removing packages..."
-        echo "XXX"
-
-        if [[ "$PACKAGE_MANAGER" == "paru" ]]; then
-            printf '%s\n' "$SUDO_PASS" | sudo -S paru -Rsn --noconfirm "${to_remove[@]}" >>"$TMP_OUTPUT" 2>&1 || true
-        else
-            printf '%s\n' "$SUDO_PASS" | sudo -S pacman -Rsn --noconfirm "${to_remove[@]}" >>"$TMP_OUTPUT" 2>&1 || true
-        fi
-        echo "60"
-        echo "XXX"
-        echo "Cleaning package cache..."
-        echo "XXX"
-        if [[ "$PACKAGE_MANAGER" == "paru" ]]; then
-            printf '%s\n' "$SUDO_PASS" | sudo -S paru -Scc --noconfirm >>"$TMP_OUTPUT" 2>&1
-        else
-            printf '%s\n' "$SUDO_PASS" | sudo -S pacman -Scc --noconfirm >>"$TMP_OUTPUT" 2>&1
-        fi
-        echo "80"
+        total=$(echo "$to_remove" | wc -l)
+        current=0
 
         echo "XXX"
-        echo "Updating packages.json..."
+        echo "Removing unused packages..."
         echo "XXX"
-        local updated_json=$(jq --argjson to_remove "$(printf '%s\n' "${to_remove[@]}" | jq -R . | jq -s .)" '
-            def remove_pkgs($arr):
-                . as $orig | reduce $arr[] as $pkg ($orig;
-                    .[] |= map(select(. != $pkg))
-                );
-            remove_pkgs($to_remove)
-        ' "$PACKAGES_JSON")
+        echo "0"
 
-        printf '%s\n' "$updated_json" > "$PACKAGES_JSON"
+        while IFS= read -r pkg; do
+            current=$((current + 1))
+            progress=$((current * 100 / total))
+            echo "XXX"
+            echo "Uninstalling $pkg ($current/$total)..."
+            echo "XXX"
+            echo "$progress"
+
+            if ! run_with_sudo pacman -Rns --noconfirm "$pkg" >>"$TMP_OUTPUT" 2>&1; then
+                echo "XXX"
+                echo "Failed to uninstall $pkg"
+                echo "XXX"
+                continue
+            fi
+        done <<< "$to_remove"
+
         echo "100"
     ) | dialog --title "Cleaning Packages" --gauge "Please wait..." "$HEIGHT" "$WIDTH" 0
 
-    dialog --title "Cleaning Complete" \
-        --msgbox "Successfully removed:\n\n$(printf '%s\n' "${to_remove[@]}")\n\npackages.json has been updated." \
-        "$HEIGHT" "$WIDTH"
+    local orphaned
+    orphaned=$(pacman -Qdtq 2>/dev/null || true)
+    if [[ -n "$orphaned" ]]; then
+        dialog --title "Remove Orphans" --yesno "Found orphaned packages:\n\n$orphaned\n\nRemove them?" "$HEIGHT" "$WIDTH"
+        if [[ $? -eq 0 ]]; then
+            echo "$orphaned" | xargs -r -n 1 sudo pacman -Rns --noconfirm
+            dialog --title "Orphans Removed" --msgbox "Orphaned packages removed." "$HEIGHT" "$WIDTH"
+        fi
+    else
+        dialog --title "No Orphans" --msgbox "No orphaned packages found." "$HEIGHT" "$WIDTH"
+    fi
+
+    dialog --title "Clean Package Cache" --yesno "Do you want to clear the package cache?\n(This runs 'pacman -Scc')" "$HEIGHT" "$WIDTH"
+    if [[ $? -eq 0 ]]; then
+        sudo pacman -Scc --noconfirm
+        dialog --title "Cache Cleaned" --msgbox "Package cache cleaned." "$HEIGHT" "$WIDTH"
+    fi
+
+    dialog --title "Clean Complete" --msgbox "All cleanup steps completed." "$HEIGHT" "$WIDTH"
 }
+
 init_packages() {
     mkdir -p "$DOTFILES_DIR"
 
@@ -408,4 +401,3 @@ dialog_box() {
 }
 
 main
-

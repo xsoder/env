@@ -1,5 +1,5 @@
 local palette = {
-    base = "#191724",     -- base
+    base = "#191724",     -- base--menu "hello"
     surface = "#1f1d2e",  -- surface
     overlay = "#26233a",  -- overlay
     muted = "#6e6a86",    -- muted

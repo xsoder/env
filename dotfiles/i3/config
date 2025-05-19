@@ -149,7 +149,7 @@ bar {
         status_command i3status
 }
 
-for_window [class="zen-browser"]move to workspace $ws3
+for_window [class="firefox"]move to workspace $ws3
 for_window [class="virt-manager"]move to workspace $ws7
 for_window [class="obs"] move to workspace $ws9
 for_window [class="Gimp"]move to workspace $ws8
@@ -157,7 +157,7 @@ for_window [class="thunar"] move to workspace $ws6
 
 bindsym $mod+Shift+p workspace $ws8; exec gimp
 bindsym $mod+Shift+y workspace $ws10; exec pavucontrol
-bindsym $mod+b workspace $ws3; fullscreen enable, exec zen-browser
+bindsym $mod+b workspace $ws3; fullscreen enable, exec firefox
 bindsym $mod+Shift+f workspace $ws6; exec thunar
 bindsym $mod+Return ; workspace $ws2;exec alacritty
 bindsym $mod+bracketleft workspace prev
@@ -176,5 +176,5 @@ bindsym $mod+Shift+o exec vesktop
 for_window [class="Virt-viewer"] fullscreen enable, floating enable
 for_window [class="Alacritty"] move to workspace $ws2, fullscreen enable
 for_window [class="Emacs"] move to workspace $ws1, fullscreen enable
-for_window [class="zen"] move to workspace $ws3, fullscreen enable
+for_window [class="firefox"] move to workspace $ws3, fullscreen enable
 bindsym $mod+v exec --no-startup-id rofi -show window

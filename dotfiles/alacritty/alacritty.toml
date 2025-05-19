@@ -1,6 +1,3 @@
-# $HOME/.config/alacritty/alacritty.toml
-# Rosé Pine Moon inspired theme
-
 [window]
 padding.x = 0
 padding.y = 0
