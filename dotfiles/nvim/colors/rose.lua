@@ -109,7 +109,6 @@ local function apply_rosepine_scheme()
     vim.api.nvim_set_hl(0, "MoreMsg", { fg = palette.iris })
     vim.api.nvim_set_hl(0, "Question", { fg = palette.gold })
 
-    -- Make sure all transparent groups are properly set
     local transparent_groups = {
         "Normal", "NormalNC", "NormalFloat",  "VertSplit",
         "SignColumn", "EndOfBuffer", "MsgArea", "Pmenu", "TelescopeNormal",

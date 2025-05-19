@@ -2,7 +2,6 @@ return {
     {
           "xsoder/buffer-manager.nvim",
         dependencies = {
-            "nvim-tree/nvim-web-devicons",
             "nvim-telescope/telescope.nvim",
         },
         config = function()

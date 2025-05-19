@@ -1,5 +1,18 @@
 {
-  "base": ["git", "neovim"],
-  "dev": [],
-  "utility": ["htop", "fzf", "ripgrep"]
+  "base": [
+    "git",
+    "neovim",
+    "tmux",
+    "shfmt"
+  ],
+  "dev": [
+    "python",
+    "nodejs",
+    "rustup"
+  ],
+  "utility": [
+    "fzf",
+    "ripgrep",
+    "make"
+  ]
 }

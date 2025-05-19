@@ -7,7 +7,6 @@ padding.y = 0
 dynamic_padding = false
 decorations = "full"
 startup_mode = "Maximized"
-opacity = 0.95
 
 [font]
 normal.family = "Iosevka"
