@@ -65,15 +65,15 @@ validate_package_exists() {
 install_package() {
     local pkg="$1"
     if pacman -Qi "$pkg" &>/dev/null; then
-        echo "Package $pkg already installed - skipping" >> "$TMP_OUTPUT"
+        echo "Package $pkg already installed - skipping" >>"$TMP_OUTPUT"
         return 0
     fi
 
-    echo "Installing $pkg..." >> "$TMP_OUTPUT"
+    echo "Installing $pkg..." >>"$TMP_OUTPUT"
     if command -v "$PACKAGE_MANAGER" &>/dev/null; then
-        printf '%s\n' "$SUDO_PASS" | sudo -S "$PACKAGE_MANAGER" -S --needed --noconfirm "$pkg" >> "$TMP_OUTPUT" 2>&1
+        printf '%s\n' "$SUDO_PASS" | "$PACKAGE_MANAGER" -S --needed --noconfirm "$pkg" >>"$TMP_OUTPUT" 2>&1
     else
-        printf '%s\n' "$SUDO_PASS" | sudo -S pacman -S --needed --noconfirm "$pkg" >> "$TMP_OUTPUT" 2>&1
+        printf '%s\n' "$SUDO_PASS" | sudo -S pacman -S --needed --noconfirm "$pkg" >>"$TMP_OUTPUT" 2>&1
     fi
 }
 
@@ -95,10 +95,10 @@ install_packages() {
 
     local pkg_array=()
     case "$category" in
-        1) mapfile -t pkg_array < <(jq -r '.base[]' "$PACKAGES_JSON") ;;
-        2) mapfile -t pkg_array < <(jq -r '.dev[]' "$PACKAGES_JSON") ;;
-        3) mapfile -t pkg_array < <(jq -r '.utility[]' "$PACKAGES_JSON") ;;
-        4) mapfile -t pkg_array < <(jq -r '.base[], .dev[], .utility[]' "$PACKAGES_JSON" | sort -u) ;;
+    1) mapfile -t pkg_array < <(jq -r '.base[]' "$PACKAGES_JSON") ;;
+    2) mapfile -t pkg_array < <(jq -r '.dev[]' "$PACKAGES_JSON") ;;
+    3) mapfile -t pkg_array < <(jq -r '.utility[]' "$PACKAGES_JSON") ;;
+    4) mapfile -t pkg_array < <(jq -r '.base[], .dev[], .utility[]' "$PACKAGES_JSON" | sort -u) ;;
     esac
 
     [[ ${#pkg_array[@]} -eq 0 ]] && dialog --title "Install Packages" --msgbox "No packages found in selected category." "$HEIGHT" "$WIDTH" && return
@@ -118,7 +118,7 @@ install_packages() {
     fi
 
     rm -f "$TMP_OUTPUT"
-    echo "Starting package installation..." > "$TMP_OUTPUT"
+    echo "Starting package installation..." >"$TMP_OUTPUT"
 
     (
         total=${#new_installed[@]}
@@ -157,11 +157,14 @@ show_main_menu() {
         3 "Initialize packages.json" \
         2>&1 >/dev/tty)
     local status=$?
-    if [[ $status -eq 1 ]]; then clear; exit 0; fi
+    if [[ $status -eq 1 ]]; then
+        clear
+        exit 0
+    fi
     case "$choice" in
-        1) show_package_menu ;;
-        2) link_dotfiles ;;
-        3) init_packages ;;
+    1) show_package_menu ;;
+    2) link_dotfiles ;;
+    3) init_packages ;;
     esac
 }
 
@@ -178,14 +181,20 @@ show_package_menu() {
         5 "Clean system" \
         2>&1 >/dev/tty)
     local status=$?
-    if [[ $status -eq 3 ]]; then show_main_menu; return; fi
-    if [[ $status -eq 1 ]]; then clear; exit 0; fi
+    if [[ $status -eq 3 ]]; then
+        show_main_menu
+        return
+    fi
+    if [[ $status -eq 1 ]]; then
+        clear
+        exit 0
+    fi
     case "$option" in
-        1) add_package ;;
-        2) install_packages ;;
-        3) delete_package ;;
-        4) update_lock ;;
-        5) clean_packages ;;
+    1) add_package ;;
+    2) install_packages ;;
+    3) delete_package ;;
+    4) update_lock ;;
+    5) clean_packages ;;
     esac
 }
 
@@ -200,7 +209,8 @@ add_package() {
         [[ $status -eq 1 ]] && clear && exit 0
         [[ -z "${package// /}" ]] && continue
         if ! validate_package_exists "$package"; then continue; fi
-        local data; data=$(jq '.' "$PACKAGES_JSON" 2>/dev/null || printf '{}')
+        local data
+        data=$(jq '.' "$PACKAGES_JSON" 2>/dev/null || printf '{}')
         local category
         category=$(dialog --title "Choose Category" \
             --extra-button --extra-label "Go Back" \
@@ -215,17 +225,18 @@ add_package() {
         [[ $cat_status -eq 1 ]] && clear && exit 0
         local updated
         case "$category" in
-            1) updated=$(jq --arg var "$package" '.base += [$var]' <<< "$data") ;;
-            2) updated=$(jq --arg var "$package" '.dev += [$var]' <<< "$data") ;;
-            3) updated=$(jq --arg var "$package" '.utility += [$var]' <<< "$data") ;;
+        1) updated=$(jq --arg var "$package" '.base += [$var]' <<<"$data") ;;
+        2) updated=$(jq --arg var "$package" '.dev += [$var]' <<<"$data") ;;
+        3) updated=$(jq --arg var "$package" '.utility += [$var]' <<<"$data") ;;
         esac
-        printf '%s\n' "$updated" > "$PACKAGES_JSON"
+        printf '%s\n' "$updated" >"$PACKAGES_JSON"
         dialog --title "Package Added" --msgbox "Package '$package' added successfully." "$HEIGHT" "$WIDTH"
     done
 }
 
 delete_package() {
-    local data; data=$(jq '.' "$PACKAGES_LOCK")
+    local data
+    data=$(jq '.' "$PACKAGES_LOCK")
     local category
     category=$(dialog --title "Delete Package - Select Category" \
         --cancel-label "Exit" \
@@ -237,11 +248,11 @@ delete_package() {
     [[ $? -eq 1 ]] && clear && exit 0
     local key pkglist
     case "$category" in
-        1) key="base" ;;
-        2) key="dev" ;;
-        3) key="utility" ;;
+    1) key="base" ;;
+    2) key="dev" ;;
+    3) key="utility" ;;
     esac
-    mapfile -t pkglist < <(jq -r ".${key}[]" <<< "$data")
+    mapfile -t pkglist < <(jq -r ".${key}[]" <<<"$data")
     if [[ ${#pkglist[@]} -eq 0 ]]; then
         dialog --title "Delete Package" --msgbox "No packages in $key to delete" "$HEIGHT" "$WIDTH"
         return
@@ -258,8 +269,8 @@ delete_package() {
         2>&1 >/dev/tty)
     [[ $? -ne 0 ]] && return
     local updated
-    updated=$(jq --arg p "$del_pkg" ".${key} |= map(select(. != \$p))" <<< "$data")
-    printf '%s\n' "$updated" > "$PACKAGES_LOCK"
+    updated=$(jq --arg p "$del_pkg" ".${key} |= map(select(. != \$p))" <<<"$data")
+    printf '%s\n' "$updated" >"$PACKAGES_LOCK"
     dialog --title "Package Removed" --msgbox "'$del_pkg' removed from $key in packages-lock.json" "$HEIGHT" "$WIDTH"
 }
 update_lock() {
@@ -319,7 +330,7 @@ clean_packages() {
                 echo "XXX"
                 continue
             fi
-        done <<< "$to_remove"
+        done <<<"$to_remove"
 
         echo "100"
     ) | dialog --title "Cleaning Packages" --gauge "Please wait..." "$HEIGHT" "$WIDTH" 0
@@ -353,7 +364,7 @@ init_packages() {
     if [[ -f "$PACKAGES_JSON" ]]; then
         messages+=("packages.json already exists")
     else
-        cat > "$PACKAGES_JSON" <<EOF
+        cat >"$PACKAGES_JSON" <<EOF
 {
   "base": ["git", "neovim", "tmux"],
   "dev": ["python", "nodejs", "rustup"],
@@ -380,14 +391,16 @@ EOF
 }
 link_dotfiles() {
     mkdir -p "$CONFIG_DIR"
-    local output; output=$(mktemp)
+    local output
+    output=$(mktemp)
     for item in "$DOTFILES_DIR/dotfiles"/.* "$DOTFILES_DIR/dotfiles"/*; do
         [[ -e "$item" && ! "$(basename "$item")" =~ ^\.{1,2}$ ]] || continue
-        local filename; filename=$(basename "$item")
+        local filename
+        filename=$(basename "$item")
         local target="$CONFIG_DIR/$filename"
         [[ -e "$target" ]] && rm -rf "$target"
         ln -s "$item" "$target"
-        printf "├── %s -> %s\n" "$target" "$item" >> "$output"
+        printf "├── %s -> %s\n" "$target" "$item" >>"$output"
     done
     dialog --title "Linked Dotfiles" --textbox "$output" "$HEIGHT" "$WIDTH"
     rm -f "$output"

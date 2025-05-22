@@ -6,39 +6,55 @@ decorations = "full"
 startup_mode = "Maximized"
 
 [font]
-normal.family = "Iosevka"
-bold.family = "Iosevka"
-italic.family = "Iosevka"
-bold_italic.family = "Iosevka"
-size = 14
+normal.family = "FiraCode Nerd Font"  # Changed to match installed font
+bold.family = "FiraCode Nerd Font"
+italic.family = "FiraCode Nerd Font"
+bold_italic.family = "FiraCode Nerd Font"
+size = 12
 
+# Tokyo Night theme colors
 [colors]
-# Default colors (match Vim's Normal bg/fg)
-primary.background = "#000000"  # Vim's Normal bg
-primary.foreground = "#e0def4"  # Vim's Normal fg
+# Default colors
+primary.background = "#1a1b26"  # Tokyo Night background
+primary.foreground = "#c0caf5"  # Tokyo Night foreground
 
-# Normal colors (match terminal_ansi_colors in Vim)
-normal.black   = "#26233a"      # Overlay (darkest UI element)
-normal.red     = "#eb6f92"      # Love (error highlights)
-normal.green   = "#31748f"      # Pine (strings, keywords)
-normal.yellow  = "#f6c177"      # Gold (numbers, booleans)
-normal.blue    = "#9ccfd8"      # Foam (functions, types)
-normal.magenta = "#c4a7e7"      # Iris (special chars, markup)
-normal.cyan    = "#ebbcba"      # Rose (operators, delimiters)
-normal.white   = "#e0def4"      # Text (foreground)
+# Normal colors
+normal.black   = "#15161e"
+normal.red     = "#f7768e"
+normal.green   = "#9ece6a"
+normal.yellow  = "#e0af68"
+normal.blue    = "#7aa2f7"
+normal.magenta = "#bb9af7"
+normal.cyan    = "#7dcfff"
+normal.white   = "#a9b1d6"
 
-# Bright colors (lighter variants)
-bright.black   = "#6e6a86"      # Muted (comments, line numbers)
-bright.red     = "#eb6f92"      # Love (bright)
-bright.green   = "#31748f"      # Pine (bright)
-bright.yellow  = "#f6c177"      # Gold (bright)
-bright.blue    = "#9ccfd8"      # Foam (bright)
-bright.magenta = "#c4a7e7"      # Iris (bright)
-bright.cyan    = "#ebbcba"      # Rose (bright)
-bright.white   = "#e0def4"      # Text (bright)
+# Bright colors
+bright.black   = "#414868"
+bright.red     = "#f7768e"
+bright.green   = "#9ece6a"
+bright.yellow  = "#e0af68"
+bright.blue    = "#7aa2f7"
+bright.magenta = "#bb9af7"
+bright.cyan    = "#7dcfff"
+bright.white   = "#c0caf5"
 
-# Cursor & Selection (match Vim's Visual mode)
-cursor.text    = "#191724"      # Base bg
-cursor.cursor  = "#e0def4"      # Text fg
-selection.text = "#e0def4"      # Text fg
-selection.background = "#403d52" # Vim's Visual mode bg
+# Selection colors
+selection.text = "#c0caf5"
+selection.background = "#28344a"
+
+# Cursor colors
+cursor.text = "#1a1b26"
+cursor.cursor = "#c0caf5"
+
+# Indexed Colors
+indexed_colors = [
+  { index = 16, color = "#ff9e64" },
+  { index = 17, color = "#db4b4b" }
+]
+
+[cursor]
+style.shape = "Block"
+style.blinking = "On"
+thickness = 0.15
+unfocused_hollow = true
+vi_mode_style = "Block"

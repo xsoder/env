@@ -1,7 +1,7 @@
 # Devenv
 
 ![Screenshot 3](img3.png)
-![Screenshot 4](img3.png)
+![Screenshot 4](img4.png)
 ![Screenshot 5](img5.png)
 
 Personal development setup using i3Wm tmux and setup I am planning to make this its own distro with some of my own utility. This setup sure does look bad but it is focused on productivity and not asthetics.

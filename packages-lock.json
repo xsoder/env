@@ -2,17 +2,25 @@
   "base": [
     "git",
     "neovim",
-    "tmux",
-    "shfmt"
+    "tmux"
   ],
   "dev": [
     "python",
     "nodejs",
-    "rustup"
+    "rustup",
+    "prettier",
+    "stylua",
+    "clang",
+    "python-black"
   ],
   "utility": [
+    "htop",
     "fzf",
-    "make",
-    "ripgrep"
+    "ripgrep",
+    "obs-studio",
+    "prettier",
+    "stylua",
+    "feh",
+    "pcmanfm"
   ]
 }
