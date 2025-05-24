@@ -1,5 +1,7 @@
 (add-to-list 'load-path "~/.config/emacs/scripts/")
-
+(add-to-list 'load-path "~/.config/emacs/local/")
+(require 'simpc-mode)
+(add-to-list 'auto-mode-alist '("\\.[hc]\\(pp\\)?\\'" . simpc-mode))
 (require 'elpaca-setup)  ;; The Elpaca Package Manager
 (require 'app-launchers) ;; Use emacs as a run launcher like dmenu (experimental)
 (require 'buffer-move)   ;; Buffer-move for better window management
@@ -11,7 +13,7 @@
   :diminish
   :custom
   (company-begin-commands '(self-insert-command))
-  (company-idle-delay .1)
+  (company-idle-delay nil)
   (company-minimum-prefix-length 2)
   (company-show-numbers t)
   (company-tooltip-align-annotations 't)
@@ -713,3 +715,13 @@
 
 (ido-mode 1) 
 (ido-everywhere 1)
+(setq make-backup-files nil)
+(setq auto-save-default nil)
+(setq create-lockfiles nil)
+(setq company-minimum-prefix-length 9999) 
+(with-eval-after-load 'company
+  (define-key evil-insert-state-map (kbd "C-<tab>") 'company-complete))
+(setq display-buffer-alist
+      '(("\\*compilation\\*"
+         (display-buffer-reuse-window display-buffer-at-bottom)
+         (window-height . 0.3))))
