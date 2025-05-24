@@ -1,0 +1,1 @@
+/home/csode/.config/emacs/elpaca/repos/tldr/tldr.el

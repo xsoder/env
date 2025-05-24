@@ -1,5 +1,6 @@
 starship init fish | source
-
+set -x XDG_DATA_DIRS /usr/local/share/:/usr/share/
+set -x GSETTINGS_SCHEMA_DIR /usr/share/glib-2.0/schemas
 set -x PATH $HOME/.emacs.d/bin $PATH
 set -x PATH $HOME/.config/emacs/bin $PATH
 set -x DOOMDIR $HOME/.config/doom
@@ -19,18 +20,12 @@ alias gitter '~/scripts/gitter.sh'
 alias ccg '~/scripts/cpp.sh'
 alias packages '~/scripts/package.sh'
 alias rm 'rm -rf'
+alias vim 'nvim'
+alias ls 'ls -l --color=auto'
 alias dev 'bash ~/devenv/script'
 alias hypr_reload 'hyprctl reload'
 alias shell_reload 'source ~/.config/fish/config.fish'
 alias tmux_reload 'tmux source-file ~/.tmux.conf'
 alias DEV 'cd ~/devenv'
 alias luamake '/home/csode/packages/lua-language-server/3rd/luamake/luamake'
-if test -z "$DISPLAY"; and test "$XDG_VTNR" = "1"
-    exec startx
-end
-if status is-interactive
-    if not set -q TMUX
-        tmux attach-session -t default 2>/dev/null; or tmux new-session -s default
-    end
-end
 

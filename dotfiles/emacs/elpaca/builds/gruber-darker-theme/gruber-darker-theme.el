@@ -1,0 +1,1 @@
+/home/csode/.config/emacs/elpaca/repos/gruber-darker-theme/gruber-darker-theme.el

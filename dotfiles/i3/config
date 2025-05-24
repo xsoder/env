@@ -1,6 +1,8 @@
 set $mod Mod1
 
-font pango:FiraCode Nerd Font 14
+gaps inner 8
+gaps outer 8
+font pango: 14
 
 exec --no-startup-id dex --autostart --environment i3
 exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
@@ -15,6 +17,7 @@ exec --no-startup-id xsetroot -cursor_name left_ptr
 exec /user/bin/emacs --daemon
 exec_always --no-startup-id picom
 exec_always --no-startup-id feh --bg-scale ~/devenv/wallpaper/tokyo.png
+exec_always --no-startup-id bash -c "bash ~/devenv/dotfiles/polybar/launch.sh"
 
 set $refresh_i3status killall -SIGUSR1 i3status
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% && $refresh_i3status
@@ -126,33 +129,30 @@ mode "resize" {
 
 bindsym $mod+r mode "resize"
 
-# Rose Pine Color Scheme
-# Define Rose Pine colors
-set $base    #191724
-set $surface #1f1d2e
-set $overlay #26233a
-set $text    #e0def4
-set $pine    #31748f
-set $rose    #ebbcba
-set $love    #eb6f92
 
-# class                   border      backgr.      text        indic.      child_border
-client.focused           #31748f    #31748f    #e0def4    #ebbcba    #31748f
-client.focused_inactive  #1f1d2e    #1f1d2e    #908caa    #26233a    #1f1d2e
-client.unfocused         #191724    #191724    #6e6a86    #191724    #191724
-client.urgent            #eb6f92    #eb6f92    #e0def4    #eb6f92    #eb6f92
-client.placeholder       #191724    #191724    #e0def4    #191724    #191724
-client.background        #191724
+# Border colors: blue for focused, grey for unfocused
+# Adjust the colors as needed for your preferred blue and grey shades
 
-bar {
-        status_command i3status
-}
+set $blue_focused #31748f     
+set $grey_unfocused #6e6a86     
+
+client.focused           $blue_focused  $blue_focused  #e0def4  $blue_focused  $blue_focused
+client.focused_inactive  $grey_unfocused  $grey_unfocused  #908caa  $grey_unfocused  $grey_unfocused
+client.unfocused         $grey_unfocused  $grey_unfocused  #6e6a86  $grey_unfocused  $grey_unfocused
+client.urgent            $blue_focused  $blue_focused  #e0def4  $blue_focused  $blue_focused
+client.placeholder       $grey_unfocused  $grey_unfocused  #e0def4  $grey_unfocused  $grey_unfocused
+client.background        $grey_unfocused
+
+# Set border pixel width (optional, adjust as you prefer)
+# bar {
+#         status_command i3status
+# }
 
 for_window [class="firefox"]move to workspace $ws3
 for_window [class="virt-manager"]move to workspace $ws7
 for_window [class="obs"] move to workspace $ws9
 for_window [class="Gimp"]move to workspace $ws8
-for_window [class=".*"] border pixel 2
+for_window [class=".*"] border pixel 3
 
 
 bindsym $mod+Shift+p workspace $ws8; exec gimp
@@ -173,8 +173,8 @@ bindsym $mod+period exec --no-startup-id ~/scripts/screenkey.sh
 bindsym $mod+Shift+period exec --no-startup-id pkill screenkey
 bindsym $mod+Shift+t exec --no-startup-id ~/.local/bin/rofi_script_launcher.sh
 bindsym $mod+Shift+o exec vesktop
-# for_window [class="Virt-viewer"] fullscreen enable, floating enable
-# for_window [class="Alacritty"] move to workspace $ws1, fullscreen enable
-# for_window [class="Emacs"] move to workspace $ws2, fullscreen enable
+for_window [class="Virt-viewer"] fullscreen enable, floating enable
+for_window [class="Alacritty"] move to workspace $ws1 
+for_window [class="Emacs"] move to workspace $ws2, fullscreen enable
 for_window [class="firefox"] move to workspace $ws3, fullscreen enable
 bindsym $mod+v exec --no-startup-id rofi -show window
