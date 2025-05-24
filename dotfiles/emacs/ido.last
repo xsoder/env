@@ -2,6 +2,7 @@
 
 ;; ----- ido-last-directory-list -----
 (
+ ("/home/csode/Programming/" . "xutilc/")
  ("/home/csode/devenv/dotfiles/" . "emacs/")
  ("/home/csode/devenv/" . "dotfiles/")
  ("/home/csode/" . "devenv/")
@@ -9,24 +10,43 @@
 
 ;; ----- ido-work-directory-list -----
 (
- "/home/csode/devenv/dotfiles/emacs/"
  "/home/csode/devenv/"
+ "/home/csode/"
+ "/home/csode/devenv/dotfiles/emacs/"
+ "/home/csode/devenv/dotfiles/"
+ "/home/csode/learning/"
+ "/home/csode/Programming/xutilc/"
 )
 
 ;; ----- ido-work-file-list -----
 (
- 
+ "test.sh"
+ "packages-lock.json"
+ "config.org"
+ "config.el"
+ "agenda.org"
+ "main.c"
 )
 
 ;; ----- ido-dir-file-cache -----
 (
- ("/home/csode/devenv/dotfiles/emacs/" (26673 23373 989478 100000) "eshell/" "tramp" "agenda.org" "elpaca/" "eln-cache/" "config.el" ".gitignore" "scripts/" "elpa/" "./" "config.org" "projectile-bookmarks.eld" "recentf" "auto-save-list/" "transient/" "themes/" "early-init.el" "ido.last" "init.el" "images/" "sessions" "../")
+ ("/home/csode/devenv/dotfiles/emacs/" (26674 2295 201360 8000) "eshell/" "tramp" "elpaca/" "eln-cache/" "config.el" ".gitignore" "scripts/" "elpa/" "./" "config.org" "projectile-bookmarks.eld" "recentf" "auto-save-list/" "transient/" "early-init.el" "ido.last" "init.el" "images/" "sessions" "local/" "../")
 
- ("/home/csode/devenv/" (26673 23090 131377 560000) "script" "screenshot_029.png" "README.md" "img3.png" ".gitignore" ".git/" "./" "screenshot_030.png" "wallpaper/" "packages.json" "packages-lock.json" "img4.png" "../" "dotfiles/")
+ ("/home/csode/" (26674 1550 780402 157000) "devenv/" ".gnupg/" "config" ".pki/" ".zshrc" "Music/" ".bash_profile" ".themes/" "Templates/" "Downloads/" "work/" "Enviroment/" "Videos/" "go/" "Documents/" ".tmux/" ".var/" "WhiteSur-gtk-theme/" ".shell.pre-oh-my-zsh" ".bashrc" ".luarocks/" ".zen/" ".cache/" "scripts/" ".elfeed/" ".fehbg" "aur-build/" ".rustup/" ".cursor/" ".zshenv" "Pictures/" ".npm/" "learning/" "opt/" "packages/" ".vim/" "media/" "./" ".nimble/" "nvim/" ".xinitrc" ".zsh_history" ".gtkrc-2.0" ".zcompdump-csode-5.9.zwc" "notes/" ".bash_history" "Public/" ".profile" ".cargo/" "tmp-gdkpixbuf/" ".config/" ".vimrc" ".dotfiles/" ".tmux.conf.backup" "dopi/" ".viminfo" ".windsurf/" ".tmux.conf" "Desktop/" ".Xauthority" ".ssh/" "Screenshots/" ".fonts/" ".gitconfig" "org/" ".zcompdump-csode-5.9" ".wget-hsts" ".mozilla/" ".bash_logout" ".local/" ".codeium/" "Programming/" "main/" "../" "Emacs/" ".icons/")
 
- ("/home/csode/devenv/dotfiles/" (26673 16624 143744 824000) "dunst/" "config" ".zshrc" "copyq/" "spicetify/" ".bashrc" "kitty/" "dconf/" "emacs/" "test.sh" "./" "hypr/" "ghostty/" "waybar/" "i3/" ".tmux.conf" "../" "fish/" "polybar/" "alacritty/")
+ ("/home/csode/devenv/dotfiles/fish/" (26674 471 332476 273000) "config.fish" "./" "fish_variables" "../")
 
- ("/home/csode/" (26673 22144 832728 866000) "devenv/" ".gnupg/" "config" ".pki/" ".zshrc" "Music/" ".bash_profile" ".themes/" "Templates/" "Downloads/" "work/" "Videos/" "go/" "Documents/" ".tmux/" ".var/" "WhiteSur-gtk-theme/" ".shell.pre-oh-my-zsh" ".bashrc" ".luarocks/" ".zen/" ".cache/" "scripts/" ".elfeed/" ".fehbg" "aur-build/" ".rustup/" ".cursor/" ".zshenv" "Pictures/" ".npm/" "learning/" "opt/" "packages/" ".vim/" "media/" "./" ".nimble/" "nvim/" ".xinitrc" ".zsh_history" ".gtkrc-2.0" ".zcompdump-csode-5.9.zwc" "notes/" ".bash_history" "Public/" ".profile" ".cargo/" "tmp-gdkpixbuf/" ".config/" ".vimrc" ".dotfiles/" ".tmux.conf.backup" "dopi/" ".viminfo" ".windsurf/" ".tmux.conf" "Desktop/" ".Xauthority" ".ssh/" "Screenshots/" ".fonts/" ".gitconfig" "org/" ".zcompdump-csode-5.9" ".wget-hsts" ".mozilla/" ".bash_logout" ".local/" ".codeium/" "Programming/" "main/" "../" "Emacs/" ".icons/")
+ ("/home/csode/devenv/dotfiles/emacs/auto-save-list/" (26673 65199 871737 871000) ".saves-191671-csode~" ".saves-16275-csode~" "./" "../")
+
+ ("/home/csode/learning/" (26673 65222 460937 315000) "networking.md" ".git/" "fugitive.md" "./" "a.out" "main.c" "hello.sh" "../")
+
+ ("/home/csode/Programming/xutilc/" (26664 63543 375973 622000) "dist/" "./" "a.out" "build/" "main.c" "Makefile" "../" "src/")
+
+ ("/home/csode/Programming/" (26672 45923 926541 63000) "bit/" "record.nvim/" "engine/" "tower/" "custom_iso/" "xutilc/" "blogsite/" "./" "buffer/" "chess/" "test/" "server/" "rpgmmo/" "../")
+
+ ("/home/csode/devenv/dotfiles/" (26673 23929 506949 485000) "dunst/" "config" ".zshrc" "copyq/" "spicetify/" ".bashrc" "kitty/" "dconf/" "emacs/" "test.sh" "./" "hypr/" "ghostty/" "waybar/" "i3/" ".tmux.conf" "starship.toml" "../" "fish/" "polybar/" "alacritty/")
+
+ ("/home/csode/devenv/" (26673 63454 798931 920000) "script" "screenshot_029.png" "README.md" "img3.png" ".gitignore" ".git/" "./" "screenshot_030.png" "wallpaper/" "packages.json" "packages-lock.json" "img4.png" "../" "dotfiles/")
 )
 
 ;; ----- ido-unc-hosts-cache -----
