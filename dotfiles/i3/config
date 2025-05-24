@@ -157,6 +157,7 @@ for_window [class=".*"] border pixel 3
 
 bindsym $mod+Shift+p workspace $ws8; exec gimp
 bindsym $mod+Shift+y workspace $ws10; exec pavucontrol
+bindsym $mod+Shift+d workspace $ws10; exec discord 
 bindsym $mod+b workspace $ws3; fullscreen enable, exec firefox
 bindsym $mod+Shift+f workspace $ws4;exec dolphin
 bindsym $mod+Shift+u exec pcmanfm
@@ -179,5 +180,6 @@ for_window [class="Virt-viewer"] fullscreen enable, floating enable
 for_window [class="Emacs"] move to workspace $ws2, fullscreen enable
 for_window [class="firefox"] move to workspace $ws3, fullscreen enable
 for_window [class="dolphin"] move to workspace $ws4
+for_window [class="disocrd"] move to workspace $ws4
 for_window [workspace="7"] fullscreen enable
 bindsym $mod+v exec --no-startup-id rofi -show window

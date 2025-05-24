@@ -1,17 +1,21 @@
 #!/usr/bin/env bash
 
 set -euo pipefail
+
 IFS=$'\n\t'
 
 WIDTH=80
 HEIGHT=40
 CONFIG_DIR="$HOME/.config"
 DOTFILES_DIR="$HOME/devenv"
+CSODE_DIR="$HOME/csode"
 PACKAGE_MANAGER="paru"
 PACKAGES_JSON="$DOTFILES_DIR/packages.json"
-PACKAGES_LOCK="$DOTFILES_DIR/packages-lock.json"
 SUDO_PASS=""
 TMP_OUTPUT="/tmp/package-install-output.log"
+GIT_REPO_URL="https://gitlab.com/tadihailukebe/devenv.git"
+TPM_DIR="$HOME/.tmux/plugins/tpm"
+
 main() {
     trap 'cleanup' INT TERM
     dialog_box
@@ -50,60 +54,357 @@ run_with_sudo() {
     printf '%s\n' "$SUDO_PASS" | sudo -S "$@"
 }
 
-validate_package_exists() {
-    local name="$1"
-    if pacman -Si "$name" &>/dev/null; then
-        return 0
-    fi
-    if command -v paru &>/dev/null && paru -Si "$name" &>/dev/null; then
-        return 0
-    fi
-    dialog --title "Validation Failed" --msgbox "Package '$name' not found in any repositories." "$HEIGHT" "$WIDTH"
-    return 1
-}
-
-install_package() {
-    local pkg="$1"
-    if pacman -Qi "$pkg" &>/dev/null; then
-        echo "Package $pkg already installed - skipping" >>"$TMP_OUTPUT"
-        return 0
-    fi
-
-    echo "Installing $pkg..." >>"$TMP_OUTPUT"
-    if command -v "$PACKAGE_MANAGER" &>/dev/null; then
-        printf '%s\n' "$SUDO_PASS" | "$PACKAGE_MANAGER" -S --needed --noconfirm "$pkg" >>"$TMP_OUTPUT" 2>&1
-    else
-        printf '%s\n' "$SUDO_PASS" | sudo -S pacman -S --needed --noconfirm "$pkg" >>"$TMP_OUTPUT" 2>&1
-    fi
-}
-
-install_packages() {
-    local category
-    category=$(dialog --title "Install Category" \
-        --extra-button --extra-label "Go Back" \
-        --cancel-label "Exit" \
-        --menu "Choose category" "$HEIGHT" "$WIDTH" 0 \
-        1 "Base" \
-        2 "Dev" \
-        3 "Utility" \
-        4 "All" \
+install_aur_helper() {
+    local choice
+    choice=$(dialog --title "AUR Helper Selection" \
+        --cancel-label "Skip" \
+        --menu "Choose AUR helper to install" "$HEIGHT" "$WIDTH" 0 \
+        1 "paru" \
+        2 "yay" \
         2>&1 >/dev/tty)
 
     local status=$?
-    [[ $status -eq 3 ]] && show_package_menu && return
-    [[ $status -eq 1 ]] && clear && exit 0
+    [[ $status -eq 1 ]] && return 0
 
-    local pkg_array=()
-    case "$category" in
-    1) mapfile -t pkg_array < <(jq -r '.base[]' "$PACKAGES_JSON") ;;
-    2) mapfile -t pkg_array < <(jq -r '.dev[]' "$PACKAGES_JSON") ;;
-    3) mapfile -t pkg_array < <(jq -r '.utility[]' "$PACKAGES_JSON") ;;
-    4) mapfile -t pkg_array < <(jq -r '.base[], .dev[], .utility[]' "$PACKAGES_JSON" | sort -u) ;;
+    local helper
+    case "$choice" in
+    1) helper="paru" ;;
+    2) helper="yay" ;;
+    *) return 0 ;;
     esac
 
-    [[ ${#pkg_array[@]} -eq 0 ]] && dialog --title "Install Packages" --msgbox "No packages found in selected category." "$HEIGHT" "$WIDTH" && return
+    if command -v "$helper" &>/dev/null; then
+        export PACKAGE_MANAGER="$helper"
+        return 0
+    fi
 
-    run_with_sudo true
+    dialog --title "Installing $helper" --infobox "Installing $helper..." "$HEIGHT" "$WIDTH"
+
+    run_with_sudo pacman -S --needed --noconfirm base-devel git
+
+    local tmp_dir="/tmp/$helper-install"
+    rm -rf "$tmp_dir"
+    git clone "https://aur.archlinux.org/$helper.git" "$tmp_dir"
+    cd "$tmp_dir"
+    makepkg -si --noconfirm
+    cd - >/dev/null
+    rm -rf "$tmp_dir"
+
+    export PACKAGE_MANAGER="$helper"
+}
+
+clone_dotfiles_repo() {
+    if [[ -d "$CSODE_DIR" ]]; then
+        return 0
+    fi
+
+    dialog --title "Cloning Repository" --infobox "Cloning dotfiles repository..." "$HEIGHT" "$WIDTH"
+
+    if ! git clone "$GIT_REPO_URL" "$CSODE_DIR"; then
+        dialog --title "Clone Failed" --msgbox "Failed to clone repository. Please check the URL and your internet connection." "$HEIGHT" "$WIDTH"
+        return 1
+    fi
+}
+
+setup_package_tracking() {
+    local wrapper_script="$HOME/.local/bin/package-tracker"
+    mkdir -p "$(dirname "$wrapper_script")"
+
+    cat >"$wrapper_script" <<'EOF'
+#!/usr/bin/env bash
+
+PACKAGES_JSON="$HOME/devenv/packages.json"
+ORIGINAL_CMD="$1"
+shift
+
+add_to_json() {
+    local pkg="$1"
+    
+    if [[ ! -f "$PACKAGES_JSON" ]]; then
+        mkdir -p "$(dirname "$PACKAGES_JSON")"
+        echo '{"packages":[]}' > "$PACKAGES_JSON"
+    fi
+    
+    if jq -e --arg pkg "$pkg" '.packages[] | select(. == $pkg)' "$PACKAGES_JSON" >/dev/null 2>&1; then
+        return 0
+    fi
+    
+    local updated
+    updated=$(jq --arg pkg "$pkg" '.packages += [$pkg] | .packages |= sort | .packages |= unique' "$PACKAGES_JSON")
+    echo "$updated" > "$PACKAGES_JSON"
+}
+
+remove_from_json() {
+    local pkg="$1"
+    
+    if [[ ! -f "$PACKAGES_JSON" ]]; then
+        return 0
+    fi
+    
+    local updated
+    updated=$(jq --arg pkg "$pkg" '.packages |= map(select(. != $pkg))' "$PACKAGES_JSON")
+    echo "$updated" > "$PACKAGES_JSON"
+}
+
+if [[ "$ORIGINAL_CMD" == "pacman" || "$ORIGINAL_CMD" == "paru" || "$ORIGINAL_CMD" == "yay" ]]; then
+    if [[ "$1" == "-S" || "$1" == "-Sy" || "$1" == "-Su" || "$1" == "-Syu" ]]; then
+        if "$ORIGINAL_CMD" "$@"; then
+            for arg in "$@"; do
+                if [[ ! "$arg" =~ ^- ]] && [[ "$arg" != "-S" ]] && [[ "$arg" != "-Sy" ]] && [[ "$arg" != "-Su" ]] && [[ "$arg" != "-Syu" ]] && [[ "$arg" != "--needed" ]] && [[ "$arg" != "--noconfirm" ]]; then
+                    add_to_json "$arg"
+                fi
+            done
+            exit 0
+        else
+            exit $?
+        fi
+    elif [[ "$1" == "-R"* ]]; then
+        if "$ORIGINAL_CMD" "$@"; then
+            for arg in "$@"; do
+                if [[ ! "$arg" =~ ^- ]] && [[ "$arg" != "-R"* ]]; then
+                    remove_from_json "$arg"
+                fi
+            done
+            exit 0
+        else
+            exit $?
+        fi
+    fi
+fi
+
+"$ORIGINAL_CMD" "$@"
+EOF
+
+    chmod +x "$wrapper_script"
+
+    local sudo_wrapper="$HOME/.local/bin/sudo-tracker"
+    cat >"$sudo_wrapper" <<'EOF'
+#!/usr/bin/env bash
+
+PACKAGES_JSON="$HOME/devenv/packages.json"
+
+add_to_json() {
+    local pkg="$1"
+    
+    if [[ ! -f "$PACKAGES_JSON" ]]; then
+        mkdir -p "$(dirname "$PACKAGES_JSON")"
+        echo '{"packages":[]}' > "$PACKAGES_JSON"
+    fi
+    
+    if jq -e --arg pkg "$pkg" '.packages[] | select(. == $pkg)' "$PACKAGES_JSON" >/dev/null 2>&1; then
+        return 0
+    fi
+    
+    local updated
+    updated=$(jq --arg pkg "$pkg" '.packages += [$pkg] | .packages |= sort | .packages |= unique' "$PACKAGES_JSON")
+    echo "$updated" > "$PACKAGES_JSON"
+}
+
+remove_from_json() {
+    local pkg="$1"
+    
+    if [[ ! -f "$PACKAGES_JSON" ]]; then
+        return 0
+    fi
+    
+    local updated
+    updated=$(jq --arg pkg "$pkg" '.packages |= map(select(. != $pkg))' "$PACKAGES_JSON")
+    echo "$updated" > "$PACKAGES_JSON"
+}
+
+if [[ "$1" == "pacman" || "$1" == "paru" || "$1" == "yay" ]]; then
+    if [[ "$2" == "-S" || "$2" == "-Sy" || "$2" == "-Su" || "$2" == "-Syu" ]]; then
+        if /usr/bin/sudo "$@"; then
+            for arg in "${@:3}"; do
+                if [[ ! "$arg" =~ ^- ]] && [[ "$arg" != "-S" ]] && [[ "$arg" != "-Sy" ]] && [[ "$arg" != "-Su" ]] && [[ "$arg" != "-Syu" ]] && [[ "$arg" != "--needed" ]] && [[ "$arg" != "--noconfirm" ]]; then
+                    add_to_json "$arg"
+                fi
+            done
+            exit 0
+        else
+            exit $?
+        fi
+    elif [[ "$2" == "-R"* ]]; then
+        if /usr/bin/sudo "$@"; then
+            for arg in "${@:3}"; do
+                if [[ ! "$arg" =~ ^- ]] && [[ "$arg" != "-R"* ]]; then
+                    remove_from_json "$arg"
+                fi
+            done
+            exit 0
+        else
+            exit $?
+        fi
+    fi
+fi
+
+/usr/bin/sudo "$@"
+EOF
+
+    chmod +x "$sudo_wrapper"
+
+    for config in "$HOME/.bashrc" "$HOME/.zshrc"; do
+        if [[ -f "$config" ]]; then
+            sed -i '/# Package tracking aliases/,/# End package tracking aliases/d' "$config"
+            cat >>"$config" <<EOF
+
+# Package tracking aliases
+alias pacman='$wrapper_script pacman'
+alias paru='$wrapper_script paru'
+alias yay='$wrapper_script yay'
+alias sudo='$sudo_wrapper'
+# End package tracking aliases
+EOF
+        fi
+    done
+
+    local fish_config="$HOME/.config/fish/config.fish"
+    if [[ -f "$fish_config" ]] || command -v fish &>/dev/null; then
+        mkdir -p "$HOME/.config/fish"
+        if [[ ! -f "$fish_config" ]]; then
+            touch "$fish_config"
+        fi
+        sed -i '/# Package tracking aliases/,/# End package tracking aliases/d' "$fish_config" 2>/dev/null || true
+        cat >>"$fish_config" <<EOF
+
+# Package tracking aliases
+alias pacman='$wrapper_script pacman'
+alias paru='$wrapper_script paru'
+alias yay='$wrapper_script yay'
+alias sudo='$sudo_wrapper'
+# End package tracking aliases
+EOF
+        mkdir -p "$HOME/.config/fish/functions"
+        for cmd in pacman paru yay sudo; do
+            if [[ "$cmd" == "sudo" ]]; then
+                cat >"$HOME/.config/fish/functions/${cmd}.fish" <<EOF
+function $cmd --wraps='$cmd' --description 'sudo with package tracking'
+    $sudo_wrapper \$argv
+end
+EOF
+            else
+                cat >"$HOME/.config/fish/functions/${cmd}.fish" <<EOF
+function $cmd --wraps='$cmd' --description 'Package manager with tracking'
+    $wrapper_script $cmd \$argv
+end
+EOF
+            fi
+        done
+    fi
+
+    if ! echo "$PATH" | grep -q "$HOME/.local/bin"; then
+        for config in "$HOME/.bashrc" "$HOME/.zshrc"; do
+            if [[ -f "$config" ]]; then
+                echo 'export PATH="$HOME/.local/bin:$PATH"' >>"$config"
+            fi
+        done
+    fi
+
+    if [[ -f "$fish_config" ]] || command -v fish &>/dev/null; then
+        if ! grep -q "fish_add_path.*\.local/bin" "$fish_config" 2>/dev/null; then
+            echo 'fish_add_path ~/.local/bin' >>"$fish_config"
+        fi
+    fi
+}
+
+clone_tpm() {
+    if [[ ! -d "$TPM_DIR" ]]; then
+        dialog --title "Cloning TPM" --infobox "Cloning Tmux Plugin Manager..." "$HEIGHT" "$WIDTH"
+        git clone https://github.com/tmux-plugins/tpm "$TPM_DIR"
+    fi
+}
+
+full_setup() {
+    get_sudo_password
+
+    local steps=6
+    local current=0
+
+    current=$((current + 1))
+    dialog --title "Full Setup ($current/$steps)" --infobox "Installing AUR helper..." "$HEIGHT" "$WIDTH"
+    install_aur_helper
+
+    current=$((current + 1))
+    dialog --title "Full Setup ($current/$steps)" --infobox "Cloning dotfiles repository..." "$HEIGHT" "$WIDTH"
+    clone_dotfiles_repo
+
+    current=$((current + 1))
+    dialog --title "Full Setup ($current/$steps)" --infobox "Initializing package configuration..." "$HEIGHT" "$WIDTH"
+    init_packages_silent
+
+    current=$((current + 1))
+    dialog --title "Full Setup ($current/$steps)" --infobox "Installing all packages..." "$HEIGHT" "$WIDTH"
+    install_all_packages_silent
+
+    current=$((current + 1))
+    dialog --title "Full Setup ($current/$steps)" --infobox "Symlinking dotfiles and setting up package tracking..." "$HEIGHT" "$WIDTH"
+    link_dotfiles_silent
+    setup_package_tracking
+    link_starship_config
+
+    current=$((current + 1))
+    dialog --title "Full Setup ($current/$steps)" --infobox "Cloning TPM if needed..." "$HEIGHT" "$WIDTH"
+    clone_tpm
+
+    dialog --title "Full Setup Complete" --msgbox "Full setup completed successfully!\n\nAll packages have been installed and dotfiles symlinked." "$HEIGHT" "$WIDTH"
+}
+
+link_starship_config() {
+    local starship_source="$DOTFILES_DIR/starship.toml"
+    local starship_target="$CONFIG_DIR/starship.toml"
+
+    if [[ -f "$starship_source" ]]; then
+        mkdir -p "$CONFIG_DIR"
+        [[ -e "$starship_target" ]] && rm -rf "$starship_target"
+        ln -s "$starship_source" "$starship_target"
+    fi
+}
+
+init_packages_silent() {
+    mkdir -p "$DOTFILES_DIR"
+
+    if [[ ! -f "$PACKAGES_JSON" ]]; then
+        cat >"$PACKAGES_JSON" <<EOF
+{
+  "packages": [
+    "go",
+    "clang",
+    "llvm",
+    "cmake",
+    "python",
+    "nodejs",
+    "feh",
+    "ttf-sourcecodepro-nerd",
+    "ttf-ubuntu-mono-nerd",
+    "ttf-jetbrains-mono-nerd",
+    "thunar",
+    "htop",
+    "polybar",
+    "fzf",
+    "firefox",
+    "openssh",
+    "alacritty",
+    "fish",
+    "git",
+    "neovim",
+    "emacs",
+    "spotify",
+    "discord",
+    "dialog",
+    "jq",
+    "tmux",
+    "ripgrep"
+  ]
+}
+EOF
+    fi
+}
+
+install_all_packages_silent() {
+    local pkg_array=()
+    mapfile -t pkg_array < <(jq -r '.packages[]' "$PACKAGES_JSON" | sort -u)
+
+    [[ ${#pkg_array[@]} -eq 0 ]] && return
 
     local new_installed=()
     for pkg in "${pkg_array[@]}"; do
@@ -112,13 +413,7 @@ install_packages() {
         fi
     done
 
-    if [[ ${#new_installed[@]} -eq 0 ]]; then
-        dialog --title "Install Packages" --msgbox "All packages already installed." "$HEIGHT" "$WIDTH"
-        return
-    fi
-
-    rm -f "$TMP_OUTPUT"
-    echo "Starting package installation..." >"$TMP_OUTPUT"
+    [[ ${#new_installed[@]} -eq 0 ]] && return
 
     (
         total=${#new_installed[@]}
@@ -138,203 +433,139 @@ install_packages() {
             echo "XXX"
             echo "$progress"
 
-            install_package "$pkg"
+            if command -v "$PACKAGE_MANAGER" &>/dev/null; then
+                printf '%s\n' "$SUDO_PASS" | "$PACKAGE_MANAGER" -S --needed --noconfirm "$pkg" &>/dev/null
+            else
+                printf '%s\n' "$SUDO_PASS" | sudo -S pacman -S --needed --noconfirm "$pkg" &>/dev/null
+            fi
+        done
+
+        echo "100"
+    ) | dialog --title "Installing Packages" --gauge "Please wait..." "$HEIGHT" "$WIDTH" 0
+}
+
+link_dotfiles_silent() {
+    mkdir -p "$CONFIG_DIR"
+    for item in "$DOTFILES_DIR/dotfiles"/.* "$DOTFILES_DIR/dotfiles"/*; do
+        [[ -e "$item" && ! "$(basename "$item")" =~ ^\.{1,2}$ ]] || continue
+        local filename
+        filename=$(basename "$item")
+        local target="$CONFIG_DIR/$filename"
+        [[ -e "$target" ]] && rm -rf "$target"
+        ln -s "$item" "$target"
+    done
+}
+
+validate_package_exists() {
+    local name="$1"
+    if pacman -Si "$name" &>/dev/null; then
+        return 0
+    fi
+    if command -v paru &>/dev/null && paru -Si "$name" &>/dev/null; then
+        return 0
+    fi
+    dialog --title "Validation Failed" --msgbox "Package '$name' not found in any repositories." "$HEIGHT" "$WIDTH"
+    return 1
+}
+
+install_packages() {
+    local pkg_array=()
+    mapfile -t pkg_array < <(jq -r '.packages[]' "$PACKAGES_JSON" | sort -u)
+
+    [[ ${#pkg_array[@]} -eq 0 ]] && dialog --title "Install Packages" --msgbox "No packages found in packages.json." "$HEIGHT" "$WIDTH" && return
+
+    run_with_sudo true
+
+    local new_installed=()
+    for pkg in "${pkg_array[@]}"; do
+        if ! pacman -Qi "$pkg" &>/dev/null; then
+            new_installed+=("$pkg")
+        fi
+    done
+
+    if [[ ${#new_installed[@]} -eq 0 ]]; then
+        dialog --title "Install Packages" --msgbox "All packages already installed." "$HEIGHT" "$WIDTH"
+        return
+    fi
+
+    (
+        total=${#new_installed[@]}
+        current=0
+
+        echo "XXX"
+        echo "Preparing package installation..."
+        echo "XXX"
+        echo "0"
+
+        for pkg in "${new_installed[@]}"; do
+            current=$((current + 1))
+            progress=$((current * 100 / total))
+
+            echo "XXX"
+            echo "Installing $pkg ($current/$total)..."
+            echo "XXX"
+            echo "$progress"
+
+            if command -v "$PACKAGE_MANAGER" &>/dev/null; then
+                printf '%s\n' "$SUDO_PASS" | "$PACKAGE_MANAGER" -S --needed --noconfirm "$pkg" &>/dev/null
+            else
+                printf '%s\n' "$SUDO_PASS" | sudo -S pacman -S --needed --noconfirm "$pkg" &>/dev/null
+            fi
         done
 
         echo "100"
     ) | dialog --title "Installing Packages" --gauge "Please wait..." "$HEIGHT" "$WIDTH" 0
 
-    dialog --title "Installation Log" --textbox "$TMP_OUTPUT" "$HEIGHT" "$WIDTH"
     dialog --title "Installation Complete" --msgbox "Package installation process finished." "$HEIGHT" "$WIDTH"
 }
-show_main_menu() {
-    local choice
-    choice=$(dialog --title "Linux system" \
-        --cancel-label "Exit" \
-        --menu "Choose an option" "$HEIGHT" "$WIDTH" 0 \
-        1 "Packages" \
-        2 "Symlink dotfiles" \
-        3 "Initialize packages.json" \
-        2>&1 >/dev/tty)
-    local status=$?
-    if [[ $status -eq 1 ]]; then
-        clear
-        exit 0
-    fi
-    case "$choice" in
-    1) show_package_menu ;;
-    2) link_dotfiles ;;
-    3) init_packages ;;
-    esac
-}
 
-show_package_menu() {
-    local option
-    option=$(dialog --title "Package Menu" \
-        --extra-button --extra-label "Go Back" \
-        --cancel-label "Exit" \
-        --menu "Choose a package operation" "$HEIGHT" "$WIDTH" 0 \
-        1 "Add packages" \
-        2 "Install packages" \
-        3 "Delete packages" \
-        4 "Update lockfile" \
-        5 "Clean system" \
-        2>&1 >/dev/tty)
-    local status=$?
-    if [[ $status -eq 3 ]]; then
-        show_main_menu
+remove_packages() {
+    local pkg_array=()
+    mapfile -t pkg_array < <(jq -r '.packages[]' "$PACKAGES_JSON" | sort -u)
+
+    if [[ ${#pkg_array[@]} -eq 0 ]]; then
+        dialog --title "Remove Packages" --msgbox "No packages found in packages.json." "$HEIGHT" "$WIDTH"
         return
     fi
-    if [[ $status -eq 1 ]]; then
-        clear
-        exit 0
-    fi
-    case "$option" in
-    1) add_package ;;
-    2) install_packages ;;
-    3) delete_package ;;
-    4) update_lock ;;
-    5) clean_packages ;;
-    esac
-}
 
-add_package() {
-    while true; do
-        local package
-        package=$(dialog --title "Add Package" \
-            --extra-button --extra-label "Go Back" \
-            --inputbox "Enter package name" "$HEIGHT" "$WIDTH" --stdout)
-        local status=$?
-        [[ $status -eq 3 ]] && show_package_menu && return
-        [[ $status -eq 1 ]] && clear && exit 0
-        [[ -z "${package// /}" ]] && continue
-        if ! validate_package_exists "$package"; then continue; fi
-        local data
-        data=$(jq '.' "$PACKAGES_JSON" 2>/dev/null || printf '{}')
-        local category
-        category=$(dialog --title "Choose Category" \
-            --extra-button --extra-label "Go Back" \
-            --cancel-label "Exit" \
-            --menu "Select a category" "$HEIGHT" "$WIDTH" 0 \
-            1 "Base" \
-            2 "Dev" \
-            3 "Utility" \
-            2>&1 >/dev/tty)
-        local cat_status=$?
-        [[ $cat_status -eq 3 ]] && show_package_menu && return
-        [[ $cat_status -eq 1 ]] && clear && exit 0
-        local updated
-        case "$category" in
-        1) updated=$(jq --arg var "$package" '.base += [$var]' <<<"$data") ;;
-        2) updated=$(jq --arg var "$package" '.dev += [$var]' <<<"$data") ;;
-        3) updated=$(jq --arg var "$package" '.utility += [$var]' <<<"$data") ;;
-        esac
-        printf '%s\n' "$updated" >"$PACKAGES_JSON"
-        dialog --title "Package Added" --msgbox "Package '$package' added successfully." "$HEIGHT" "$WIDTH"
-    done
-}
-
-delete_package() {
-    local data
-    data=$(jq '.' "$PACKAGES_LOCK")
-    local category
-    category=$(dialog --title "Delete Package - Select Category" \
-        --cancel-label "Exit" \
-        --menu "Choose category to delete from" "$HEIGHT" "$WIDTH" 0 \
-        1 "Base" \
-        2 "Dev" \
-        3 "Utility" \
-        2>&1 >/dev/tty)
-    [[ $? -eq 1 ]] && clear && exit 0
-    local key pkglist
-    case "$category" in
-    1) key="base" ;;
-    2) key="dev" ;;
-    3) key="utility" ;;
-    esac
-    mapfile -t pkglist < <(jq -r ".${key}[]" <<<"$data")
-    if [[ ${#pkglist[@]} -eq 0 ]]; then
-        dialog --title "Delete Package" --msgbox "No packages in $key to delete" "$HEIGHT" "$WIDTH"
-        return
-    fi
     local dialog_args=()
-    for pkg in "${pkglist[@]}"; do
+    for pkg in "${pkg_array[@]}"; do
         dialog_args+=("$pkg" "$pkg")
     done
+
     local del_pkg
-    del_pkg=$(dialog --title "Delete Package from $key" \
+    del_pkg=$(dialog --title "Remove Package" \
         --cancel-label "Cancel" \
-        --menu "Select package to delete" "$HEIGHT" "$WIDTH" 0 \
+        --menu "Select package to remove" "$HEIGHT" "$WIDTH" 0 \
         "${dialog_args[@]}" \
         2>&1 >/dev/tty)
     [[ $? -ne 0 ]] && return
-    local updated
-    updated=$(jq --arg p "$del_pkg" ".${key} |= map(select(. != \$p))" <<<"$data")
-    printf '%s\n' "$updated" >"$PACKAGES_LOCK"
-    dialog --title "Package Removed" --msgbox "'$del_pkg' removed from $key in packages-lock.json" "$HEIGHT" "$WIDTH"
-}
-update_lock() {
-    if [[ ! -f "$PACKAGES_JSON" ]]; then
-        dialog --title "Update Lock" --msgbox "packages.json not found" "$HEIGHT" "$WIDTH"
-        return
-    fi
-    cp "$PACKAGES_JSON" "$PACKAGES_LOCK"
-    dialog --title "Update Lock" --msgbox "Lock file updated successfully" "$HEIGHT" "$WIDTH"
-}
-clean_packages() {
-    if [[ ! -f "$PACKAGES_JSON" || ! -f "$PACKAGES_LOCK" ]]; then
-        dialog --title "Clean Packages" --msgbox "packages.json or packages-lock.json not found!" "$HEIGHT" "$WIDTH"
-        return
-    fi
-
-    local installed declared to_remove
-    declared=$(jq -r '.[] | .[]' "$PACKAGES_JSON" | sort -u)
-    installed=$(jq -r '.[] | .[]' "$PACKAGES_LOCK" | sort -u)
-
-    to_remove=$(comm -23 <(echo "$declared") <(echo "$installed"))
-
-    if [[ -z "$to_remove" ]]; then
-        dialog --title "Clean Packages" --msgbox "No unused packages to remove." "$HEIGHT" "$WIDTH"
-        return
-    fi
-
-    dialog --title "Confirm Removal" --yesno "These packages are in packages.json but not in lockfile:\n\n$to_remove\n\nRemove them?" "$HEIGHT" "$WIDTH"
-    local response=$?
-    if [[ $response -ne 0 ]]; then
-        return
-    fi
 
     run_with_sudo true
 
-    rm -f "$TMP_OUTPUT"
     (
-        total=$(echo "$to_remove" | wc -l)
-        current=0
-
         echo "XXX"
-        echo "Removing unused packages..."
+        echo "Removing package $del_pkg..."
         echo "XXX"
         echo "0"
 
-        while IFS= read -r pkg; do
-            current=$((current + 1))
-            progress=$((current * 100 / total))
-            echo "XXX"
-            echo "Uninstalling $pkg ($current/$total)..."
-            echo "XXX"
-            echo "$progress"
-
-            if ! run_with_sudo pacman -Rns --noconfirm "$pkg" >>"$TMP_OUTPUT" 2>&1; then
-                echo "XXX"
-                echo "Failed to uninstall $pkg"
-                echo "XXX"
-                continue
-            fi
-        done <<<"$to_remove"
+        if command -v "$PACKAGE_MANAGER" &>/dev/null; then
+            printf '%s\n' "$SUDO_PASS" | "$PACKAGE_MANAGER" -Rns --noconfirm "$del_pkg" &>/dev/null
+        else
+            printf '%s\n' "$SUDO_PASS" | sudo -S pacman -Rns --noconfirm "$del_pkg" &>/dev/null
+        fi
 
         echo "100"
-    ) | dialog --title "Cleaning Packages" --gauge "Please wait..." "$HEIGHT" "$WIDTH" 0
+    ) | dialog --title "Removing Package" --gauge "Please wait..." "$HEIGHT" "$WIDTH" 0
 
+    local updated
+    updated=$(jq --arg pkg "$del_pkg" '.packages |= map(select(. != $pkg))' "$PACKAGES_JSON")
+    echo "$updated" >"$PACKAGES_JSON"
+
+    dialog --title "Package Removed" --msgbox "'$del_pkg' removed from system and packages.json" "$HEIGHT" "$WIDTH"
+}
+
+clean_packages() {
     local orphaned
     orphaned=$(pacman -Qdtq 2>/dev/null || true)
     if [[ -n "$orphaned" ]]; then
@@ -356,39 +587,6 @@ clean_packages() {
     dialog --title "Clean Complete" --msgbox "All cleanup steps completed." "$HEIGHT" "$WIDTH"
 }
 
-init_packages() {
-    mkdir -p "$DOTFILES_DIR"
-
-    local messages=()
-
-    if [[ -f "$PACKAGES_JSON" ]]; then
-        messages+=("packages.json already exists")
-    else
-        cat >"$PACKAGES_JSON" <<EOF
-{
-  "base": ["git", "neovim", "tmux"],
-  "dev": ["python", "nodejs", "rustup"],
-  "utility": ["htop", "fzf", "ripgrep"]
-}
-EOF
-        messages+=("Created packages.json")
-    fi
-
-    if [[ -f "$PACKAGES_LOCK" ]]; then
-        messages+=("packages-lock.json already exists")
-    else
-        if [[ -f "$PACKAGES_JSON" ]]; then
-            cp "$PACKAGES_JSON" "$PACKAGES_LOCK"
-            messages+=("Created packages-lock.json from packages.json")
-        else
-            messages+=("Could not create lockfile - packages.json missing")
-        fi
-    fi
-
-    dialog --title "Initialize Packages" \
-        --msgbox "$(printf '%s\n' "${messages[@]}")" \
-        "$HEIGHT" "$WIDTH"
-}
 link_dotfiles() {
     mkdir -p "$CONFIG_DIR"
     local output
@@ -411,6 +609,36 @@ dialog_box() {
     while true; do
         if ! show_main_menu; then break; fi
     done
+}
+
+show_main_menu() {
+    local choice
+    choice=$(dialog --title "Linux system" \
+        --cancel-label "Exit" \
+        --menu "Choose an option" "$HEIGHT" "$WIDTH" 0 \
+        1 "Full Setup" \
+        2 "Install packages" \
+        3 "Remove packages" \
+        4 "Clean system" \
+        5 "Symlink dotfiles" \
+        6 "Symlink starship config" \
+        7 "Clone TPM" \
+        2>&1 >/dev/tty)
+
+    local status=$?
+    if [[ $status -eq 1 ]]; then
+        clear
+        exit 0
+    fi
+    case "$choice" in
+    1) full_setup ;;
+    2) install_packages ;;
+    3) remove_packages ;;
+    4) clean_packages ;;
+    5) link_dotfiles ;;
+    6) link_starship_config ;;
+    7) clone_tpm ;;
+    esac
 }
 
 main

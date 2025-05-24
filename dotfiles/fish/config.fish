@@ -33,3 +33,16 @@ if status is-interactive
     and test (tty) = "/dev/tty1"
     exec startx
 end
+
+fish_add_path ~/.local/bin
+
+
+
+
+
+# Package tracking aliases
+alias pacman='/home/csode/.local/bin/package-tracker pacman'
+alias paru='/home/csode/.local/bin/package-tracker paru'
+alias yay='/home/csode/.local/bin/package-tracker yay'
+alias sudo='/home/csode/.local/bin/sudo-tracker'
+# End package tracking aliases
