@@ -28,4 +28,8 @@ alias shell_reload 'source ~/.config/fish/config.fish'
 alias tmux_reload 'tmux source-file ~/.tmux.conf'
 alias DEV 'cd ~/devenv'
 alias luamake '/home/csode/packages/lua-language-server/3rd/luamake/luamake'
-
+if status is-interactive
+    and test -z "$DISPLAY"
+    and test (tty) = "/dev/tty1"
+    exec startx
+end
