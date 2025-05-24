@@ -1,9 +1,6 @@
 starship init fish | source
-set -x XDG_DATA_DIRS /usr/local/share/:/usr/share/
-set -x GSETTINGS_SCHEMA_DIR /usr/share/glib-2.0/schemas
 set -x PATH $HOME/.emacs.d/bin $PATH
 set -x PATH $HOME/.config/emacs/bin $PATH
-set -x DOOMDIR $HOME/.config/doom
 set -x PATH $HOME/.nimble/bin $PATH
 set -x PATH /home/csode/packages/nim-2.2.4/bin $PATH
 set -x GCM_CREDENTIAL_STORE cache
@@ -35,11 +32,6 @@ if status is-interactive
 end
 
 fish_add_path ~/.local/bin
-
-
-
-
-
 # Package tracking aliases
 alias pacman='/home/csode/.local/bin/package-tracker pacman'
 alias paru='/home/csode/.local/bin/package-tracker paru'

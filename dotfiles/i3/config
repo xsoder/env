@@ -182,4 +182,3 @@ for_window [class="firefox"] move to workspace $ws3, fullscreen enable
 for_window [class="dolphin"] move to workspace $ws4
 for_window [class="disocrd"] move to workspace $ws4
 for_window [workspace="7"] fullscreen enable
-bindsym $mod+v exec --no-startup-id rofi -show window
