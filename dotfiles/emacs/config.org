@@ -358,15 +358,15 @@ Defining the various fonts that Emacs will use.
 ** Setting the Font Face
 #+begin_src emacs-lisp
 (set-face-attribute 'default nil
-  :font "Iosevka"
+  :font "JetBrains Mono"
   :height 110
   :weight 'medium)
 (set-face-attribute 'variable-pitch nil
-  :font "Iosevka"
+  :font "Ubuntu"
   :height 120
   :weight 'medium)
 (set-face-attribute 'fixed-pitch nil
-  :font "Iosevka"
+  :font "JetBrains Mono"
   :height 110
   :weight 'medium)
 ;; Makes commented text and keywords italics.

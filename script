@@ -8,16 +8,48 @@ WIDTH=80
 HEIGHT=40
 CONFIG_DIR="$HOME/.config"
 DOTFILES_DIR="$HOME/devenv"
-CSODE_DIR="$HOME/csode"
+NVIM_DIR="$HOME/nvim"
 PACKAGE_MANAGER="paru"
 PACKAGES_JSON="$DOTFILES_DIR/packages.json"
 SUDO_PASS=""
 TMP_OUTPUT="/tmp/package-install-output.log"
-GIT_REPO_URL="https://gitlab.com/tadihailukebe/devenv.git"
+NVIM_URL="https://github.com/xsoder/nvim.git"
 TPM_DIR="$HOME/.tmux/plugins/tpm"
+SCRIPT_NAME="$DOTFILES_DIR/script"
 
 main() {
     trap 'cleanup' INT TERM
+    
+    # Check if dialog is installed
+    if ! command -v dialog &>/dev/null; then
+        echo "Installing dialog..."
+        if command -v pacman &>/dev/null; then
+            sudo pacman -S --needed --noconfirm dialog
+        elif command -v apt &>/dev/null; then
+            sudo apt update && sudo apt install -y dialog
+        elif command -v dnf &>/dev/null; then
+            sudo dnf install -y dialog
+        else
+            echo "Error: Cannot install dialog. Please install it manually."
+            exit 1
+        fi
+    fi
+    
+    # Check if jq is installed
+    if ! command -v jq &>/dev/null; then
+        echo "Installing jq..."
+        if command -v pacman &>/dev/null; then
+            sudo pacman -S --needed --noconfirm jq
+        elif command -v apt &>/dev/null; then
+            sudo apt update && sudo apt install -y jq
+        elif command -v dnf &>/dev/null; then
+            sudo dnf install -y jq
+        else
+            echo "Error: Cannot install jq. Please install it manually."
+            exit 1
+        fi
+    fi
+    
     dialog_box
     clear
     exit 0
@@ -91,19 +123,6 @@ install_aur_helper() {
     rm -rf "$tmp_dir"
 
     export PACKAGE_MANAGER="$helper"
-}
-
-clone_dotfiles_repo() {
-    if [[ -d "$CSODE_DIR" ]]; then
-        return 0
-    fi
-
-    dialog --title "Cloning Repository" --infobox "Cloning dotfiles repository..." "$HEIGHT" "$WIDTH"
-
-    if ! git clone "$GIT_REPO_URL" "$CSODE_DIR"; then
-        dialog --title "Clone Failed" --msgbox "Failed to clone repository. Please check the URL and your internet connection." "$HEIGHT" "$WIDTH"
-        return 1
-    fi
 }
 
 setup_package_tracking() {
@@ -243,9 +262,12 @@ EOF
 
     chmod +x "$sudo_wrapper"
 
+    # Setup shell aliases with better handling
     for config in "$HOME/.bashrc" "$HOME/.zshrc"; do
         if [[ -f "$config" ]]; then
+            # Remove existing aliases
             sed -i '/# Package tracking aliases/,/# End package tracking aliases/d' "$config"
+            # Add new aliases
             cat >>"$config" <<EOF
 
 # Package tracking aliases
@@ -258,6 +280,7 @@ EOF
         fi
     done
 
+    # Setup fish shell if present
     local fish_config="$HOME/.config/fish/config.fish"
     if [[ -f "$fish_config" ]] || command -v fish &>/dev/null; then
         mkdir -p "$HOME/.config/fish"
@@ -274,6 +297,7 @@ alias yay='$wrapper_script yay'
 alias sudo='$sudo_wrapper'
 # End package tracking aliases
 EOF
+        
         mkdir -p "$HOME/.config/fish/functions"
         for cmd in pacman paru yay sudo; do
             if [[ "$cmd" == "sudo" ]]; then
@@ -292,6 +316,7 @@ EOF
         done
     fi
 
+    # Add ~/.local/bin to PATH if not already present
     if ! echo "$PATH" | grep -q "$HOME/.local/bin"; then
         for config in "$HOME/.bashrc" "$HOME/.zshrc"; do
             if [[ -f "$config" ]]; then
@@ -307,9 +332,39 @@ EOF
     fi
 }
 
+force_link() {
+    local source="$1"
+    local target="$2"
+    
+    # Remove existing target (file, directory, or symlink)
+    if [[ -e "$target" || -L "$target" ]]; then
+        rm -rf "$target"
+    fi
+    
+    # Create target directory if it doesn't exist
+    mkdir -p "$(dirname "$target")"
+    
+    # Create the symlink
+    ln -sf "$source" "$target"
+}
+
+edit_dev() {
+    nvim "$SCRIPT_NAME"
+}
+clone_nvim() {
+    if [[ ! -d "$NVIM_DIR" ]]; then
+        dialog --title "Cloning Nvim" --infobox "Cloning Neovim config..." "$HEIGHT" "$WIDTH"
+        git clone "$NVIM_URL" "$NVIM_DIR"
+    fi
+    
+    # Force link neovim config
+    force_link "$NVIM_DIR" "$HOME/.config/nvim"
+}
+
 clone_tpm() {
     if [[ ! -d "$TPM_DIR" ]]; then
         dialog --title "Cloning TPM" --infobox "Cloning Tmux Plugin Manager..." "$HEIGHT" "$WIDTH"
+        mkdir -p "$(dirname "$TPM_DIR")"
         git clone https://github.com/tmux-plugins/tpm "$TPM_DIR"
     fi
 }
@@ -317,16 +372,16 @@ clone_tpm() {
 full_setup() {
     get_sudo_password
 
-    local steps=6
+    local steps=7
     local current=0
+
+    current=$((current + 1))
+    dialog --title "Full Setup ($current/$steps)" --infobox "Installing essential packages..." "$HEIGHT" "$WIDTH"
+    install_essential_packages
 
     current=$((current + 1))
     dialog --title "Full Setup ($current/$steps)" --infobox "Installing AUR helper..." "$HEIGHT" "$WIDTH"
     install_aur_helper
-
-    current=$((current + 1))
-    dialog --title "Full Setup ($current/$steps)" --infobox "Cloning dotfiles repository..." "$HEIGHT" "$WIDTH"
-    clone_dotfiles_repo
 
     current=$((current + 1))
     dialog --title "Full Setup ($current/$steps)" --infobox "Initializing package configuration..." "$HEIGHT" "$WIDTH"
@@ -337,27 +392,74 @@ full_setup() {
     install_all_packages_silent
 
     current=$((current + 1))
-    dialog --title "Full Setup ($current/$steps)" --infobox "Symlinking dotfiles and setting up package tracking..." "$HEIGHT" "$WIDTH"
-    link_dotfiles_silent
-    setup_package_tracking
-    link_starship_config
+    dialog --title "Full Setup ($current/$steps)" --infobox "Installing neovim config..." "$HEIGHT" "$WIDTH"
+    clone_nvim
 
     current=$((current + 1))
-    dialog --title "Full Setup ($current/$steps)" --infobox "Cloning TPM if needed..." "$HEIGHT" "$WIDTH"
+    dialog --title "Full Setup ($current/$steps)" --infobox "Setting up dotfiles and package tracking..." "$HEIGHT" "$WIDTH"
+    link_dotfiles_silent
+    setup_package_tracking
+    link_hidden_config
+
+    current=$((current + 1))
+    dialog --title "Full Setup ($current/$steps)" --infobox "Installing TPM..." "$HEIGHT" "$WIDTH"
     clone_tpm
 
-    dialog --title "Full Setup Complete" --msgbox "Full setup completed successfully!\n\nAll packages have been installed and dotfiles symlinked." "$HEIGHT" "$WIDTH"
+    dialog --title "Full Setup Complete" --msgbox "Full setup completed successfully!\n\nAll packages have been installed and dotfiles symlinked.\n\nPlease restart your shell or source your shell config to apply changes." "$HEIGHT" "$WIDTH"
 }
 
-link_starship_config() {
-    local starship_source="$DOTFILES_DIR/starship.toml"
-    local starship_target="$CONFIG_DIR/starship.toml"
+install_essential_packages() {
+    local essential_packages=("git" "dialog" "jq" "base-devel")
+    
+    for pkg in "${essential_packages[@]}"; do
+        if ! pacman -Qi "$pkg" &>/dev/null; then
+            run_with_sudo pacman -S --needed --noconfirm "$pkg"
+        fi
+    done
+}
 
-    if [[ -f "$starship_source" ]]; then
-        mkdir -p "$CONFIG_DIR"
-        [[ -e "$starship_target" ]] && rm -rf "$starship_target"
-        ln -s "$starship_source" "$starship_target"
+link_hidden_config() {
+    local configs=(
+        "$DOTFILES_DIR/starship.toml:$CONFIG_DIR/starship.toml"
+        "$DOTFILES_DIR/.tmux.conf:$HOME/.tmux.conf"
+        "$DOTFILES_DIR/.bashrc:$HOME/.bashrc"
+        "$DOTFILES_DIR/.zshrc:$HOME/.zshrc"
+        "$DOTFILES_DIR/.gitconfig:$HOME/.gitconfig"
+    )
+
+    local linked_files=()
+    local missing_files=()
+
+    for config in "${configs[@]}"; do
+        local source="${config%:*}"
+        local target="${config#*:}"
+        
+        if [[ -f "$source" ]]; then
+            force_link "$source" "$target"
+            linked_files+=("✓ $(basename "$source") -> $target")
+        else
+            missing_files+=("✗ $(basename "$source") (not found at $source)")
+        fi
+    done
+
+    # Show results
+    local result_msg="Hidden Config Files Linking Results:\n\n"
+    
+    if [[ ${#linked_files[@]} -gt 0 ]]; then
+        result_msg+="Successfully linked:\n"
+        for file in "${linked_files[@]}"; do
+            result_msg+="$file\n"
+        done
     fi
+    
+    if [[ ${#missing_files[@]} -gt 0 ]]; then
+        result_msg+="\nMissing files (skipped):\n"
+        for file in "${missing_files[@]}"; do
+            result_msg+="$file\n"
+        done
+    fi
+
+    dialog --title "Hidden Config Linking" --msgbox "$result_msg" "$HEIGHT" "$WIDTH"
 }
 
 init_packages_silent() {
@@ -373,12 +475,14 @@ init_packages_silent() {
     "cmake",
     "python",
     "nodejs",
+    "npm",
     "feh",
     "ttf-sourcecodepro-nerd",
     "ttf-ubuntu-mono-nerd",
     "ttf-jetbrains-mono-nerd",
     "thunar",
     "htop",
+    "btop",
     "polybar",
     "fzf",
     "firefox",
@@ -393,7 +497,18 @@ init_packages_silent() {
     "dialog",
     "jq",
     "tmux",
-    "ripgrep"
+    "ripgrep",
+    "fd",
+    "exa",
+    "bat",
+    "starship",
+    "zsh",
+    "curl",
+    "wget",
+    "unzip",
+    "zip",
+    "tree",
+    "vim"
   ]
 }
 EOF
@@ -434,9 +549,17 @@ install_all_packages_silent() {
             echo "$progress"
 
             if command -v "$PACKAGE_MANAGER" &>/dev/null; then
-                printf '%s\n' "$SUDO_PASS" | "$PACKAGE_MANAGER" -S --needed --noconfirm "$pkg" &>/dev/null
+                if [[ -n "${SUDO_PASS:-}" ]]; then
+                    printf '%s\n' "$SUDO_PASS" | "$PACKAGE_MANAGER" -S --needed --noconfirm "$pkg" &>>"$TMP_OUTPUT" || true
+                else
+                    "$PACKAGE_MANAGER" -S --needed --noconfirm "$pkg" &>>"$TMP_OUTPUT" || true
+                fi
             else
-                printf '%s\n' "$SUDO_PASS" | sudo -S pacman -S --needed --noconfirm "$pkg" &>/dev/null
+                if [[ -n "${SUDO_PASS:-}" ]]; then
+                    printf '%s\n' "$SUDO_PASS" | sudo -S pacman -S --needed --noconfirm "$pkg" &>>"$TMP_OUTPUT" || true
+                else
+                    sudo pacman -S --needed --noconfirm "$pkg" &>>"$TMP_OUTPUT" || true
+                fi
             fi
         done
 
@@ -445,14 +568,18 @@ install_all_packages_silent() {
 }
 
 link_dotfiles_silent() {
+    if [[ ! -d "$DOTFILES_DIR/dotfiles" ]]; then
+        dialog --title "Warning" --msgbox "Dotfiles directory not found at $DOTFILES_DIR/dotfiles" "$HEIGHT" "$WIDTH"
+        return
+    fi
+
     mkdir -p "$CONFIG_DIR"
     for item in "$DOTFILES_DIR/dotfiles"/.* "$DOTFILES_DIR/dotfiles"/*; do
         [[ -e "$item" && ! "$(basename "$item")" =~ ^\.{1,2}$ ]] || continue
         local filename
         filename=$(basename "$item")
         local target="$CONFIG_DIR/$filename"
-        [[ -e "$target" ]] && rm -rf "$target"
-        ln -s "$item" "$target"
+        force_link "$item" "$target"
     done
 }
 
@@ -461,11 +588,27 @@ validate_package_exists() {
     if pacman -Si "$name" &>/dev/null; then
         return 0
     fi
-    if command -v paru &>/dev/null && paru -Si "$name" &>/dev/null; then
+    if command -v "$PACKAGE_MANAGER" &>/dev/null && "$PACKAGE_MANAGER" -Si "$name" &>/dev/null; then
         return 0
     fi
     dialog --title "Validation Failed" --msgbox "Package '$name' not found in any repositories." "$HEIGHT" "$WIDTH"
     return 1
+}
+
+add_package() {
+    local pkg_name
+    pkg_name=$(dialog --title "Add Package" --inputbox "Enter package name:" "$HEIGHT" "$WIDTH" 2>&1 >/dev/tty)
+    [[ $? -ne 0 || -z "$pkg_name" ]] && return
+
+    if ! validate_package_exists "$pkg_name"; then
+        return
+    fi
+
+    local updated
+    updated=$(jq --arg pkg "$pkg_name" '.packages += [$pkg] | .packages |= sort | .packages |= unique' "$PACKAGES_JSON")
+    echo "$updated" > "$PACKAGES_JSON"
+
+    dialog --title "Package Added" --msgbox "'$pkg_name' added to packages.json" "$HEIGHT" "$WIDTH"
 }
 
 install_packages() {
@@ -507,16 +650,16 @@ install_packages() {
             echo "$progress"
 
             if command -v "$PACKAGE_MANAGER" &>/dev/null; then
-                printf '%s\n' "$SUDO_PASS" | "$PACKAGE_MANAGER" -S --needed --noconfirm "$pkg" &>/dev/null
+                printf '%s\n' "$SUDO_PASS" | "$PACKAGE_MANAGER" -S --needed --noconfirm "$pkg" &>>"$TMP_OUTPUT" || true
             else
-                printf '%s\n' "$SUDO_PASS" | sudo -S pacman -S --needed --noconfirm "$pkg" &>/dev/null
+                printf '%s\n' "$SUDO_PASS" | sudo -S pacman -S --needed --noconfirm "$pkg" &>>"$TMP_OUTPUT" || true
             fi
         done
 
         echo "100"
     ) | dialog --title "Installing Packages" --gauge "Please wait..." "$HEIGHT" "$WIDTH" 0
 
-    dialog --title "Installation Complete" --msgbox "Package installation process finished." "$HEIGHT" "$WIDTH"
+    dialog --title "Installation Complete" --msgbox "Package installation process finished.\n\nCheck $TMP_OUTPUT for detailed logs." "$HEIGHT" "$WIDTH"
 }
 
 remove_packages() {
@@ -547,12 +690,12 @@ remove_packages() {
         echo "XXX"
         echo "Removing package $del_pkg..."
         echo "XXX"
-        echo "0"
+        echo "50"
 
         if command -v "$PACKAGE_MANAGER" &>/dev/null; then
-            printf '%s\n' "$SUDO_PASS" | "$PACKAGE_MANAGER" -Rns --noconfirm "$del_pkg" &>/dev/null
+            printf '%s\n' "$SUDO_PASS" | "$PACKAGE_MANAGER" -Rns --noconfirm "$del_pkg" &>>"$TMP_OUTPUT" || true
         else
-            printf '%s\n' "$SUDO_PASS" | sudo -S pacman -Rns --noconfirm "$del_pkg" &>/dev/null
+            printf '%s\n' "$SUDO_PASS" | sudo -S pacman -Rns --noconfirm "$del_pkg" &>>"$TMP_OUTPUT" || true
         fi
 
         echo "100"
@@ -566,21 +709,25 @@ remove_packages() {
 }
 
 clean_packages() {
+    run_with_sudo true
+
+    # Clean orphaned packages
     local orphaned
     orphaned=$(pacman -Qdtq 2>/dev/null || true)
     if [[ -n "$orphaned" ]]; then
         dialog --title "Remove Orphans" --yesno "Found orphaned packages:\n\n$orphaned\n\nRemove them?" "$HEIGHT" "$WIDTH"
         if [[ $? -eq 0 ]]; then
-            echo "$orphaned" | xargs -r -n 1 sudo pacman -Rns --noconfirm
+            echo "$orphaned" | xargs -r printf '%s\n' "$SUDO_PASS" | sudo -S pacman -Rns --noconfirm
             dialog --title "Orphans Removed" --msgbox "Orphaned packages removed." "$HEIGHT" "$WIDTH"
         fi
     else
         dialog --title "No Orphans" --msgbox "No orphaned packages found." "$HEIGHT" "$WIDTH"
     fi
 
+    # Clean package cache
     dialog --title "Clean Package Cache" --yesno "Do you want to clear the package cache?\n(This runs 'pacman -Scc')" "$HEIGHT" "$WIDTH"
     if [[ $? -eq 0 ]]; then
-        sudo pacman -Scc --noconfirm
+        printf '%s\n' "$SUDO_PASS" | sudo -S pacman -Scc --noconfirm
         dialog --title "Cache Cleaned" --msgbox "Package cache cleaned." "$HEIGHT" "$WIDTH"
     fi
 
@@ -588,6 +735,11 @@ clean_packages() {
 }
 
 link_dotfiles() {
+    if [[ ! -d "$DOTFILES_DIR/dotfiles" ]]; then
+        dialog --title "Error" --msgbox "Dotfiles directory not found at $DOTFILES_DIR/dotfiles" "$HEIGHT" "$WIDTH"
+        return
+    fi
+
     mkdir -p "$CONFIG_DIR"
     local output
     output=$(mktemp)
@@ -596,16 +748,119 @@ link_dotfiles() {
         local filename
         filename=$(basename "$item")
         local target="$CONFIG_DIR/$filename"
-        [[ -e "$target" ]] && rm -rf "$target"
-        ln -s "$item" "$target"
+        force_link "$item" "$target"
         printf "├── %s -> %s\n" "$target" "$item" >>"$output"
     done
     dialog --title "Linked Dotfiles" --textbox "$output" "$HEIGHT" "$WIDTH"
     rm -f "$output"
 }
 
+show_file_locations() {
+    local info_msg="Current Configuration:\n\n"
+    info_msg+="Dotfiles Directory: $DOTFILES_DIR\n"
+    info_msg+="Config Directory: $CONFIG_DIR\n"
+    info_msg+="Nvim Directory: $NVIM_DIR\n"
+    info_msg+="TPM Directory: $TPM_DIR\n"
+    info_msg+="Packages JSON: $PACKAGES_JSON\n\n"
+    
+    info_msg+="Expected Hidden Config Files:\n"
+    info_msg+="• $DOTFILES_DIR/.tmux.conf -> $HOME/.tmux.conf\n"
+    info_msg+="• $DOTFILES_DIR/.bashrc -> $HOME/.bashrc\n"
+    info_msg+="• $DOTFILES_DIR/.zshrc -> $HOME/.zshrc\n"
+    info_msg+="• $DOTFILES_DIR/starship.toml -> $CONFIG_DIR/starship.toml\n"
+    info_msg+="• $DOTFILES_DIR/.gitconfig -> $HOME/.gitconfig\n\n"
+    
+    info_msg+="File Status:\n"
+    local files=(
+        "$DOTFILES_DIR/.tmux.conf"
+        "$DOTFILES_DIR/.bashrc" 
+        "$DOTFILES_DIR/.zshrc"
+        "$DOTFILES_DIR/starship.toml"
+        "$DOTFILES_DIR/.gitconfig"
+    )
+    
+    for file in "${files[@]}"; do
+        if [[ -f "$file" ]]; then
+            info_msg+="✓ $(basename "$file") exists\n"
+        else
+            info_msg+="✗ $(basename "$file") missing\n"
+        fi
+    done
+
+    dialog --title "File Locations & Status" --msgbox "$info_msg" "$HEIGHT" "$WIDTH"
+}
+
+create_dotfiles_directory() {
+    mkdir -p "$DOTFILES_DIR/dotfiles"
+    
+    # Create sample hidden config files if they don't exist
+    local sample_tmux="$DOTFILES_DIR/.tmux.conf"
+    local sample_bashrc="$DOTFILES_DIR/.bashrc"
+    
+    if [[ ! -f "$sample_tmux" ]]; then
+        cat > "$sample_tmux" <<'EOF'
+# Sample tmux configuration
+# Prefix key
+set -g prefix C-a
+unbind C-b
+bind C-a send-prefix
+
+# Split panes
+bind | split-window -h
+bind - split-window -v
+
+# Reload config
+bind r source-file ~/.tmux.conf \; display-message "Config reloaded!"
+
+# Enable mouse mode
+set -g mouse on
+
+# Status bar
+set -g status-bg black
+set -g status-fg white
+EOF
+    fi
+    
+    if [[ ! -f "$sample_bashrc" ]]; then
+        cat > "$sample_bashrc" <<'EOF'
+# Sample bashrc configuration
+# If not running interactively, don't do anything
+[[ $- != *i* ]] && return
+
+# Aliases
+alias ls='ls --color=auto'
+alias ll='ls -alF'
+alias la='ls -A'
+alias l='ls -CF'
+alias grep='grep --color=auto'
+
+# History
+HISTCONTROL=ignoreboth
+HISTSIZE=1000
+HISTFILESIZE=2000
+
+# Check window size after each command
+shopt -s checkwinsize
+
+# Colored prompt
+PS1='\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+
+# Enable programmable completion features
+if ! shopt -oq posix; then
+  if [ -f /usr/share/bash-completion/bash_completion ]; then
+    . /usr/share/bash-completion/bash_completion
+  elif [ -f /etc/bash_completion ]; then
+    . /etc/bash_completion
+  fi
+fi
+EOF
+    fi
+    
+    dialog --title "Directory Created" --msgbox "Created dotfiles directory at $DOTFILES_DIR/dotfiles\n\nAlso created sample files:\n• .tmux.conf\n• .bashrc\n\nYou can now customize these files and use option 7 to symlink them." "$HEIGHT" "$WIDTH"
+}
+
 dialog_box() {
-    dialog --title "Linux system" --msgbox "System manager by csode" 10 40
+    dialog --title "Linux System Manager" --msgbox "System manager by csode\n\nVersion 2.0 - Enhanced" 12 50
     while true; do
         if ! show_main_menu; then break; fi
     done
@@ -613,16 +868,21 @@ dialog_box() {
 
 show_main_menu() {
     local choice
-    choice=$(dialog --title "Linux system" \
+    choice=$(dialog --title "Linux System Manager" \
         --cancel-label "Exit" \
         --menu "Choose an option" "$HEIGHT" "$WIDTH" 0 \
-        1 "Full Setup" \
+        1 "Full Setup (Recommended)" \
         2 "Install packages" \
-        3 "Remove packages" \
-        4 "Clean system" \
-        5 "Symlink dotfiles" \
-        6 "Symlink starship config" \
-        7 "Clone TPM" \
+        3 "Add new package" \
+        4 "Remove packages" \
+        5 "Clean system" \
+        6 "Symlink dotfiles" \
+        7 "Symlink hidden config files" \
+        8 "Clone/Install TPM" \
+        9 "Clone/Install Neovim config" \
+        10 "Create dotfiles directory" \
+        11 "Show file locations" \
+        12 "Edit Script" \
         2>&1 >/dev/tty)
 
     local status=$?
@@ -630,14 +890,20 @@ show_main_menu() {
         clear
         exit 0
     fi
+    
     case "$choice" in
     1) full_setup ;;
     2) install_packages ;;
-    3) remove_packages ;;
-    4) clean_packages ;;
-    5) link_dotfiles ;;
-    6) link_starship_config ;;
-    7) clone_tpm ;;
+    3) add_package ;;
+    4) remove_packages ;;
+    5) clean_packages ;;
+    6) link_dotfiles ;;
+    7) link_hidden_config ;;
+    8) clone_tpm ;;
+    9) clone_nvim ;;
+    10) create_dotfiles_directory ;;
+    11) show_file_locations ;;
+    12) edit_dev ;;
     esac
 }
 

@@ -1,1 +1,1 @@
-("~/devenv/" "~/learning/" "~/Programming/xutilc/")
+("~/devenv/")

@@ -44,10 +44,10 @@ cmake_force:
 SHELL = /bin/sh
 
 # The CMake executable.
-CMAKE_COMMAND = /usr/bin/cmake
+CMAKE_COMMAND = /sbin/cmake
 
 # The command to remove a file.
-RM = /usr/bin/cmake -E rm -f
+RM = /sbin/cmake -E rm -f
 
 # Escaping for special characters.
 EQUALS = =
@@ -76,43 +76,43 @@ CMakeFiles/vterm-module.dir/vterm-module.c.o: CMakeFiles/vterm-module.dir/flags.
 CMakeFiles/vterm-module.dir/vterm-module.c.o: /home/csode/.config/emacs/elpaca/builds/vterm/vterm-module.c
 CMakeFiles/vterm-module.dir/vterm-module.c.o: CMakeFiles/vterm-module.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/csode/.config/emacs/elpaca/builds/vterm/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/vterm-module.dir/vterm-module.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/vterm-module.dir/vterm-module.c.o -MF CMakeFiles/vterm-module.dir/vterm-module.c.o.d -o CMakeFiles/vterm-module.dir/vterm-module.c.o -c /home/csode/.config/emacs/elpaca/builds/vterm/vterm-module.c
+	/sbin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/vterm-module.dir/vterm-module.c.o -MF CMakeFiles/vterm-module.dir/vterm-module.c.o.d -o CMakeFiles/vterm-module.dir/vterm-module.c.o -c /home/csode/.config/emacs/elpaca/builds/vterm/vterm-module.c
 
 CMakeFiles/vterm-module.dir/vterm-module.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/vterm-module.dir/vterm-module.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/csode/.config/emacs/elpaca/builds/vterm/vterm-module.c > CMakeFiles/vterm-module.dir/vterm-module.c.i
+	/sbin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/csode/.config/emacs/elpaca/builds/vterm/vterm-module.c > CMakeFiles/vterm-module.dir/vterm-module.c.i
 
 CMakeFiles/vterm-module.dir/vterm-module.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/vterm-module.dir/vterm-module.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/csode/.config/emacs/elpaca/builds/vterm/vterm-module.c -o CMakeFiles/vterm-module.dir/vterm-module.c.s
+	/sbin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/csode/.config/emacs/elpaca/builds/vterm/vterm-module.c -o CMakeFiles/vterm-module.dir/vterm-module.c.s
 
 CMakeFiles/vterm-module.dir/utf8.c.o: CMakeFiles/vterm-module.dir/flags.make
 CMakeFiles/vterm-module.dir/utf8.c.o: /home/csode/.config/emacs/elpaca/builds/vterm/utf8.c
 CMakeFiles/vterm-module.dir/utf8.c.o: CMakeFiles/vterm-module.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/csode/.config/emacs/elpaca/builds/vterm/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/vterm-module.dir/utf8.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/vterm-module.dir/utf8.c.o -MF CMakeFiles/vterm-module.dir/utf8.c.o.d -o CMakeFiles/vterm-module.dir/utf8.c.o -c /home/csode/.config/emacs/elpaca/builds/vterm/utf8.c
+	/sbin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/vterm-module.dir/utf8.c.o -MF CMakeFiles/vterm-module.dir/utf8.c.o.d -o CMakeFiles/vterm-module.dir/utf8.c.o -c /home/csode/.config/emacs/elpaca/builds/vterm/utf8.c
 
 CMakeFiles/vterm-module.dir/utf8.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/vterm-module.dir/utf8.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/csode/.config/emacs/elpaca/builds/vterm/utf8.c > CMakeFiles/vterm-module.dir/utf8.c.i
+	/sbin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/csode/.config/emacs/elpaca/builds/vterm/utf8.c > CMakeFiles/vterm-module.dir/utf8.c.i
 
 CMakeFiles/vterm-module.dir/utf8.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/vterm-module.dir/utf8.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/csode/.config/emacs/elpaca/builds/vterm/utf8.c -o CMakeFiles/vterm-module.dir/utf8.c.s
+	/sbin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/csode/.config/emacs/elpaca/builds/vterm/utf8.c -o CMakeFiles/vterm-module.dir/utf8.c.s
 
 CMakeFiles/vterm-module.dir/elisp.c.o: CMakeFiles/vterm-module.dir/flags.make
 CMakeFiles/vterm-module.dir/elisp.c.o: /home/csode/.config/emacs/elpaca/builds/vterm/elisp.c
 CMakeFiles/vterm-module.dir/elisp.c.o: CMakeFiles/vterm-module.dir/compiler_depend.ts
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/csode/.config/emacs/elpaca/builds/vterm/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/vterm-module.dir/elisp.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/vterm-module.dir/elisp.c.o -MF CMakeFiles/vterm-module.dir/elisp.c.o.d -o CMakeFiles/vterm-module.dir/elisp.c.o -c /home/csode/.config/emacs/elpaca/builds/vterm/elisp.c
+	/sbin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/vterm-module.dir/elisp.c.o -MF CMakeFiles/vterm-module.dir/elisp.c.o.d -o CMakeFiles/vterm-module.dir/elisp.c.o -c /home/csode/.config/emacs/elpaca/builds/vterm/elisp.c
 
 CMakeFiles/vterm-module.dir/elisp.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/vterm-module.dir/elisp.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/csode/.config/emacs/elpaca/builds/vterm/elisp.c > CMakeFiles/vterm-module.dir/elisp.c.i
+	/sbin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/csode/.config/emacs/elpaca/builds/vterm/elisp.c > CMakeFiles/vterm-module.dir/elisp.c.i
 
 CMakeFiles/vterm-module.dir/elisp.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/vterm-module.dir/elisp.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/csode/.config/emacs/elpaca/builds/vterm/elisp.c -o CMakeFiles/vterm-module.dir/elisp.c.s
+	/sbin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/csode/.config/emacs/elpaca/builds/vterm/elisp.c -o CMakeFiles/vterm-module.dir/elisp.c.s
 
 # Object files for target vterm-module
 vterm__module_OBJECTS = \

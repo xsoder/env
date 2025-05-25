@@ -2,7 +2,6 @@
 
 ![Screenshot 3](img3.png)
 ![Screenshot 4](img4.png)
-![Screenshot 5](img5.png)
 
 Personal development setup using i3Wm tmux and setup I am planning to make this its own distro with some of my own utility. This setup sure does look bad but it is focused on productivity and not asthetics.
 I have recently been trying emacs I might switch we will never know.
@@ -11,7 +10,7 @@ I have recently been trying emacs I might switch we will never know.
 From my previous setup certain things have changed which include my terminal, neovim config and more.
 As a recap this are the changes.
 - [x] Hyprland -> i3(reason webcam not working in wayland)
-- [x] ghostty -> kitty(reason being nice cursor trail)
+- [x] ghostty -> alacritty(reason being nice cursor trail)
 - [x] zsh -> fish(I love fish and it looked cool)
 - [x] neovim -> emacs(Not a full switch it is a temporary one but love it so far)
 - [x] rofi -> dmenu(I just love dmenu)
@@ -44,13 +43,10 @@ This will install the base packages required for the environment.
 
 ## Usage
 
-The installation script supports several commands:
-
-- `bash script install base` - Install base packages
-- `bash script install dev` - Install development tools
-- `bash script install utility` - Install utility packages
-- `bash script copy` - Copy dotfiles to their respective locations
-- `bash script link` - Syslink dotfiles to their respective locations
+Just do 
+``` 
+bash script
+```
 
 ## Configuration Structure
 

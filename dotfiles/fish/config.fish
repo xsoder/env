@@ -32,6 +32,7 @@ if status is-interactive
 end
 
 fish_add_path ~/.local/bin
+
 # Package tracking aliases
 alias pacman='/home/csode/.local/bin/package-tracker pacman'
 alias paru='/home/csode/.local/bin/package-tracker paru'
