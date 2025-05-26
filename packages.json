@@ -1,6 +1,7 @@
 {
   "packages": [
     "alacritty",
+    "asciidoc",
     "clang",
     "cmake",
     "copyq",
@@ -15,7 +16,9 @@
     "firefox",
     "fish",
     "fzf",
+    "gimp",
     "git",
+    "gnu-netcat",
     "go",
     "htop",
     "intel-media-driver",
@@ -34,6 +37,7 @@
     "pavucontrol",
     "polybar",
     "python",
+    "python-pip",
     "ripgrep",
     "scrot",
     "spotify",
