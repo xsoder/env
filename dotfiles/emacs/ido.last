@@ -19,8 +19,8 @@
 
 ;; ----- ido-work-directory-list -----
 (
- "/home/csode/devenv/dotfiles/emacs/"
  "/home/csode/devenv/"
+ "/home/csode/devenv/dotfiles/emacs/"
  "/home/csode/nvim/lua/csode/local_plugins/"
  "/home/csode/Programming/"
  "/home/csode/Programming/bit/"
@@ -45,11 +45,11 @@
 
 ;; ----- ido-dir-file-cache -----
 (
- ("/home/csode/" (26679 16319 32752 853000) "nvim/" ".vim/" "media/" "scripts/" ".mozilla/" "notes/" ".ssh/" ".gitconfig" ".fonts/" "packages/" ".bash_profile" ".bashrc" ".wget-hsts" ".gnupg/" "work/" ".cargo/" ".tmux/" "Thirdparty/" ".local/" "./" ".bash_history" "Programming/" ".pki/" ".cache/" ".fehbg" ".bash_logout" "Downloads/" "dopi/" ".tmux.conf" ".zshrc" "../" "devenv/" "test/" ".npm/" ".elfeed/" "meme/" "opt/" "devsetup/" ".config/" ".viminfo" ".codeium/")
+ ("/home/csode/devenv/dotfiles/emacs/" (26679 17725 558036 539000) "projects" "config.org" "early-init.el" "scripts/" "auto-save-list/" "config.el" "elpaca/" "./" "recentf" "sessions" "transient/" "images/" "projectile-bookmarks.eld" "local/" "../" "ido.last" "init.el" "eshell/" "themes/" "eln-cache/")
 
- ("/home/csode/devenv/" (26679 16538 707342 173000) "README.md" "script" "starship.toml" ".bashrc" "packages.json" "dotfiles/" "./" ".tmux.conf" ".zshrc" "../" ".gitignore" "docs/" ".git/" "wallpaper/")
+ ("/home/csode/devenv/" (26679 16596 715249 592000) "README.md" "script" "starship.toml" ".bashrc" "packages.json" "dotfiles/" "./" ".tmux.conf" ".zshrc" "../" ".gitignore" "docs/" ".git/" "wallpaper/")
 
- ("/home/csode/devenv/dotfiles/emacs/" (26679 15956 281753 597000) "projects" "config.org" "early-init.el" "scripts/" "auto-save-list/" "config.el" "elpaca/" "./" "recentf" "sessions" "transient/" "images/" "projectile-bookmarks.eld" "local/" "../" "ido.last" "init.el" "eshell/" "themes/" "eln-cache/")
+ ("/home/csode/" (26679 16665 91449 884000) "nvim/" ".vim/" "media/" "scripts/" ".mozilla/" "notes/" ".ssh/" ".gitconfig" ".fonts/" "packages/" ".bash_profile" ".bashrc" ".wget-hsts" ".gnupg/" "work/" ".cargo/" ".tmux/" "Thirdparty/" ".local/" "./" ".bash_history" "Programming/" ".pki/" ".cache/" ".fehbg" "main.c" ".bash_logout" "Downloads/" "dopi/" ".tmux.conf" ".zshrc" "../" "devenv/" "test/" ".npm/" ".elfeed/" "meme/" "opt/" "devsetup/" ".config/" ".viminfo" ".codeium/")
 
  ("/home/csode/devenv/dotfiles/" (26674 27592 144184 894000) "starship.toml" ".bashrc" "./" "i3/" "hypr/" "copyq/" "ghostty/" "emacs/" "kitty/" ".tmux.conf" "test.sh" "waybar/" ".zshrc" "alacritty/" "../" "spicetify/" "polybar/" "fish/" "config" "dunst/" "dconf/")
 
