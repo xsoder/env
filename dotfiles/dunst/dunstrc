@@ -1,6 +1,5 @@
 [global]
-# Appearance
-font = Monospace 10
+font = SauceCodePro NF 10
 frame_width = 2
 frame_color = "#565f89"
 separator_color = frame
@@ -9,7 +8,7 @@ padding = 8
 horizontal_padding = 8
 
 # Transparency
-transparency = 15  # roughly 85% opacity
+transparency = 0 # roughly 85% opacity
 
 # Timeouts
 timeout = 5
@@ -33,9 +32,6 @@ max_icon_size = 64
 
 # History
 history_length = 20
-
-# Startup script (optional)
-startup_notification = false
 
 # Word wrap
 word_wrap = true

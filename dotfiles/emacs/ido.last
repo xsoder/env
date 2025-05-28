@@ -2,26 +2,98 @@
 
 ;; ----- ido-last-directory-list -----
 (
+ ("/home/csode/devenv/dotfiles/" . "emacs/")
+ ("/home/csode/devenv/" . "dotfiles/")
+ ("/home/csode/nvim/lua/csode/" . "local_plugins/")
+ ("/home/csode/nvim/lua/" . "csode/")
+ ("/home/csode/nvim/" . "lua/")
+ ("/home/csode/Programming/chess/" . "build/")
+ ("/home/" . "csode/")
+ ("/home/csode/Programming/echo-server/" . "thirdparty/")
+ ("/home/csode/Programming/" . "bit/")
+ ("/home/csode/Thirdparty/libzmq/libzmq-4.3.5/" . "build/")
+ ("/home/csode/Thirdparty/libzmq/" . "libzmq-4.3.5/")
+ ("/home/csode/Thirdparty/" . "libzmq/")
  ("/home/csode/" . "devenv/")
 )
 
 ;; ----- ido-work-directory-list -----
 (
- "/home/csode/"
- "/home/csode/time.sh/"
+ "/home/csode/devenv/dotfiles/emacs/"
  "/home/csode/devenv/"
+ "/home/csode/nvim/lua/csode/local_plugins/"
+ "/home/csode/Programming/"
+ "/home/csode/Programming/bit/"
+ "/home/csode/Programming/echo-server/"
+ "/home/csode/Programming/echo-server/thirdparty/"
+ "/home/csode/Programming/chess/"
+ "/home/csode/"
+ "/home/csode/scripts/"
+ "/home/csode/Programming/chess/build/"
+ "/home/csode/Thirdparty/libzmq/"
+ "/home/csode/Thirdparty/libzmq/libzmq-4.3.5/build/"
+ "/home/csode/Thirdparty/libzmq/libzmq-4.3.5/"
+ "/home/csode/Thirdparty/libzmq/libzmq-4.3.5/tests/"
+ "/home/csode/Thirdparty/libzmq/libzmq-4.3.5/builds/"
+ "/home/csode/time.sh/"
 )
 
 ;; ----- ido-work-file-list -----
 (
- 
+ "zmq.h"
 )
 
 ;; ----- ido-dir-file-cache -----
 (
- ("/home/csode/" (26674 32521 954846 88000) "nvim/" ".vim/" "media/" ".mozilla/" ".ssh/" ".fonts/" "packages/" ".bash_profile" ".bashrc" ".wget-hsts" ".gnupg/" "work/" ".cargo/" ".tmux/" ".local/" "./" ".bash_history" ".cache/" ".fehbg" ".bash_logout" "dopi/" ".tmux.conf" ".zshrc" "../" "devenv/" ".elfeed/" "meme/" ".config/" ".viminfo")
+ ("/home/csode/" (26679 16319 32752 853000) "nvim/" ".vim/" "media/" "scripts/" ".mozilla/" "notes/" ".ssh/" ".gitconfig" ".fonts/" "packages/" ".bash_profile" ".bashrc" ".wget-hsts" ".gnupg/" "work/" ".cargo/" ".tmux/" "Thirdparty/" ".local/" "./" ".bash_history" "Programming/" ".pki/" ".cache/" ".fehbg" ".bash_logout" "Downloads/" "dopi/" ".tmux.conf" ".zshrc" "../" "devenv/" "test/" ".npm/" ".elfeed/" "meme/" "opt/" "devsetup/" ".config/" ".viminfo" ".codeium/")
 
- ("/home/csode/devenv/" (26674 29884 468483 681000) "screenshot_030.png" "README.md" "script" "starship.toml" ".bashrc" "packages.json" "img4.png" "dotfiles/" "./" ".tmux.conf" ".zshrc" "../" "screenshot_029.png" ".gitignore" "config" ".git/" "wallpaper/" "img3.png")
+ ("/home/csode/devenv/" (26679 16538 707342 173000) "README.md" "script" "starship.toml" ".bashrc" "packages.json" "dotfiles/" "./" ".tmux.conf" ".zshrc" "../" ".gitignore" "docs/" ".git/" "wallpaper/")
+
+ ("/home/csode/devenv/dotfiles/emacs/" (26679 15956 281753 597000) "projects" "config.org" "early-init.el" "scripts/" "auto-save-list/" "config.el" "elpaca/" "./" "recentf" "sessions" "transient/" "images/" "projectile-bookmarks.eld" "local/" "../" "ido.last" "init.el" "eshell/" "themes/" "eln-cache/")
+
+ ("/home/csode/devenv/dotfiles/" (26674 27592 144184 894000) "starship.toml" ".bashrc" "./" "i3/" "hypr/" "copyq/" "ghostty/" "emacs/" "kitty/" ".tmux.conf" "test.sh" "waybar/" ".zshrc" "alacritty/" "../" "spicetify/" "polybar/" "fish/" "config" "dunst/" "dconf/")
+
+ ("/home/csode/nvim/lua/csode/local_plugins/" (26677 11693 363589 343000) "nvim_compile.lua" "./" "markdown_link_nav.lua" "todo.lua" "../")
+
+ ("/home/csode/nvim/lua/csode/" (26677 10685 370423 970000) "keymap.lua" "plugin_config/" "local_plugins/" "autocmd.lua" "plugins.lua" "colorscheme.lua" "./" "options.lua" "../" "local.lua")
+
+ ("/home/csode/nvim/lua/" (26674 29529 375113 594000) "csode/" "snippets/" "./" "../")
+
+ ("/home/csode/nvim/" (26676 54433 890890 374000) "README.md" "plugin/" "lua/" "./" "../" ".git/" "init.lua")
+
+ ("/home/csode/Programming/" (26677 13441 115926 524000) "a.out" "echo-server/" "bit/" "chess/" "./" "main.c" "../")
+
+ ("/home/csode/Programming/bit/" (26677 11063 455202 649000) "scripts/" "LICENSE.org" "./" ".cache/" "Makefile" "CMakeLists.txt" "README.org" "../" "test/" ".gitignore" "install.sh" "docs/" "src/" ".git/" "build/" "includes/")
+
+ ("/home/csode/Programming/bit/src/" (26677 11140 585601 762000) "parser.cpp" "error.cpp" "./" "bit.cpp" "../" "arguments.cpp")
+
+ ("/home/csode/Programming/echo-server/" (26676 62748 44003 834000) "thirdparty/" "client.h" "README.md" "server.c" "./" "client.c" "main.c" "bin/" "main.cpp" "Makefile" "todo.md" "../" ".gitignore" ".git/")
+
+ ("/home/csode/Programming/chess/" (26676 58568 969846 59000) "scripts/" "README.md" "assets/" "LICENSE" "lib/" "./" "CMakeLists.txt" "CHANGELOG.md" "../" "header/" ".gitignore" "docs/" "src/" ".git/" "build/")
+
+ ("/home/csode/scripts/" (26674 43215 685594 263000) "power.sh" "nvim_sessionizer.sh" "java.sh" "session_switch.sh" "wch.sh" "git.sh" "README.md" "pkill.sh" "tmux_sessionize.sh" "bluetooth.sh" "win.qcow2" "file.sh" "take-screenshot.sh" "kill_session.sh" "lazygit.sh" "wallpaper.sh" "neovim.sh" "session.sh" "look-screen.sh" "./" "package.sh" "fzf_from.sh" "nff.sh" "preview.sh" "remap_caps_escape.sh" "run.sh" "rofi.sh" "set-wallpaper.sh" "session_killer.sh" "winrun.sh" "sysmaintenance.sh" "../" "node.sh" "fzf.sh" "win10.sh" "raylib.sh" "gitter.sh" "gcgccsys.sh" "c.sh" "screenkey-toogle.sh" "clipboard-daemon.sh" "ghostty.sh" "tmux.sh" "clean.sh" ".git/" "screenkey.sh" "tmux_sessionizer.sh" "cpp.sh" "json_lock.sh")
+
+ ("/home/csode/Programming/chess/build/" (26675 54227 496306 599000) "compile_commands.json" "cmake_install.cmake" "assets/" "CMakeFiles/" "chess" "./" "Makefile" "CMakeCache.txt" "../")
+
+ ("/home/" (26674 23521 483409 428000) "csode/" "./" "../")
+
+ ("/home/csode/Programming/echo-server/thirdparty/" (26675 50002 209581 786000) "./" "zmq.h" "../" "zmq_utils.h")
+
+ ("/home/csode/Thirdparty/libzmq/" (26675 47437 172831 696000) "libzmq-4.3.5/" "./" "../" "v4.3.5.tar.gz")
+
+ ("/home/csode/Thirdparty/libzmq/libzmq-4.3.5/include/" (25891 55849 0 0) "./" "zmq.h" "../" "zmq_utils.h")
+
+ ("/home/csode/Thirdparty/libzmq/libzmq-4.3.5/build/" (26675 47930 211021 512000) "tests/" "libzmq.pc" "CMakeFiles/" "version.rc" "platform.hpp" "./" "bin/" "CMakeCache.txt" "doc/" "../")
+
+ ("/home/csode/Thirdparty/libzmq/libzmq-4.3.5/tests/" (26675 47795 462141 148000) "test_capabilities.cpp" "test_router_mandatory_hwm.cpp" "test_shutdown_stress_tipc.cpp" "test_system.cpp" "test_stream_disconnect.cpp" "test_hwm.cpp" "test_xpub_welcome_msg.cpp" "test_reqrep_vmci.cpp" "test_security_zap.cpp" "test_req_correlate.cpp" "test_spec_req.cpp" "test_disconnect_inproc.cpp" "test_spec_dealer.cpp" "test_heartbeats.cpp" "test_stream_timeout.cpp" "test_pair_tcp_cap_net_admin.cpp" "cmake_install.cmake" "test_metadata.cpp" "test_sodium.cpp" "test_bind_src_address.cpp" "test_dgram.cpp" "test_reqrep_tcp.cpp" "testutil_monitoring.hpp" "test_xpub_nodrop.cpp" "README.md" "test_msg_flags.cpp" "test_router_mandatory_tipc.cpp" "test_immediate.cpp" "test_connect_rid.cpp" "test_iov.cpp" "test_proxy_single_socket.cpp" "test_unbind_wildcard.cpp" "tests/" "test_xsub_verbose.cpp" "test_abstract_ipc.cpp" "test_mock_pub_sub.cpp" "test_connect_resolve.cpp" "test_term_endpoint.cpp" "testutil_monitoring.cpp" "test_pubsub.cpp" "ZeroMQConfigVersion.cmake" "test_connect_delay_tipc.cpp" "test_proxy_terminate.cpp" "test_getsockopt_memset.cpp" "libzmq.pc" "clang-format-check.sh" "test_spec_router.cpp" "test_pair_tipc.cpp" "CMakeFiles/" "test_peer.cpp" "test_connect_ws_fuzzer.cpp" "version.rc" "ZeroMQConfig.cmake" "test_channel.cpp" "test_thread_safe.cpp" "test_socket_options_fuzzer.cpp" "test_fork.cpp" "test_diffserv.cpp" "test_conflate.cpp" "lib/" "test_reqrep_device_tipc.cpp" "test_invalid_rep.cpp" "test_spec_rep.cpp" "test_spec_pushpull.cpp" "testutil_unity.cpp" "AUTHORS.txt" "testutil_unity.hpp" "platform.hpp" "test_xpub_verbose.cpp" "test_filter_ipc.cpp" "test_address_tipc.cpp" "test_ctx_options.cpp" "unittests/" "test_req_relaxed.cpp" "test_reqrep_inproc.cpp" "test_proxy_steerable.cpp" "test_security_null.cpp" "test_timers.cpp" "test_stream_exceeds_buffer.cpp" "test_stream_empty.cpp" "test_setsockopt.cpp" "test_shutdown_stress.cpp" "test_router_mandatory.cpp" "bin/" "test_connect_curve_fuzzer.cpp" "test_monitor.cpp" "testutil_security.cpp" "Makefile" "test_sub_forward.cpp" "test_app_meta.cpp" "test_inproc_connect.cpp" "test_term_endpoint_tipc.cpp" "test_socket_null.cpp" "CMakeLists.txt" "test_pair_tcp.cpp" "test_zmq_ppoll_signals.cpp" "testutil.cpp" "CMakeCache.txt" "test_router_handover.cpp" "NEWS.txt" "doc/" "test_stream.cpp" "test_security_plain.cpp" "test_sockopt_hwm.cpp" "test_ipc_wildcard.cpp" "test_radio_dish.cpp" "test_hwm_pubsub.cpp" "test_security_curve.cpp" "test_reconnect_ivl.cpp" "test_many_sockets.cpp" "test_pubsub_topics_count.cpp" "testutil.hpp" "test_pair_ipc.cpp" "test_use_fd.cpp" "test_xpub_topic.cpp" "test_rebind_ipc.cpp" "test_tcp_accept_filter.cpp" "test_msg_ffn.cpp" "test_wss_transport.cpp" "test_bind_null_fuzzer.cpp" "ZeroMQTargets.cmake" "test_client_server.cpp" "test_bind_stream_fuzzer.cpp" "test_ws_transport.cpp" "test_busy_poll.cpp" "test_srcfd.cpp" "test_reqrep_ipc.cpp" "test_xpub_manual_last_value.cpp" "test_issue_566.cpp" "test_z85_decode_fuzzer.cpp" "test_base85.cpp" "test_xpub_manual.cpp" "test_proxy.cpp" "test_last_endpoint.cpp" "test_pair_vmci.cpp" "test_connect_null_fuzzer.cpp" "test_msg_init.cpp" "test_zmq_ppoll_fd.cpp" "test_poller.cpp" "LICENSE.txt" "test_ancillaries.cpp" "test_bind_after_connect_tcp.cpp" "test_connect_fuzzer.cpp" "test_atomics.cpp" "test_ctx_destroy.cpp" "test_socks.cpp" "test_bind_ws_fuzzer.cpp" "test_reqrep_tipc.cpp" "test_hiccup_msg.cpp" "test_proxy_hwm.cpp" "test_router_notify.cpp" "test_security_no_zap_handler.cpp" "test_hello_msg.cpp" "CTestTestfile.cmake" "test_security_gssapi.cpp" "test_sub_forward_tipc.cpp" "test_disconnect_msg.cpp" "test_bind_curve_fuzzer.cpp" "test_connect_stream_fuzzer.cpp" "test_zmq_poll_fd.cpp" "test_pair_inproc.cpp" "test_probe_router.cpp" "test_pub_invert_matching.cpp" "test_reconnect_options.cpp" "test_scatter_gather.cpp" "test_bind_fuzzer.cpp" "test_timeo.cpp" "test_reqrep_device.cpp" "testutil_security.hpp" "../" "./")
+
+ ("/home/csode/Thirdparty/libzmq/libzmq-4.3.5/" (26675 47319 400303 505000) "packaging/" "config.sh" "external/" "tools/" ".mailmap" "perf/" "build_qnx/" "README.md" "Dockerfile" "tests/" "SupportedPlatforms.md" "README.doxygen.md" ".hgeol" "acinclude.m4" "autogen.sh" "README.cygwin.md" "LICENSE" ".obs/" "NEWS" "SECURITY.md" "./" "include/" "unittests/" "m4/" ".git-blame-ignore-revs" ".clang-format" "CMakeLists.txt" "appveyor.yml" "ci_deploy.sh" "doc/" "version.sh" "Jenkinsfile" "configure.ac" ".travis.yml" "../" "ci_build.sh" "INSTALL" "installer.ico" "branding.bmp" "Makefile.am" ".clang-tidy" ".gitignore" "builds/" ".github/" "Doxygen.cfg" "src/" "AUTHORS" "build/")
+
+ ("/home/csode/Thirdparty/libzmq/libzmq-4.3.5/build_qnx/" (25891 55849 0 0) "common.mk" "nto/" "qnx.nto.toolchain.cmake" "./" "Makefile" "../")
+
+ ("/home/csode/Thirdparty/libzmq/libzmq-4.3.5/builds/" (25891 55849 0 0) "qnx/" "mingw32/" "cygwin/" "cmake/" "openwrt/" "zos/" "gyp/" "valgrind/" "./" "abi-compliance-checker/" "README" "coverage/" "../" "fuzz/" "ios/" "nuget/" "Makefile.am" "android/" "deprecated-msvc/" "vxworks/")
+
+ ("/home/csode/Thirdparty/" (26675 47005 190390 231000) "zmq/" "./" "../" "libzmq/")
 )
 
 ;; ----- ido-unc-hosts-cache -----
