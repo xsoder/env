@@ -60,7 +60,9 @@ To replicate my whole system it is easy to do. Follow the instrcution.
 
 1. Clone the repository
 ```
-git clone https://github.com/xsoder/Enviroment.git ~/devenv
+git clone https://github.com/xsoder/env.git ~/devenv # If you got it from github
+
+git clone https://gitlab.com/xsoder/devenv.git ~/devenv # If you got it from gitlab
 ```
 
 2. Change the directory
