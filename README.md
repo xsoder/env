@@ -3,9 +3,8 @@
 <center><img style="width: 200px" src="docs/img/logo.png" alt="logo"/></center>
 
 ## Quick Preview Of Script
-<center><video width="480" height="320" controls>
-  <source src="docs/vids/video.mp4" type="video/mp4">
-</video></center>
+
+![](./docs/demo.gif)
 
 
 This is a full system managment of packages and dotfiles inspired by nix on how to make Arch-based distro more stable and more configurable. 
@@ -14,10 +13,7 @@ This is a full system managment of packages and dotfiles inspired by nix on how 
 > This is just a personal preference meaning it is not for meant for everybody who just want their things to work.
 
 > [!WARNING]
-> All of the tools I use here are my choices so be aware that you have to do your own setup. 
-
-> [!WARNING]
-> And this will only work for archlinux
+> All of the tools I use here are my choices so be aware that you have to do your own setup.  And this will only work for archlinux
 
 ## Introduction
 This is a custom enviroment I setup for archlinux on a better use of my system. This is a customized script to automate my linux setup and make my life easier. 
@@ -77,11 +73,6 @@ cd ~/devenv
 ```
 bash script
 ```
-
-4. Choose your option.
-
-<center><img style="width: 720px" src="docs/img/screenshots/home.png" alt="logo"/></center>
-
 
 ### Dotfiles information
 
