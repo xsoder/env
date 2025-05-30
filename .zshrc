@@ -102,19 +102,11 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-export GTK_THEME=rose-pine-gtk
 export PATH="$HOME/.emacs.d/bin:$PATH"
 export PATH="$HOME/.config/emacs/bin:$PATH"
-export DOOMDIR=~/.config/doom
 set -o vi
 export PATH="$HOME/.nimble/bin:$PATH"
 export PATH=/home/csode/packages/nim-2.2.4/bin/:$PATH
-export GCM_CREDENTIAL_STORE=cache
-export GIT_TERMINAL_PROMPT=1
-export GIT_ASKPASS=git-credential-manager-core
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 export EDITOR=nvim
 export PATH="$HOME/.npm-global/bin:$PATH"
 export PATH="$HOME/packages/zig:$PATH"
@@ -127,4 +119,6 @@ alias rm="rm -rf"
 alias dev="bash ~/devenv/script"
 alias DEV="cd ~/devenv"
 alias luamake="/home/csode/packages/lua-language-server/3rd/luamake/luamake"
-. "$HOME/.cargo/env"
+if [[ -z "$DISPLAY" && $(tty) = /dev/tty1 ]]; then
+  exec startx
+fi

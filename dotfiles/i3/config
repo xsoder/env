@@ -2,7 +2,7 @@ set $mod Mod1
 
 # gaps inner 8
 # gaps outer 8
-font pango:SauceCodePro NF 14
+font pango:monospace 14
 
 ## KEYBIND BRIGHTNESS AND VOLUME
 set $refresh_i3status killall -SIGUSR1 i3status
@@ -85,9 +85,9 @@ client.placeholder       $grey_unfocused  $grey_unfocused  #e0def4  $grey_unfocu
 client.background        $grey_unfocused
 
 # Set border pixel width (optional, adjust as you prefer)
-# bar {
-#         status_command i3status
-# }
+bar {
+        status_command i3status
+}
 
 
 ## WINDOW RULE
@@ -103,7 +103,7 @@ for_window [class="dolphin"] move to workspace $ws4
 ## APPLICATION KEYBIND
 bindsym $mod+b workspace $ws3; , exec firefox
 bindsym $mod+Shift+f workspace $ws4;exec dolphin
-bindsym $mod+Return ; exec alacritty
+bindsym $mod+Return ; exec ghostty
 bindsym $mod+bracketleft workspace prev
 bindsym $mod+Tab focus next
 bindsym $mod+Shift+Tab focus prev

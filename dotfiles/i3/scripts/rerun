@@ -9,7 +9,7 @@ if ! pgrep -x picom > /dev/null; then
 fi
 
 # Run polybar launch script (kills old bars inside script, so safe to rerun)
-bash ~/devenv/dotfiles/polybar/launch.sh &
+# bash ~/devenv/dotfiles/polybar/launch.sh &
 
 # Start pipewire if not running (better managed via systemd, but just in case)
 if ! pgrep -x pipewire > /dev/null; then
