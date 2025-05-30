@@ -112,7 +112,6 @@ bindsym $mod+o workspace $ws9 exec obs
 bindsym $mod+c workspace $ws2, exec emacs
 
 
-
 ## CUSTOM SCRIPTS
 bindsym $mod+Shift+z exec --no-startup-id bash -c 'cd /home/csode/packages/boomer && ./boomer'
 bindsym $mod+Shift+y exec --no-startup-id ~/work/script/select
