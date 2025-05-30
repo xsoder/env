@@ -4,73 +4,40 @@ set $mod Mod1
 # gaps outer 8
 font pango:SauceCodePro NF 14
 
-exec --no-startup-id dex --autostart --environment i3
-exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
-
-exec --no-startup-id nm-applet
-exec --no-startup-id dunst &
-exec --no-startup-id blueman-applet
-exec_always --no-startup-id xclip -selection clipboard -loops 0
-exec --no-startup-id picom --config ~/.config/picom.conf --experimental-backends
-exec_always pipewire
-exec --no-startup-id xsetroot -cursor_name left_ptr
-exec /user/bin/emacs --daemon
-exec_always --no-startup-id picom
-exec_always --no-startup-id feh --bg-scale ~/devenv/wallpaper/tokyo.png
-exec_always --no-startup-id bash -c "bash ~/devenv/dotfiles/polybar/launch.sh"
-
+## KEYBIND BRIGHTNESS AND VOLUME
 set $refresh_i3status killall -SIGUSR1 i3status
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% && $refresh_i3status
 bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10% && $refresh_i3status
 bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl set +10
 bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl set 10-
-bindsym F6 exec --no-startup-id xbacklight -dec 10
-bindsym F7 exec --no-startup-id xbacklight -inc 10
-
-
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
 bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
+
+## WINDOW NAVIGATION 
+
 floating_modifier $mod
-exec --no-startup-id xclip -selection clipboard
 bindsym $mod+Down focus down
 bindsym $mod+Up focus up
 bindsym $mod+Right focus right
-
-# move focused window
+# MOVEMENT WINDOW
 bindsym $mod+Shift+j move left
 bindsym $mod+Shift+k move down
 bindsym $mod+Shift+l move up
 bindsym $mod+Shift+semicolon move right
 
-# alternatively, you can use the cursor keys:
-bindsym $mod+Shift+Left move left
-bindsym $mod+Shift+Down move down
-bindsym $mod+Shift+Up move up
-bindsym $mod+Shift+Right move right
-
-# split in horizontal orientation
-bindsym $mod+h split h
-
-
-# enter fullscreen mode for the focused container
+# ADDITIONAL LAYOUT
 bindsym $mod+f fullscreen toggle
-
-# change container layout (stacked, tabbed, toggle split)
 bindsym $mod+s layout stacking
 bindsym $mod+w layout tabbed
 bindsym $mod+e layout toggle split
-
-# toggle tiling / floating
 bindsym $mod+Shift+space floating toggle
-
-# change focus between tiling / floating windows
 bindsym $mod+space focus mode_toggle
-
-# focus the parent container
 bindsym $mod+a focus parent
 bindsym $mod+d exec --no-startup-id dmenu_run
 bindsym $mod+q kill
+bindsym $mod+Shift+r restart
 
+## WORKSPACE RULE
 set $ws1 "1"
 set $ws2 "2"
 set $ws3 "3"
@@ -82,7 +49,7 @@ set $ws8 "8"
 set $ws9 "9"
 set $ws10 "10"
 
-# switch to workspace
+## SWITCH TO WORKSPACE
 bindsym $mod+1 workspace number $ws1
 bindsym $mod+2 workspace number $ws2
 bindsym $mod+3 workspace number $ws3
@@ -94,7 +61,7 @@ bindsym $mod+8 workspace number $ws8
 bindsym $mod+9 workspace number $ws9
 bindsym $mod+0 workspace number $ws10
 
-# move focused container to workspace
+## MOVE FOCUSED 
 bindsym $mod+Shift+1 move container to workspace number $ws1
 bindsym $mod+Shift+2 move container to workspace number $ws2
 bindsym $mod+Shift+3 move container to workspace number $ws3
@@ -106,33 +73,7 @@ bindsym $mod+Shift+8 move container to workspace number $ws8
 bindsym $mod+Shift+9 move container to workspace number $ws9
 bindsym $mod+Shift+0 move container to workspace number $ws10
 
-# reload the configuration file
-bindsym $mod+Shift+r restart
-bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
-
-# resize window (you can also use the mouse for that)
-mode "resize" {
-        bindsym j resize shrink width 10 px or 10 ppt
-        bindsym k resize grow height 10 px or 10 ppt
-        bindsym l resize shrink height 10 px or 10 ppt
-        bindsym semicolon resize grow width 10 px or 10 ppt
-
-        bindsym Left resize shrink width 10 px or 10 ppt
-        bindsym Down resize grow height 10 px or 10 ppt
-        bindsym Up resize shrink height 10 px or 10 ppt
-        bindsym Right resize grow width 10 px or 10 ppt
-
-        bindsym Return mode "default"
-        bindsym Escape mode "default"
-        bindsym $mod+r mode "default"
-}
-
-bindsym $mod+r mode "resize"
-
-
-# Border colors: blue for focused, grey for unfocused
-# Adjust the colors as needed for your preferred blue and grey shades
-
+## BORDER RULE
 set $blue_focused #31748f     
 set $grey_unfocused #6e6a86     
 
@@ -148,37 +89,34 @@ client.background        $grey_unfocused
 #         status_command i3status
 # }
 
-for_window [class="firefox"]move to workspace $ws3
-for_window [class="virt-manager"]move to workspace $ws7
-for_window [class="obs"] move to workspace $ws9
-for_window [class="Gimp"]move to workspace $ws8
+
+## WINDOW RULE
 for_window [class=".*"] border pixel 3
-
-
-bindsym $mod+Shift+p workspace $ws8; exec gimp
-bindsym $mod+Shift+y workspace $ws10; exec pavucontrol
-bindsym $mod+Shift+d workspace $ws10; exec discord 
-bindsym $mod+b workspace $ws3; fullscreen enable, exec firefox
-bindsym $mod+Shift+f workspace $ws4;exec dolphin
-bindsym $mod+Shift+u exec pcmanfm
-bindsym $mod+Return ; workspace $ws1;move to workspace $ws1; exec alacritty
-bindsym $mod+Shift+Return ; workspace $ws7;move to workspace $ws7;exec alacritty
-bindsym $mod+bracketleft workspace prev
-bindsym $mod+Tab focus next
-bindsym $mod+Shift+Tab focus prev
-bindsym $mod+bracketright workspace next
-bindsym $mod+Shift+s exec scrot ~/media/Picture/screenshot/screenshot.png && notify-send "Screenshot Taken" "Saved to ~/media/Picture/screenshot"
-bindsym $mod+o workspace $ws9 exec obs
-bindsym $mod+c workspace $ws2, exec emacs
-bindsym $mod+Shift+Delete exec --no-startup-id systemctl poweroff
-bindsym $mod+Shift+z exec --no-startup-id bash -c 'cd /home/csode/packages/boomer && ./boomer'
-bindsym $mod+period exec --no-startup-id ~/scripts/screenkey.sh
-bindsym $mod+Shift+period exec --no-startup-id pkill screenkey
-bindsym $mod+Shift+t exec --no-startup-id ~/.local/bin/rofi_script_launcher.sh
-bindsym $mod+Shift+o exec vesktop
+for_window [class="obs"] move to workspace $ws9
 for_window [class="Virt-viewer"] fullscreen enable, floating enable
 for_window [class="Emacs"] move to workspace $ws2, fullscreen enable
 for_window [class="firefox"] move to workspace $ws3, fullscreen enable
 for_window [class="dolphin"] move to workspace $ws4
-for_window [class="disocrd"] move to workspace $ws4
-for_window [workspace="7"] fullscreen enable
+
+
+
+## APPLICATION KEYBIND
+bindsym $mod+b workspace $ws3; , exec firefox
+bindsym $mod+Shift+f workspace $ws4;exec dolphin
+bindsym $mod+Return ; exec alacritty
+bindsym $mod+bracketleft workspace prev
+bindsym $mod+Tab focus next
+bindsym $mod+Shift+Tab focus prev
+bindsym $mod+bracketright workspace next
+bindsym $mod+o workspace $ws9 exec obs
+bindsym $mod+c workspace $ws2, exec emacs
+
+
+
+## CUSTOM SCRIPTS
+bindsym $mod+Shift+z exec --no-startup-id bash -c 'cd /home/csode/packages/boomer && ./boomer'
+bindsym $mod+Shift+y exec --no-startup-id ~/work/script/select
+bindsym $mod+y exec --no-startup-id ~/scripts/toggle_focus.sh
+bindsym $mod+t exec --no-startup-id ~/scripts/todo-popup.sh
+bindsym $mod+Shift+s exec ~/work/script/screenshot
+bindsym $mod+Shift+p exec --no-startup-id bash -c 'cd /home/csode/work/script && bash screenshot ato ato'
