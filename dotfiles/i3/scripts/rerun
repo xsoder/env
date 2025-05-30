@@ -1,0 +1,22 @@
+#!/usr/env/bin bash
+
+# Set wallpaper (can be run multiple times safely)
+feh --bg-scale ~/devenv/wallpaper/tokyo.png &
+
+# Start picom only if not already running
+if ! pgrep -x picom > /dev/null; then
+  picom &
+fi
+
+# Run polybar launch script (kills old bars inside script, so safe to rerun)
+bash ~/devenv/dotfiles/polybar/launch.sh &
+
+# Start pipewire if not running (better managed via systemd, but just in case)
+if ! pgrep -x pipewire > /dev/null; then
+  pipewire &
+fi
+
+# Start xclip with clipboard loop (kills old instances before starting)
+pkill -x xclip
+xclip -selection clipboard -loops 0 &
+
