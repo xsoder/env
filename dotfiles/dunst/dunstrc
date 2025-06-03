@@ -1,7 +1,7 @@
 [global]
-font = SauceCodePro NF 10
+font = Iosevka NF 18
 frame_width = 2
-frame_color = "#565f89"
+frame_color = "#181818"
 separator_color = frame
 corner_radius = 10
 padding = 8
@@ -43,19 +43,19 @@ mouse_middle_click = do_action
 mouse_right_click = close_all
 
 [urgency_low]
-frame_color = "#565f89"
-background = "#1a1b26"
-foreground = "#a9b1d6"
+frame_color = "#454545"
+background = "#282828"
+foreground = "#95a99f"
 timeout = 4
 
 [urgency_normal]
-frame_color = "#565f89"
-background = "#1a1b26"
-foreground = "#a9b1d6"
+frame_color = "#454545"
+background = "#181818"
+foreground = "#e4e4ef"
 timeout = 6
 
 [urgency_critical]
-frame_color = "#f7768e"
-background = "#1a1b26"
-foreground = "#f7768e"
+frame_color = "#f43841"
+background = "#181818"
+foreground = "#f43841"
 timeout = 0

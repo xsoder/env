@@ -114,11 +114,14 @@ alias cpp="~/scripts/cpp.sh"
 alias gitter="~/scripts/gitter.sh"
 alias ccg="~/scripts/cpp.sh"
 alias packages="~/scripts/package.sh"
-alias vim="nvim"
 alias rm="rm -rf"
 alias dev="bash ~/devenv/script"
 alias DEV="cd ~/devenv"
 alias luamake="/home/csode/packages/lua-language-server/3rd/luamake/luamake"
-if [[ -z "$DISPLAY" && $(tty) = /dev/tty1 ]]; then
+alias vim="nvim"
+alias fedora="distrobox enter neovim-isolated"
+alias emacs="emacsclient -c -a "emacs""
+if [[ -z "$DISPLAY" && $XDG_VTNR -eq 1 ]]; then
   exec startx
 fi
+

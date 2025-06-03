@@ -2,23 +2,28 @@ set $mod Mod1
 
 # gaps inner 8
 # gaps outer 8
-font pango:monospace 14
+font pango:Iosevka 16
 
 ## KEYBIND BRIGHTNESS AND VOLUME
 set $refresh_i3status killall -SIGUSR1 i3status
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% && $refresh_i3status
 bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10% && $refresh_i3status
-bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl set +10
-bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl set 10-
+bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl set +10%
+bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl set 10%-
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
 bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
 
-## WINDOW NAVIGATION 
+#AUTO START
+exec --no-startup-id bash -c 'cd /home/csode/devenv/scripts && bash autostart'
+exec_always --no-startup-id bash -c 'cd /home/csode/devenv/scripts && bash rerun'
 
+## WINDOW NAVIGATION 
 floating_modifier $mod
 bindsym $mod+Down focus down
 bindsym $mod+Up focus up
 bindsym $mod+Right focus right
+
+
 # MOVEMENT WINDOW
 bindsym $mod+Shift+j move left
 bindsym $mod+Shift+k move down
@@ -91,12 +96,13 @@ bar {
 
 
 ## WINDOW RULE
-for_window [class=".*"] border pixel 3
+for_window [class=".*"] border pixel 0
 for_window [class="obs"] move to workspace $ws9
 for_window [class="Virt-viewer"] fullscreen enable, floating enable
 for_window [class="Emacs"] move to workspace $ws2, fullscreen enable
 for_window [class="firefox"] move to workspace $ws3, fullscreen enable
 for_window [class="dolphin"] move to workspace $ws4
+for_window [class="ghostty"] fullscreen enable
 
 
 
@@ -109,12 +115,13 @@ bindsym $mod+Tab focus next
 bindsym $mod+Shift+Tab focus prev
 bindsym $mod+bracketright workspace next
 bindsym $mod+o workspace $ws9 exec obs
-bindsym $mod+c workspace $ws2, exec emacs
+bindsym $mod+c workspace $ws2, exec emacsclient -c -a "emacs"
 
 
 ## CUSTOM SCRIPTS
 bindsym $mod+Shift+z exec --no-startup-id bash -c 'cd /home/csode/packages/boomer && ./boomer'
 bindsym $mod+Shift+y exec --no-startup-id ~/work/script/select
+bindsym $mod+Shift+t exec --no-startup-id ~/scripts/select.sh
 bindsym $mod+y exec --no-startup-id ~/scripts/toggle_focus.sh
 bindsym $mod+t exec --no-startup-id ~/scripts/todo-popup.sh
 bindsym $mod+Shift+s exec ~/work/script/screenshot

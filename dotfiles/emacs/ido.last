@@ -21,6 +21,7 @@
 
 ;; ----- ido-work-directory-list -----
 (
+ "/home/csode/"
  "/home/csode/devenv/patches/dwm/"
  "/home/csode/devenv/patches/dwm/scripts/"
  "/home/csode/.config/"
@@ -35,7 +36,6 @@
  "/home/csode/Programming/bit/"
  "/home/csode/Programming/echo-server/thirdparty/"
  "/home/csode/Programming/chess/"
- "/home/csode/"
  "/home/csode/scripts/"
  "/home/csode/Programming/chess/build/"
  "/home/csode/Thirdparty/libzmq/"
@@ -54,7 +54,7 @@
 
 ;; ----- ido-dir-file-cache -----
 (
- ("/home/csode/" (26680 53353 627969 127000) "nvim/" ".vim/" "media/" "scripts/" ".mozilla/" "notes/" ".ssh/" ".gitconfig" ".fonts/" "packages/" ".bash_profile" ".bashrc" ".wget-hsts" "main/" ".gnupg/" "work/" ".cargo/" ".tmux/" "Thirdparty/" ".local/" "./" ".bash_history" "Programming/" ".pki/" ".cache/" "12-51-08-29-05-2025.png" "Videos/" ".fehbg" ".bash_logout" "Downloads/" "dopi/" ".xinitrc" ".tmux.conf" ".zshrc" "../" "devenv/" "12-49-14-29-05-2025.png" ".Xauthority" ".npm/" ".elfeed/" "meme/" "opt/" ".config/" ".viminfo")
+ ("/home/csode/" (26686 14526 587377 242000) ".zcompdump-archlinux-5.9.zwc" "learning/" "nvim/" ".vim/" "media/" "scripts/" ".gtkrc-2.0" ".distrobox-home-neovim/" ".mozilla/" ".zcompdump-archlinux-5.9" "notes/" ".ssh/" ".gitconfig" ".fonts/" "packages/" ".bash_profile" ".shell.pre-oh-my-zsh" ".bashrc" ".wget-hsts" "main/" ".gnupg/" "arch.qcow2" "work/" ".cargo/" "Thirdparty/" ".local/" "./" ".bash_history" "Programming/" ".pki/" ".cache/" "Videos/" ".fehbg" ".bash_logout" "Downloads/" "dopi/" ".xinitrc" ".zshrc.pre-oh-my-zsh" "VM/" ".tmux.conf" ".zshrc" "../" "devenv/" ".Xauthority" ".zsh_history" ".npm/" ".elfeed/" "meme/" "dotfiles-latest/" "opt/" ".config/" ".viminfo" ".oh-my-zsh/")
 
  ("/home/csode/.config/" (26680 53121 665524 381000) "trashrc" "nvim/" "kdenliverc" "mpv/" "Thunar/" "trizen/" "systemd/" "pulse/" "xfce4/" "starship.toml" "discord/" "kde.org/" "kdenlive-layoutsrc" "QtProject.conf" "kiorc" "procps/" "GIMP/" "spotify/" "kritadisplayrc" "gtk-3.0/" "obs-studio/" "dolphinrc" "htop/" "vlc/" "./" "i3/" "kdeglobals" "hypr/" "Proton/" "copyq/" "chromium/" "pavucontrol.ini" "Windsurf/" "ghostty/" "emacs/" "Vial/" "kitty/" "test.sh" "waybar/" ".zshrc" "alacritty/" "../" "Electron/" "spicetify/" "polybar/" "fish/" "session/" "neofetch/" "kritarc" "config" "dunst/" "greenclip.toml" "picom.conf" "dconf/")
 

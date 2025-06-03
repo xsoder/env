@@ -725,3 +725,7 @@
 (add-hook 'compilation-mode-hook #'my-consult-ripgrep-arrows)
 (add-to-list 'display-buffer-alist
              '("\\*vterm\\*" (display-buffer-same-window)))
+(defun my/open-vm-ssh ()
+  "Open TRAMP SSH connection to papa@localhost:2222."
+  (interactive)
+  (dired "/sshx:papa@localhost#2222:~/"))
