@@ -24,10 +24,11 @@
 
 ;; ----- ido-work-directory-list -----
 (
+ "/home/csode/devenv/dotfiles/hypr/"
  "/home/csode/devenv/"
+ "/home/csode/"
  "/home/csode/devenv/scripts/"
  "/home/csode/devenv/dotfiles/emacs/"
- "/home/csode/"
  "/home/csode/Programming/nwm/"
  "/sshx:papa@localhost#2222:/home/papa/nwm/src/"
  "/sshx:papa@localhost#2222:/home/papa/nwm/"
@@ -69,9 +70,13 @@
 
 ;; ----- ido-dir-file-cache -----
 (
- ("/home/csode/devenv/" (26687 47432 969558 944000) "scripts/" "README.md" "script" "starship.toml" "patches/" ".bashrc" "packages.json" "dotfiles/" "./" ".tmux.conf" "test.sh" ".zshrc" "../" ".gitignore" "docs/" ".git/" "wallpaper/")
+ ("/home/csode/devenv/dotfiles/hypr/modules/" (26687 50237 257305 421000) "general.conf" "monitors.conf" "input.conf" "./" "binds.conf.bak" "env.conf" "rules.conf" "../" "binds.conf")
 
- ("/home/csode/" (26687 50988 972999 902000) ".zcompdump-archlinux-5.9.zwc" "learning/" "nvim/" ".vim/" ".var/" "media/" "scripts/" ".gtkrc-2.0" ".distrobox-home-neovim/" ".mozilla/" ".zcompdump-archlinux-5.9" ".authinfo" "notes/" ".ssh/" ".gitconfig" ".fonts/" "packages/" ".bash_profile" ".shell.pre-oh-my-zsh" ".bashrc" ".wget-hsts" ".gnupg/" "arch.qcow2" "work/" ".cargo/" "Thirdparty/" ".local/" "./" ".bash_history" "Programming/" ".pki/" ".cache/" "Videos/" ".fehbg" ".bash_logout" "Downloads/" "dopi/" ".xinitrc" ".zshrc.pre-oh-my-zsh" "VM/" ".tmux.conf" ".zshrc" "../" "devenv/" ".Xauthority" ".zsh_history" ".npm/" ".elfeed/" "meme/" "opt/" "my-dots/" ".config/" ".viminfo" ".oh-my-zsh/")
+ ("/home/csode/devenv/dotfiles/hypr/" (26687 47800 210079 760000) "modules/" "scripts/" "imgs/" "hyprland.conf" "./" "hyprlock.conf" "env.conf" "../" "txt.txt" "themes/" "pyprland.toml")
+
+ ("/home/csode/" (26688 30045 555644 533000) ".zcompdump-archlinux-5.9.zwc" "learning/" "nvim/" ".vim/" ".var/" "media/" "scripts/" ".gtkrc-2.0" ".distrobox-home-neovim/" ".mozilla/" ".zcompdump-archlinux-5.9" ".authinfo" "notes/" ".ssh/" ".gitconfig" ".fonts/" "packages/" ".bash_profile" ".shell.pre-oh-my-zsh" ".bashrc" ".wget-hsts" ".gnupg/" "arch.qcow2" "work/" ".cargo/" "Thirdparty/" ".local/" "./" ".bash_history" "Programming/" ".pki/" ".cache/" "Videos/" ".fehbg" ".bash_logout" "Downloads/" "dopi/" ".xinitrc" ".zshrc.pre-oh-my-zsh" "VM/" ".tmux.conf" ".zshrc" "../" "devenv/" ".Xauthority" ".zsh_history" ".npm/" ".elfeed/" "meme/" "opt/" "my-dots/" ".config/" ".viminfo" ".oh-my-zsh/")
+
+ ("/home/csode/devenv/" (26687 47432 969558 944000) "scripts/" "README.md" "script" "starship.toml" "patches/" ".bashrc" "packages.json" "dotfiles/" "./" ".tmux.conf" "test.sh" ".zshrc" "../" ".gitignore" "docs/" ".git/" "wallpaper/")
 
  ("/home/csode/devenv/dotfiles/emacs/" (26687 45652 785901 681000) "projects" "config.org" "early-init.el" "scripts/" "auto-save-list/" "elpa/" "config.el" "elpaca/" "./" "recentf" "tramp" "sessions" "transient/" "images/" "projectile-bookmarks.eld" "local/" "../" "ido.last" "init.el" "eshell/" "themes/" "eln-cache/")
 

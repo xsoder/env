@@ -85,4 +85,3 @@ Read About my i3 setup: [i3](./dotfiles/i3/README.md)
 Read About my emacs setup here: [Emacs](./dotfiles/emacs/config.org)
 
 Read About my neovim setup here: [Neovim](https://github.com/xsoder/nvim)
-
