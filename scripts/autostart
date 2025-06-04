@@ -1,11 +1,7 @@
 #!/usr/bin/env bash
-
-# Background startup programs
 nm-applet &                              
 dunst &                                   
-greenclip daemon &                        
 blueman-applet &                          
-xsetroot -cursor_name left_ptr &         
 /usr/bin/emacs --daemon &                
 dex --autostart --environment i3 &       
 xss-lock --transfer-sleep-lock -- i3lock --nofork &  

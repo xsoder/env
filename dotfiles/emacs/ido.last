@@ -2,17 +2,20 @@
 
 ;; ----- ido-last-directory-list -----
 (
+ ("/sshx:papa@localhost#2222:/home/papa/nwm/" . "src/")
+ ("/sshx:papa@localhost#2222:/home/papa/" . "nwm/")
+ ("/home/csode/work/" . "script/")
  ("/home/csode/devenv/patches/dwm/" . "scripts/")
  ("/home/csode/devenv/patches/" . "dwm/")
- ("/home/csode/devenv/dotfiles/" . "i3/")
- ("/home/csode/devenv/" . "patches/")
+ ("/home/csode/devenv/dotfiles/" . "dunst/")
+ ("/home/csode/devenv/" . "dotfiles/")
  ("/home/csode/nvim/lua/csode/" . "local_plugins/")
  ("/home/csode/nvim/lua/" . "csode/")
  ("/home/csode/nvim/" . "lua/")
  ("/home/csode/Programming/chess/" . "build/")
  ("/home/" . "csode/")
  ("/home/csode/Programming/echo-server/" . "thirdparty/")
- ("/home/csode/Programming/" . "echo-server/")
+ ("/home/csode/Programming/" . "nwm/")
  ("/home/csode/Thirdparty/libzmq/libzmq-4.3.5/" . "build/")
  ("/home/csode/Thirdparty/libzmq/" . "libzmq-4.3.5/")
  ("/home/csode/Thirdparty/" . "libzmq/")
@@ -21,7 +24,22 @@
 
 ;; ----- ido-work-directory-list -----
 (
+ "/home/csode/devenv/"
+ "/home/csode/devenv/scripts/"
+ "/home/csode/devenv/dotfiles/emacs/"
  "/home/csode/"
+ "/home/csode/Programming/nwm/"
+ "/sshx:papa@localhost#2222:/home/papa/nwm/src/"
+ "/sshx:papa@localhost#2222:/home/papa/nwm/"
+ "/sshx:papa@localhost#2222:/home/papa/nwm/config/"
+ "/sshx:papa@localhost#2222:/home/papa/nwm/config/nwm/"
+ "/home/csode/.config/emacs/"
+ "/home/csode/Programming/website/"
+ "/home/csode/work/script/"
+ "/home/csode/devenv/patches/dmenu/"
+ "/sshx:papa@localhost#2222:/home/papa/"
+ "/home/csode/scripts/"
+ "/home/csode/devenv/dotfiles/dunst/"
  "/home/csode/devenv/patches/dwm/"
  "/home/csode/devenv/patches/dwm/scripts/"
  "/home/csode/.config/"
@@ -29,14 +47,11 @@
  "/home/csode/devenv/dotfiles/i3/"
  "/home/csode/main/"
  "/home/csode/Downloads/"
- "/home/csode/devenv/dotfiles/emacs/"
- "/home/csode/devenv/"
  "/home/csode/nvim/lua/csode/local_plugins/"
  "/home/csode/Programming/"
  "/home/csode/Programming/bit/"
  "/home/csode/Programming/echo-server/thirdparty/"
  "/home/csode/Programming/chess/"
- "/home/csode/scripts/"
  "/home/csode/Programming/chess/build/"
  "/home/csode/Thirdparty/libzmq/"
  "/home/csode/Thirdparty/libzmq/libzmq-4.3.5/build/"
@@ -54,7 +69,39 @@
 
 ;; ----- ido-dir-file-cache -----
 (
- ("/home/csode/" (26686 14526 587377 242000) ".zcompdump-archlinux-5.9.zwc" "learning/" "nvim/" ".vim/" "media/" "scripts/" ".gtkrc-2.0" ".distrobox-home-neovim/" ".mozilla/" ".zcompdump-archlinux-5.9" "notes/" ".ssh/" ".gitconfig" ".fonts/" "packages/" ".bash_profile" ".shell.pre-oh-my-zsh" ".bashrc" ".wget-hsts" "main/" ".gnupg/" "arch.qcow2" "work/" ".cargo/" "Thirdparty/" ".local/" "./" ".bash_history" "Programming/" ".pki/" ".cache/" "Videos/" ".fehbg" ".bash_logout" "Downloads/" "dopi/" ".xinitrc" ".zshrc.pre-oh-my-zsh" "VM/" ".tmux.conf" ".zshrc" "../" "devenv/" ".Xauthority" ".zsh_history" ".npm/" ".elfeed/" "meme/" "dotfiles-latest/" "opt/" ".config/" ".viminfo" ".oh-my-zsh/")
+ ("/home/csode/devenv/" (26687 47432 969558 944000) "scripts/" "README.md" "script" "starship.toml" "patches/" ".bashrc" "packages.json" "dotfiles/" "./" ".tmux.conf" "test.sh" ".zshrc" "../" ".gitignore" "docs/" ".git/" "wallpaper/")
+
+ ("/home/csode/" (26687 50988 972999 902000) ".zcompdump-archlinux-5.9.zwc" "learning/" "nvim/" ".vim/" ".var/" "media/" "scripts/" ".gtkrc-2.0" ".distrobox-home-neovim/" ".mozilla/" ".zcompdump-archlinux-5.9" ".authinfo" "notes/" ".ssh/" ".gitconfig" ".fonts/" "packages/" ".bash_profile" ".shell.pre-oh-my-zsh" ".bashrc" ".wget-hsts" ".gnupg/" "arch.qcow2" "work/" ".cargo/" "Thirdparty/" ".local/" "./" ".bash_history" "Programming/" ".pki/" ".cache/" "Videos/" ".fehbg" ".bash_logout" "Downloads/" "dopi/" ".xinitrc" ".zshrc.pre-oh-my-zsh" "VM/" ".tmux.conf" ".zshrc" "../" "devenv/" ".Xauthority" ".zsh_history" ".npm/" ".elfeed/" "meme/" "opt/" "my-dots/" ".config/" ".viminfo" ".oh-my-zsh/")
+
+ ("/home/csode/devenv/dotfiles/emacs/" (26687 45652 785901 681000) "projects" "config.org" "early-init.el" "scripts/" "auto-save-list/" "elpa/" "config.el" "elpaca/" "./" "recentf" "tramp" "sessions" "transient/" "images/" "projectile-bookmarks.eld" "local/" "../" "ido.last" "init.el" "eshell/" "themes/" "eln-cache/")
+
+ ("/home/csode/devenv/scripts/" (26687 20901 696650 858000) "autostart" "./" "rerun" "../")
+
+ ("/home/csode/Programming/nwm/" (26687 23705 954846 284000) "thirdparty/" "README.md" "./" "Makefile" "nwm" "todo.md" "../" "src/" ".git/")
+
+ ("/home/csode/.config/emacs/" (26687 12123 576889 57000) "projects" "config.org" "early-init.el" "scripts/" "auto-save-list/" "elpa/" "config.el" "elpaca/" "./" "recentf" "tramp" "sessions" "transient/" "images/" "projectile-bookmarks.eld" "local/" "../" "ido.last" "init.el" "eshell/" "themes/" "eln-cache/")
+
+ ("/home/csode/.config/emacs/elpaca/" (26674 26737 261946 648000) "repos/" "./" "cache/" "../" "builds/")
+
+ ("/home/csode/.config/emacs/elpaca/repos/" (26687 12126 987876 315000) "eshell-syntax-highlighting/" "magit/" "company-mode/" "eshell-toggle/" "consult/" "dired-hacks/" "evil/" "diminish/" "goto-chg/" "gruber-darker-theme/" "evil-tutor/" "git-timemachine/" "projectile/" "treepy/" "haskell-mode/" "elfeed/" "company-box/" "emacsql/" "emacs-which-key/" "plz/" "ellama/" "vterm-toggle/" "link-hint/" "plz-media-type/" "app-launcher/" "rainbow-delimiters/" "swiper/" "with-editor/" "closql/" "emacs-dashboard/" "elpaca/" "ox-hugo/" "php-mode/" "eradio/" "./" "all-the-icons-dired/" "markdown-mode/" "peep-dired/" "llama/" "plz-event-source/" "toc-org/" "annalist/" "dart-mode/" "rainbow-mode/" "pdf-tools/" "tldr/" "evil-collection/" "dash/" "transient/" "powerline/" "all-the-icons/" "sudo-edit/" "popwin/" "general/" "eglot/" "../" "forge/" "flycheck/" "ivy-rich/" "tomelr/" "org-bullets/" "hl-todo/" "llm/" "drag-stuff/" "elfeed-goodies/" "perspective-el/" "emacs-libvterm/" "tablist/" "yaml/" "lua-mode/" "avy/" "frame-local/" "ghub/")
+
+ ("/home/csode/.config/emacs/elpaca/repos/eglot/" (26687 11959 120447 99000) "admin/" "config.bat" ".mailmap" "Makefile.in" "modules/" "build-aux/" "COPYING" "INSTALL.REPO" ".dir-locals.el" "lib-src/" "ChangeLog.android" "java/" "autogen.sh" ".gitlab-ci.yml" "BUGS" "CONTRIBUTE" "lib/" "GNUmakefile" "lwlib/" "./" "m4/" "README" "nextstep/" ".clang-format" "doc/" "ChangeLog.2" "msdos/" ".gitattributes" "leim/" "ChangeLog.1" "configure.ac" "../" "ChangeLog.5" "INSTALL" "ChangeLog.3" ".clangd" "test/" "ChangeLog.4" "nt/" ".gitignore" "oldXMenu/" "exec/" "src/" "make-dist" ".git/" "etc/" "cross/" "lisp/")
+
+ ("/home/csode/Programming/" (26687 11702 829562 690000) "echo-server/" "bit/" "chess/" "./" "server/" "nwm/" "../" "website/" "tme/")
+
+ ("/home/csode/Programming/website/" (26687 11810 680891 85000) "html/" "index.html" "./" "../")
+
+ ("/home/csode/work/script/" (26687 3423 301304 121000) "define_word" "wallpaper_feh" "random_wallpaper" "screenshot" "README.md" "dmenu_notes" "dmenu_musicpicker" "phototransfer" "dmenu_tempconvert" "dmenu_sys" "dwmblocks_systemstats" "audio_output_switch" "test.jpg" "LICENSE" "select" "./" "dwmblocks_disks" "dwmblocks_musicplaying" "record" "dmenu_audioswitch_prev" "edit_recording" "dmenu_mpv" "../" "dmenu_timer" "screenshot_extra_features" "spin" "wallpapermenu" "dimmer" "dmenu_cliphist" ".git/")
+
+ ("/home/csode/work/" (26684 21812 121030 649000) "tradeclover-Satyam-Maurya/" "script/" "Together/" "./" "test.tsx" "music/" "../")
+
+ ("/home/csode/devenv/patches/dmenu/" (26687 6420 903625 472000) "stest.o" "config.mk" "drw.h" "arg.h" "dmenu_path" "dmenu.c.rej" "dmenu" "dmenu.o" "dmenu.c" "patches/" "drw.o" "util.o" "LICENSE" "config.def.h" "./" "README" "Makefile" "stest.1" "util.h" "../" "stest.c" "util.c" "dmenu.1" "dmenu_run" ".gitignore" "config.h" "stest" "dmenu.c.orig" "drw.c" "dmenu-png-images-5.3.diff" "config.def.h.orig")
+
+ ("/home/csode/scripts/" (26686 22914 378838 78000) "power.sh" "nvim_sessionizer.sh" "java.sh" "session_switch.sh" "wch.sh" "git.sh" "README.md" "pkill.sh" "tmux_sessionize.sh" "bluetooth.sh" "select.sh" "win.qcow2" "file.sh" "todo-popup.sh" "take-screenshot.sh" "kill_session.sh" "lazygit.sh" "wallpaper.sh" "neovim.sh" "session.sh" "look-screen.sh" "emacs.sh" "./" "package.sh" "fzf_from.sh" "cat" "nff.sh" "preview.sh" "remap_caps_escape.sh" "run.sh" "rofi.sh" "set-wallpaper.sh" "session_killer.sh" "pywal" "winrun.sh" "sysmaintenance.sh" "../" "node.sh" "fzf.sh" "win10.sh" "raylib.sh" "gitter.sh" "gcgccsys.sh" "c.sh" "screenkey-toogle.sh" "clipboard-daemon.sh" "ghostty.sh" "tmux.sh" "toggle_focus.sh" "clean.sh" ".git/" "screenkey.sh" "tmux_sessionizer.sh" "cpp.sh" "json_lock.sh")
+
+ ("/home/csode/devenv/dotfiles/dunst/" (26687 2346 522979 859000) "dunstrc" "./" "../")
+
+ ("/home/csode/devenv/dotfiles/" (26686 22296 661274 262000) "./" "i3/" "hypr/" "copyq/" "ghostty/" "emacs/" "kitty/" "test.sh" "waybar/" "alacritty/" "../" "spicetify/" "polybar/" "fish/" "dunst/" "dconf/")
 
  ("/home/csode/.config/" (26680 53121 665524 381000) "trashrc" "nvim/" "kdenliverc" "mpv/" "Thunar/" "trizen/" "systemd/" "pulse/" "xfce4/" "starship.toml" "discord/" "kde.org/" "kdenlive-layoutsrc" "QtProject.conf" "kiorc" "procps/" "GIMP/" "spotify/" "kritadisplayrc" "gtk-3.0/" "obs-studio/" "dolphinrc" "htop/" "vlc/" "./" "i3/" "kdeglobals" "hypr/" "Proton/" "copyq/" "chromium/" "pavucontrol.ini" "Windsurf/" "ghostty/" "emacs/" "Vial/" "kitty/" "test.sh" "waybar/" ".zshrc" "alacritty/" "../" "Electron/" "spicetify/" "polybar/" "fish/" "session/" "neofetch/" "kritarc" "config" "dunst/" "greenclip.toml" "picom.conf" "dconf/")
 
@@ -64,21 +111,13 @@
 
  ("/home/csode/devenv/patches/" (26680 52184 396820 519000) "dmenu/" "./" "dwm/" "../" "st/")
 
- ("/home/csode/devenv/" (26680 48108 127635 696000) "README.md" "script" "starship.toml" "patches/" ".bashrc" "packages.json" "dotfiles/" "./" ".tmux.conf" ".zshrc" "../" "Vial-v0.7.3-x86_64.AppImage" ".gitignore" "docs/" ".git/" "wallpaper/")
-
  ("/home/csode/Programming/echo-server/" (26679 52175 821300 292000) "thirdparty/" "client.h" "README.md" "index.html" "server.c" "./" "client.c" "bin/" "Makefile" "todo.md" "../" ".gitignore" ".git/")
-
- ("/home/csode/Programming/" (26678 10520 508233 64000) "echo-server/" "bit/" "chess/" "./" "server/" "../" "tme/")
 
  ("/home/csode/devenv/dotfiles/i3/" (26679 48643 800727 716000) "scripts/" "README.md" "./" "../" "config")
 
  ("/home/csode/Downloads/" (26679 34313 178420 20000) "video.mov" "linux-0.01.tar.gz" "2025-05-25 01-30-09.mp4" "logo-removebg-preview.png" "arch.webp" "8840772714526.png" "X11_WM_Learning_Plan.pdf" "2025-05-25 01-21-28.mp4" "linux/" "compressed.zip" "m6pqzs2iqxx61.webp" "dialog.tar.gz" "2025-05-25 01-15-22.mp4" "2025-05-25 01-20-06.mp4" "./" "win-11-grey-minimal-v0-nke9jd6rrgze1.webp" "image.webp" "7c9b5ad19ed745d8a2e1809763b6d259-free.png" "token.md" "image1.webp" "../" "grub.webp" "sg-11134201-7req1-m2an9zqyu94we2-2049133496.jpg" "2025-05-25 01-22-06.mp4" "test.c" "video.gif")
 
  ("/home/csode/main/" (26679 33528 915312 491000) "define_word" "random_wallpaper" "screenshot" "README.md" "dmenu_notes" "dmenu_musicpicker" "phototransfer" "dmenu_tempconvert" "dmenu_sys" "dwmblocks_systemstats" "audio_output_switch" "LICENSE" "./" "dwmblocks_disks" "dwmblocks_musicplaying" "record" "dmenu_audioswitch_prev" "edit_recording" "dmenu_mpv" "../" "dmenu_timer" "screenshot_extra_features" "spin" "wallpapermenu" "dimmer" "dmenu_cliphist" ".git/")
-
- ("/home/csode/devenv/dotfiles/emacs/" (26679 17725 558036 539000) "projects" "config.org" "early-init.el" "scripts/" "auto-save-list/" "config.el" "elpaca/" "./" "recentf" "sessions" "transient/" "images/" "projectile-bookmarks.eld" "local/" "../" "ido.last" "init.el" "eshell/" "themes/" "eln-cache/")
-
- ("/home/csode/devenv/dotfiles/" (26674 27592 144184 894000) "starship.toml" ".bashrc" "./" "i3/" "hypr/" "copyq/" "ghostty/" "emacs/" "kitty/" ".tmux.conf" "test.sh" "waybar/" ".zshrc" "alacritty/" "../" "spicetify/" "polybar/" "fish/" "config" "dunst/" "dconf/")
 
  ("/home/csode/nvim/lua/csode/local_plugins/" (26677 11693 363589 343000) "nvim_compile.lua" "./" "markdown_link_nav.lua" "todo.lua" "../")
 
@@ -93,8 +132,6 @@
  ("/home/csode/Programming/bit/src/" (26677 11140 585601 762000) "parser.cpp" "error.cpp" "./" "bit.cpp" "../" "arguments.cpp")
 
  ("/home/csode/Programming/chess/" (26676 58568 969846 59000) "scripts/" "README.md" "assets/" "LICENSE" "lib/" "./" "CMakeLists.txt" "CHANGELOG.md" "../" "header/" ".gitignore" "docs/" "src/" ".git/" "build/")
-
- ("/home/csode/scripts/" (26674 43215 685594 263000) "power.sh" "nvim_sessionizer.sh" "java.sh" "session_switch.sh" "wch.sh" "git.sh" "README.md" "pkill.sh" "tmux_sessionize.sh" "bluetooth.sh" "win.qcow2" "file.sh" "take-screenshot.sh" "kill_session.sh" "lazygit.sh" "wallpaper.sh" "neovim.sh" "session.sh" "look-screen.sh" "./" "package.sh" "fzf_from.sh" "nff.sh" "preview.sh" "remap_caps_escape.sh" "run.sh" "rofi.sh" "set-wallpaper.sh" "session_killer.sh" "winrun.sh" "sysmaintenance.sh" "../" "node.sh" "fzf.sh" "win10.sh" "raylib.sh" "gitter.sh" "gcgccsys.sh" "c.sh" "screenkey-toogle.sh" "clipboard-daemon.sh" "ghostty.sh" "tmux.sh" "clean.sh" ".git/" "screenkey.sh" "tmux_sessionizer.sh" "cpp.sh" "json_lock.sh")
 
  ("/home/csode/Programming/chess/build/" (26675 54227 496306 599000) "compile_commands.json" "cmake_install.cmake" "assets/" "CMakeFiles/" "chess" "./" "Makefile" "CMakeCache.txt" "../")
 

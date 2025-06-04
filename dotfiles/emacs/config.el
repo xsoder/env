@@ -26,7 +26,10 @@
 
 (use-package diminish)
 (use-package consult)
-
+(use-package gruvbox-theme
+  :ensure t
+  :config
+  (load-theme 'gruvbox t))
 (use-package dired-open
   :config
   (setq dired-open-extensions '(("gif" . "sxiv")
@@ -153,15 +156,15 @@
   :init (global-flycheck-mode))
 
 (set-face-attribute 'default nil
-  :font "Iosevka"
+  :font "JetBrains Mono Nerd Font"
   :height 110
   :weight 'medium)
 (set-face-attribute 'variable-pitch nil
-  :font "Iosevka"
+  :font "JetBrains Mono Nerd Font"
   :height 120
   :weight 'medium)
 (set-face-attribute 'fixed-pitch nil
-  :font "Iosevka"
+  :font "JetBrains Mono Nerd Font"
   :height 110
   :weight 'medium)
 ;; Makes commented text and keywords italics.
@@ -175,7 +178,7 @@
 ;; This sets the default font on all graphical frames created after restarting Emacs.
 ;; Does the same thing as 'set-face-attribute default' above, but emacsclient fonts
 ;; are not right unless I also add this method of setting the default font.
-(add-to-list 'default-frame-alist '(font . "Iosevka-22"))
+(add-to-list 'default-frame-alist '(font . "JetBrains Mono-20"))
 
 ;; Uncomment the following line if line spacing needs adjusting.
 (setq-default line-spacing 0.15)
@@ -634,10 +637,7 @@
   )
 
 (use-package sudo-edit)
-(use-package gruber-darker-theme
-  :ensure t
-  :config
-  (load-theme 'gruber-darker t))
+(use-package gruber-darker-theme)
 
 (use-package tldr)
 

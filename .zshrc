@@ -124,4 +124,4 @@ alias emacs="emacsclient -c -a "emacs""
 if [[ -z "$DISPLAY" && $XDG_VTNR -eq 1 ]]; then
   exec startx
 fi
-
+fastfetch

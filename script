@@ -14,7 +14,6 @@ PACKAGES_JSON="$DOTFILES_DIR/packages.json"
 SUDO_PASS=""
 TMP_OUTPUT="/tmp/package-install-output.log"
 NVIM_URL="https://github.com/xsoder/nvim.git"
-TPM_DIR="$HOME/.tmux/plugins/tpm"
 SCRIPT_NAME="$DOTFILES_DIR/script"
 
 main() {
@@ -361,14 +360,6 @@ clone_nvim() {
     force_link "$NVIM_DIR" "$HOME/.config/nvim"
 }
 
-clone_tpm() {
-    if [[ ! -d "$TPM_DIR" ]]; then
-        dialog --title "Cloning TPM" --infobox "Cloning Tmux Plugin Manager..." "$HEIGHT" "$WIDTH"
-        mkdir -p "$(dirname "$TPM_DIR")"
-        git clone https://github.com/tmux-plugins/tpm "$TPM_DIR"
-    fi
-}
-
 full_setup() {
     get_sudo_password
 
@@ -400,11 +391,6 @@ full_setup() {
     link_dotfiles_silent
     setup_package_tracking
     link_hidden_config
-
-    current=$((current + 1))
-    dialog --title "Full Setup ($current/$steps)" --infobox "Installing TPM..." "$HEIGHT" "$WIDTH"
-    clone_tpm
-
     dialog --title "Full Setup Complete" --msgbox "Full setup completed successfully!\n\nAll packages have been installed and dotfiles symlinked.\n\nPlease restart your shell or source your shell config to apply changes." "$HEIGHT" "$WIDTH"
 }
 
@@ -760,14 +746,12 @@ show_file_locations() {
     info_msg+="Dotfiles Directory: $DOTFILES_DIR\n"
     info_msg+="Config Directory: $CONFIG_DIR\n"
     info_msg+="Nvim Directory: $NVIM_DIR\n"
-    info_msg+="TPM Directory: $TPM_DIR\n"
     info_msg+="Packages JSON: $PACKAGES_JSON\n\n"
     
     info_msg+="Expected Hidden Config Files:\n"
     info_msg+="• $DOTFILES_DIR/.tmux.conf -> $HOME/.tmux.conf\n"
     info_msg+="• $DOTFILES_DIR/.bashrc -> $HOME/.bashrc\n"
     info_msg+="• $DOTFILES_DIR/.zshrc -> $HOME/.zshrc\n"
-    info_msg+="• $DOTFILES_DIR/starship.toml -> $CONFIG_DIR/starship.toml\n"
     info_msg+="• $DOTFILES_DIR/.gitconfig -> $HOME/.gitconfig\n\n"
     
     info_msg+="File Status:\n"
@@ -775,7 +759,6 @@ show_file_locations() {
         "$DOTFILES_DIR/.tmux.conf"
         "$DOTFILES_DIR/.bashrc" 
         "$DOTFILES_DIR/.zshrc"
-        "$DOTFILES_DIR/starship.toml"
         "$DOTFILES_DIR/.gitconfig"
     )
     
@@ -878,11 +861,8 @@ show_main_menu() {
         5 "Clean system" \
         6 "Symlink dotfiles" \
         7 "Symlink hidden config files" \
-        8 "Clone/Install TPM" \
-        9 "Clone/Install Neovim config" \
-        10 "Create dotfiles directory" \
-        11 "Show file locations" \
-        12 "Edit Script" \
+        8 "Clone/Install Neovim config" \
+        9 "Show file locations" \
         2>&1 >/dev/tty)
 
     local status=$?
@@ -899,11 +879,8 @@ show_main_menu() {
     5) clean_packages ;;
     6) link_dotfiles ;;
     7) link_hidden_config ;;
-    8) clone_tpm ;;
-    9) clone_nvim ;;
-    10) create_dotfiles_directory ;;
-    11) show_file_locations ;;
-    12) edit_dev ;;
+    8) clone_nvim ;;
+    9) show_file_locations ;;
     esac
 }
 

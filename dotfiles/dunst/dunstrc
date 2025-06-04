@@ -1,11 +1,11 @@
 [global]
-font = Iosevka NF 18
+font = Iosevka 14
 frame_width = 2
 frame_color = "#181818"
 separator_color = frame
 corner_radius = 10
-padding = 8
-horizontal_padding = 8
+padding = 10
+horizontal_padding =  10
 
 # Transparency
 transparency = 0 # roughly 85% opacity
@@ -15,12 +15,12 @@ timeout = 5
 idle_threshold = 120
 
 # Notification position
-geometry = "300x5-30+50"
+geometry = "400x7-30+50"
 origin = center
 
 # Progress bar (optional)
 progress_bar = true
-progress_bar_height = 4
+progress_bar_height = 8
 progress_bar_min_width = 150
 progress_bar_max_width = 300
 progress_bar_corner_radius = 3
