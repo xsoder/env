@@ -104,13 +104,13 @@
 
   },
     "custom/screenshot": {
-        "format": " ",
+        "format": "",
         "tooltip": "Take Screenshot",
         "on-click": "~/scripts/screenshot.sh",
         "interval": 9999
     },
     "custom/record": {
-        "format": "󰖯 ",
+        "format": "󰖯",
         "tooltip": "Take Screenshot",
         "on-click": "~/scripts/record_test.sh",
         "interval": 9999

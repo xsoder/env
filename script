@@ -19,7 +19,6 @@ SCRIPT_NAME="$DOTFILES_DIR/script"
 main() {
     trap 'cleanup' INT TERM
     
-    # Check if dialog is installed
     if ! command -v dialog &>/dev/null; then
         echo "Installing dialog..."
         if command -v pacman &>/dev/null; then

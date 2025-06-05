@@ -1,1 +1,1 @@
-("~/scripts/" "~/devenv/" "~/Programming/nwm/" "~/work/script/" "~/devenv/patches/dmenu/" "~/Programming/echo-server/" "~/nvim/" "~/Programming/bit/" "~/Programming/chess/" "~/Thirdparty/libzmq/libzmq-4.3.5/" "~/Thirdparty/libzmq/libzmq-4.3.5/tests/" "~/Thirdparty/zmq/")
+("~/devenv/" "~/Programming/bit/" "~/firefox/" "~/Programming/nwm/" "~/Programming/chess/" "~/Programming/server/" "~/Programming/echo-server/" "~/scripts/" "~/work/script/" "~/devenv/patches/dmenu/" "~/nvim/" "~/Thirdparty/libzmq/libzmq-4.3.5/" "~/Thirdparty/libzmq/libzmq-4.3.5/tests/" "~/Thirdparty/zmq/")

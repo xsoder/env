@@ -5,11 +5,6 @@
 hyprctl setcursor Bibita-Modern-Ice 24 &
 ssh-add &
 swww-daemon &
-if ! pgrep -x swww-daemon > /dev/null; then
-  swww init
-  sleep 1
-fi
-swww img ~/devenv/wallpaper/gruvbox.png &
 /home/csode/.local/bin/pypr &
 ~/.config/hypr/scripts/suspend.sh &
 flatpak run com.nextcloud.desktopclient.nextcloud &

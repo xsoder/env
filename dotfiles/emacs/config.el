@@ -1,31 +1,122 @@
 (add-to-list 'load-path "~/.config/emacs/scripts/")
 (add-to-list 'load-path "~/.config/emacs/local/")
-(require 'simpc-mode)
-(add-to-list 'auto-mode-alist '("\\.[hc]\\(pp\\)?\\'" . simpc-mode))
 (require 'elpaca-setup)  ;; The Elpaca Package Manager
 (require 'app-launchers) ;; Use emacs as a run launcher like dmenu (experimental)
 (require 'buffer-move)   ;; Buffer-move for better window management
 (require 'eshell-prompt) ;; A fancy prompt for eshell
 (setq backup-directory-alist '((".*" . "~/.local/share/Trash/files")))
 
+;; cc-mode is built-in, so we use a dummy use-package to manage its configuration.
+(use-package cc-mode
+  ;; No :ensure t as it's built-in
+  :hook
+  ;; These hooks apply common settings to all C-like modes
+  ((c-mode . my-c-common-setup)
+   (c++-mode . my-c-common-setup)
+   (objc-mode . my-c-common-setup))
+  :config
+  (defun my-c-common-setup ()
+    "Common settings for C/C++/ObjC modes."
+    ;; Set default style for C-like languages
+    ;; Choose one of the following, or customize further:
+    ;; (setq c-default-style "gnu")
+    ;; (setq c-default-style "k&r")
+    (setq c-default-style "linux") ; A common choice
+    ;; (setq c-default-style "stroustrup")
+
+    ;; Set basic indentation offset (number of spaces)
+    (setq c-basic-offset 4)
+
+    ;; Use spaces instead of tabs for indentation
+    (setq indent-tabs-mode nil)
+
+    ;; Enable electric indentation (auto-indent on typing certain characters)
+    ;; This is usually `t` by default, but good to be explicit
+    (setq c-electric-flag t)
+
+    ;; Don't put closing brace on a new line for functions/blocks
+    ;; (setq c-hanging-braces-alist '((brace-list-open) (brace-list-close)))
+
+    ;; Automatically add newlines after semicolons and braces
+    ;; (setq c-auto-newline t)
+
+    ;; If you want specific settings for C++ only, you'd add them here
+    ;; or in a separate hook for 'c++-mode.
+    ;; For example, if c++-mode should have a different offset:
+    ;; (when (eq major-mode 'c++-mode)
+    ;;   (setq c-basic-offset 2))
+    ))
+
+;; If you want all .h files to open in C++ mode by default (common for C++ projects)
+;; (add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
+
+;; --- LSP Mode for C/C++ ---
+(use-package lsp-mode
+  :ensure t
+  :commands (lsp lsp-deferred) ; lsp-deferred is good for performance on large files
+  :hook
+  ;; Automatically start LSP when opening C/C++ files
+  ((c-mode . lsp-deferred)
+   (c++-mode . lsp-deferred)
+   (objc-mode . lsp-deferred))
+  :config
+  (setq lsp-enable-c-header-insertion nil) ; Often useful to disable for C/C++
+  (define-key lsp-mode-map (kbd "<tab>") 'company-indent-or-complete-f)
+  )
+;; --- Company Mode for LSP Completion ---
 (use-package company
-  :defer 2
+  ;; Already defined earlier, but ensuring settings for LSP are here
+  :defer 2 ; Keep your existing defer setting
   :diminish
+  :hook (lsp-mode . company-mode) ; Enable company in lsp-mode buffers
   :custom
   (company-begin-commands '(self-insert-command))
-  (company-idle-delay nil)
-  (company-minimum-prefix-length 2)
+  (company-idle-delay 0) ; Corrected to integer, 0 for instantaneous
+  (company-minimum-prefix-length 1) ; Lowered from 2 for better LSP experience
   (company-show-numbers t)
   (company-tooltip-align-annotations 't)
-  (global-company-mode t))
+  (global-company-mode t) ; Keep global unless you want per-mode control
+  :config
+  ;; This binding for company-mode-map is fine here
+  (define-key company-mode-map (kbd "<tab>") 'company-indent-or-complete-f)
+  ;; REMOVE THIS LINE: (define-key lsp-mode-map (kbd "<tab>") 'company-indent-or-complete-f)
 
+  )
+(use-package which-key
+  :ensure t
+  :init
+  (which-key-mode))
+(use-package dashboard
+  :ensure t
+  :config
+  (dashboard-setup-startup-hook)
+  (setq dashboard-banner-logo-title "Welcome to Emacs, csode! Keep Programming!")
+  (setq dashboard-startup-banner "~/.config/emacs/logo.png")  ;; Change this to the path of your logo
+
+  (setq dashboard-items '((recents  . 5)  ;; Show 5 recent files
+                          (bookmarks . 5)  ;; Show 5 bookmarks
+                          (projects . 5)   ;; Show 5 recent projects
+                          (agenda . 5)))   ;; Show 5 agenda items (if using Org-mode)
+
+  ;; Optionally, customize the footer (e.g., your name or slogan)
+  (setq dashboard-footer-messages '("csode - Keep Programming!"))
+
+  ;; Set the dashboard as the initial buffer to open on startup
+(setq initial-buffer-choice 'dashboard-open))
+(use-package flycheck
+  :ensure t
+  :defer t
+  :hook (lsp-mode . flycheck-mode)
+)
 (use-package company-box
   :after company
   :diminish
   :hook (company-mode . company-box-mode))
-
+(use-package markdown-mode
+  :ensure t)
 (use-package diminish)
 (use-package consult)
+(use-package denote-markdown)
 (use-package gruvbox-theme
   :ensure t
   :config
@@ -148,12 +239,6 @@
   (define-key evil-motion-state-map (kbd "TAB") nil))
 ;; Setting RETURN key in org-mode to follow links
   (setq org-return-follows-link  t)
-
-(use-package flycheck
-  :ensure t
-  :defer t
-  :diminish
-  :init (global-flycheck-mode))
 
 (set-face-attribute 'default nil
   :font "JetBrains Mono Nerd Font"
@@ -729,3 +814,23 @@
   "Open TRAMP SSH connection to papa@localhost:2222."
   (interactive)
   (dired "/sshx:papa@localhost#2222:~/"))
+(setq inhibit-startup-screen t)  ;; Disable the default startup screen
+;; Explicitly ensure C/C++ modes are used for source files
+;; Put these BEFORE any tree-sitter or generic file association
+(add-to-list 'auto-mode-alist '("\\.c\\'" . c-mode))
+(add-to-list 'auto-mode-alist '("\\.cpp\\'" . c++-mode))
+(add-to-list 'auto-mode-alist '("\\.cc\\'" . c++-mode))
+(add-to-list 'auto-mode-alist '("\\.cxx\\'" . c++-mode))
+(add-to-list 'auto-mode-alist '("\\.C\\'" . c-mode)) ; For some systems that use .C extension for C code
+
+;; For header files, decide if you want C or C++ mode by default
+;; Common for C++ projects to treat .h as C++
+(add-to-list 'auto-mode-alist '("\\.h\\'" . c++-mode))
+;; Or if you prefer .h to be C mode by default:
+;; (add-to-list 'auto-mode-alist '("\\.h\\'" . c-mode))
+
+;; Ensure CMake-ts-mode is only for CMakeLists.txt and .cmake files
+(add-to-list 'auto-mode-alist '("CMakeLists\\.txt\\'" . cmake-ts-mode))
+(add-to-list 'auto-mode-alist '("\\.cmake\\'" . cmake-ts-mode))
+(setq enable-local-variables :all)
+(setq enable-local-eval :all)

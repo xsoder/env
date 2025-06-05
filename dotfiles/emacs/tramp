@@ -1,4 +1,4 @@
-;; -*- emacs-lisp -*- <25/06/03 16:39:23 ~/.config/emacs/tramp>
+;; -*- emacs-lisp -*- <25/06/05 00:27:28 ~/.config/emacs/tramp>
 ;; Tramp connection history.  Don't change this file.
 ;; Run `M-x tramp-cleanup-all-connections' instead.
 
@@ -23,4 +23,6 @@
   ("gid-string" "papa") ("groups-integer" (1000 998))
   ("groups-string" ("papa" "wheel")) ("bzr" nil) ("git" "\\git")
   ("hg" nil) ("perl-file-spec" t) ("perl-cwd-realpath" t)
-  ("perl" "\\perl") ("dev-tty" t)))
+  ("perl" "\\perl") ("dev-tty" t))
+ ((tramp-file-name "ssh" "user" nil "host" nil nil nil) nil)
+ ((tramp-file-name "sudo" "root" nil "archlinux" nil nil nil) nil))
