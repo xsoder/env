@@ -1,0 +1,1 @@
+/home/csode/.config/emacs/elpaca/repos/denote/denote.el
