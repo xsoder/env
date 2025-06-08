@@ -2,6 +2,8 @@
 
 ;; ----- ido-last-directory-list -----
 (
+ ("/home/csode/devenv/dotfiles/hypr/" . "modules/")
+ ("/home/csode/Videos/" . "Recordings/")
  ("/home/csode/.mozilla/firefox/y70ci8ul.default-release/" . "chrome/")
  ("/home/csode/.mozilla/firefox/" . "y70ci8ul.default-release/")
  ("/home/csode/.mozilla/" . "firefox/")
@@ -12,29 +14,40 @@
  ("/home/csode/devenv/patches/dwm/" . "scripts/")
  ("/home/csode/devenv/patches/" . "dwm/")
  ("/home/csode/devenv/dotfiles/" . "emacs/")
- ("/home/csode/devenv/" . "dotfiles/")
+ ("/home/csode/devenv/" . "docs/")
  ("/home/csode/nvim/lua/csode/" . "local_plugins/")
  ("/home/csode/nvim/lua/" . "csode/")
  ("/home/csode/nvim/" . "lua/")
  ("/home/csode/Programming/chess/" . "build/")
  ("/home/" . "csode/")
  ("/home/csode/Programming/echo-server/" . "thirdparty/")
- ("/home/csode/Programming/" . "bit/")
+ ("/home/csode/Programming/" . "chess/")
  ("/home/csode/Thirdparty/libzmq/libzmq-4.3.5/" . "build/")
  ("/home/csode/Thirdparty/libzmq/" . "libzmq-4.3.5/")
  ("/home/csode/Thirdparty/" . "libzmq/")
- ("/home/csode/" . "devenv/")
+ ("/home/csode/" . "Programming/")
 )
 
 ;; ----- ido-work-directory-list -----
 (
- "/home/csode/Programming/echo-server/"
- "/home/csode/devenv/dotfiles/emacs/"
- "/home/csode/Programming/bit/"
- "/home/csode/devenv/"
- "/home/csode/Programming/"
+ "/home/csode/Programming/chess/"
+ "/home/csode/notes/"
  "/home/csode/"
  "/home/csode/devenv/dotfiles/"
+ "/home/csode/devenv/dotfiles/hypr/modules/"
+ "/home/csode/devenv/"
+ "/home/csode/devenv/docs/"
+ "/home/csode/devenv/dotfiles/emacs/"
+ "/home/csode/devenv/dotfiles/hypr/"
+ "/home/csode/devenv/modules/"
+ "/home/csode/devenv/dotfiles/waybar/"
+ "/home/csode/Videos/Recordings/"
+ "/home/csode/scripts/"
+ "/home/csode/Videos/"
+ "/home/csode/devenv/dotfiles/alacritty/"
+ "/home/csode/Programming/echo-server/"
+ "/home/csode/Programming/bit/"
+ "/home/csode/Programming/"
  "/home/csode/firefox/"
  "/home/csode/Programming/website/"
  "/home/csode/.mozilla/firefox/y70ci8ul.default-release/chrome/"
@@ -42,10 +55,8 @@
  "/home/csode/Programming/website/html/"
  "/home/csode/Programming/website/css/"
  "/home/csode/Programming/nwm/"
- "/home/csode/devenv/docs/"
  "/home/csode/Programming/website/js/"
  "/home/csode/Downloads/"
- "/home/csode/devenv/dotfiles/hypr/"
  "/home/csode/devenv/scripts/"
  "/sshx:papa@localhost#2222:/home/papa/nwm/src/"
  "/sshx:papa@localhost#2222:/home/papa/nwm/"
@@ -55,7 +66,6 @@
  "/home/csode/work/script/"
  "/home/csode/devenv/patches/dmenu/"
  "/sshx:papa@localhost#2222:/home/papa/"
- "/home/csode/scripts/"
  "/home/csode/devenv/dotfiles/dunst/"
  "/home/csode/devenv/patches/dwm/"
  "/home/csode/devenv/patches/dwm/scripts/"
@@ -64,14 +74,12 @@
  "/home/csode/main/"
  "/home/csode/nvim/lua/csode/local_plugins/"
  "/home/csode/Programming/echo-server/thirdparty/"
- "/home/csode/Programming/chess/"
  "/home/csode/Programming/chess/build/"
  "/home/csode/Thirdparty/libzmq/"
  "/home/csode/Thirdparty/libzmq/libzmq-4.3.5/build/"
  "/home/csode/Thirdparty/libzmq/libzmq-4.3.5/"
  "/home/csode/Thirdparty/libzmq/libzmq-4.3.5/tests/"
  "/home/csode/Thirdparty/libzmq/libzmq-4.3.5/builds/"
- "/home/csode/time.sh/"
 )
 
 ;; ----- ido-work-file-list -----
@@ -84,21 +92,49 @@
 
 ;; ----- ido-dir-file-cache -----
 (
- ("/home/csode/" (26689 7810 202708 649000) ".zcompdump-archlinux-5.9.zwc" "learning/" "nvim/" ".vim/" ".var/" "media/" "scripts/" ".gtkrc-2.0" ".distrobox-home-neovim/" ".mozilla/" ".zcompdump-archlinux-5.9" ".authinfo" "notes/" ".ssh/" ".gitconfig" ".fonts/" "packages/" ".bash_profile" ".shell.pre-oh-my-zsh" ".bashrc" ".wget-hsts" "firefox/" ".gnupg/" "arch.qcow2" ".icons/" "work/" ".cargo/" "Thirdparty/" ".local/" "./" ".Xresources" "rofi/" ".bash_history" "Programming/" ".pki/" ".cache/" "Videos/" ".fehbg" ".bash_logout" "Downloads/" "dopi/" ".xinitrc" ".zshrc.pre-oh-my-zsh" "VM/" ".tmux.conf" "installed_packages.json" ".zshrc" "../" "devenv/" ".Xauthority" ".zsh_history" ".npm/" ".elfeed/" "meme/" "opt/" "my-dots/" ".config/" ".viminfo" ".oh-my-zsh/")
+ ("/home/csode/Programming/" (26691 20763 783424 795000) "echo-server/" "bit/" "chess/" "./" "server/" "nwm/" "../" "website/" "test/" "tme/")
 
- ("/home/csode/devenv/dotfiles/emacs/" (26689 5548 560774 332000) "projects" "config.org" "early-init.el" "scripts/" "auto-save-list/" "elpa/" "config.el" "elpaca/" "snippets/" "./" "recentf" "tramp" "sessions" "transient/" "images/" "projectile-bookmarks.eld" "local/" "../" ".lsp-session-v1" "logo.png" "ido.last" "init.el" "eshell/" "logo2.png" "themes/" "eln-cache/")
+ ("/home/csode/" (26691 39083 890376 999000) ".zcompdump-archlinux-5.9.zwc" "learning/" "nvim/" ".xsession-errors" ".vim/" ".var/" "media/" "scripts/" ".gtkrc-2.0" ".distrobox-home-neovim/" ".mozilla/" ".zcompdump-archlinux-5.9" ".authinfo" "notes/" ".ssh/" ".gitconfig" ".fonts/" "packages/" ".bash_profile" ".shell.pre-oh-my-zsh" ".bashrc" ".wget-hsts" ".gnupg/" ".xsession-errors.old" ".icons/" "work/" ".cargo/" "Thirdparty/" ".local/" "./" ".Xresources" ".bash_history" "Programming/" ".pki/" ".cache/" "Videos/" ".fehbg" ".bash_logout" "Downloads/" "dopi/" ".xinitrc" ".zshrc.pre-oh-my-zsh" "VM/" ".tmux.conf" ".zshrc" "../" "devenv/" ".Xauthority" ".zsh_history" ".npm/" ".notes" ".elfeed/" "meme/" "opt/" ".config/" ".viminfo" ".oh-my-zsh/" ".dmrc")
 
- ("/home/csode/devenv/" (26689 3918 50389 341000) "scripts/" "README.md" "script" "patches/" ".bashrc" "packages.json" "dotfiles/" "./" ".tmux.conf" ".zshrc" "../" ".gitignore" "docs/" ".git/" "wallpaper/")
+ ("/home/csode/notes/" (26691 38497 339756 906000) "todo-2025-05-30.md" "README.md" "todo-2025-05-29.md" "X11_WM_Learning_Plan.pdf" "todo-2025-06-02.md" "LICENSE" "./" "todo.md" "../" "todo-2025-06-01.md" "todo-2025-06-03.md")
 
- ("/home/csode/devenv/dotfiles/" (26689 3194 180563 548000) "fastfetch/" "dmenu/" "./" "i3/" "rofi/" "hypr/" "copyq/" "ghostty/" "emacs/" "waybar/" "../" "dunst/" "swaylock/" "dconf/")
+ ("/home/csode/devenv/dotfiles/emacs/" (26690 64193 665449 520000) "projects" "config.org" "early-init.el" "scripts/" "auto-save-list/" "elpa/" "config.el" "elpaca/" "snippets/" "./" "recentf" "tramp" "sessions" "transient/" "images/" "projectile-bookmarks.eld" "local/" "../" ".lsp-session-v1" "logo.png" "ido.last" "init.el" "eshell/" "themes/" "eln-cache/")
 
- ("/home/csode/devenv/dotfiles/waybar/" (26688 33390 268424 423000) "style.css" "theme.css" "scripts/" "./" "config.jsonc" "../" "themes/")
+ ("/home/csode/devenv/dotfiles/hypr/" (26690 60649 698782 645000) "modules/" "scripts/" "imgs/" "hyprland.conf" "./" "hyprlock.conf" "README.org" "../" "themes/")
+
+ ("/home/csode/devenv/" (26690 58631 892174 489000) "modules/" "scripts/" "README.md" "script" ".bashrc" "main" "packages.json" "dotfiles/" "./" ".tmux.conf" "../" ".gitignore" "docs/" ".git/" "wallpaper/")
+
+ ("/home/csode/.config/" (26690 22271 548970 338000) "trashrc" "nvim/" "kdenliverc" "krusaderrc" "mpv/" "Thunar/" "autostart/" "trizen/" "systemd/" "fastfetch/" "pulse/" "xfce4/" "coc/" "vivaldi/" "QtProject/" "starship.toml" "discord/" "dmenu/" "kde.org/" "kdenlive-layoutsrc" "QtProject.conf" "kiorc" "procps/" "GIMP/" "spotify/" "kritadisplayrc" "gtk-3.0/" "obs-studio/" "dolphinrc" "wal/" "htop/" "vlc/" "gtk-4.0/" "./" "i3/" "kdeglobals" "rofi/" "hypr/" "Proton/" "copyq/" "virt-viewer/" "wezterm" "chromium/" "pavucontrol.ini" "obsidian/" "Windsurf/" "konachan-wallpaper/" "ghostty/" "wlogout/" "emacs/" "wallpaper_switcher/" "mimeapps.list" "Vial/" "kitty" "nwm/" "test.sh" "waybar/" ".zshrc" "alacritty/" "../" "Electron/" "spicetify" "polybar" "fish" "session/" "neofetch/" "xdg-desktop-portal/" "kritarc" "config" "dunst/" "greenclip.toml" "picom.conf" "swaylock/" "kdeconnect/" "libvirt/" "dconf/")
+
+ ("/home/csode/.config/emacs/" (26689 10034 111581 400000) "projects" "config.org" "early-init.el" "scripts/" "auto-save-list/" "elpa/" "config.el" "elpaca/" "snippets/" "./" "recentf" "tramp" "sessions" "transient/" "images/" "projectile-bookmarks.eld" "local/" "../" ".lsp-session-v1" "logo.png" "ido.last" "init.el" "eshell/" "themes/" "eln-cache/")
+
+ ("/home/csode/Downloads/" (26690 54450 43311 802000) "4341020.png" "favicon_io/" "Win10_22H2_English_x64v1.iso" "cal.ics" "dtos-2025.05.24-alpha.iso" "Gemini_Generated_Image_8ourez8ourez8our(1).png" "daily_routine.ics" "wp11058350-gruvbox-wallpapers.png" "wp11058332-gruvbox-wallpapers.png" "./" "../" "Gemini_Generated_Image_8ourez8ourez8our.png" "Diluted 142 @bpm @spexx Nemzz Type beat.mp3" "Vial-v0.7.3-x86_64.AppImage" "favicon_io.zip" "archlinux-2025.04.12-x86_64.iso")
+
+ ("/home/csode/Programming/nwm/" (26689 9106 96949 981000) "thirdparty/" "README.md" "./" "Makefile" "nwm" "todo.md" "../" "src/" ".git/")
+
+ ("/home/csode/.mozilla/firefox/y70ci8ul.default-release/chrome/" (26688 60045 830943 488000) "./" "../" "userChrome.css")
+
+ ("/home/csode/devenv/dotfiles/" (26690 22169 983273 935000) "fastfetch/" "dmenu/" "./" "i3/" "rofi/" "hypr/" "copyq/" "ghostty/" "wlogout/" "emacs/" "waybar/" "alacritty/" "../" "neofetch/" "dunst/" "swaylock/" "dconf/")
+
+ ("/home/csode/Programming/bit/" (26689 9132 143250 634000) "scripts/" "LICENSE.org" "./" ".cache/" "Makefile" "CMakeLists.txt" "README.org" "../" "test/" ".gitignore" "install.sh" "docs/" "src/" ".git/" "build/" "includes/")
+
+ ("/home/csode/scripts/" (26690 22891 414988 986000) "power.sh" "nvim_sessionizer.sh" "java.sh" "screenshot.sh" "session_switch.sh" "wch.sh" "git.sh" "README.md" "pkill.sh" "tmux_sessionize.sh" "bluetooth.sh" "select.sh" "win.qcow2" "file.sh" "todo-popup.sh" "take-screenshot.sh" "kill_session.sh" "wayland_wallpaper.sh" "lazygit.sh" "wallpaper.sh" "neovim.sh" "session.sh" "look-screen.sh" "emacs.sh" "./" "package.sh" "fzf_from.sh" "cat" "nff.sh" "preview.sh" "remap_caps_escape.sh" "run.sh" "rofi.sh" "set-wallpaper.sh" "session_killer.sh" "pywal" "winrun.sh" "test.sh" "record_test.sh" "sysmaintenance.sh" "../" "node.sh" "fzf.sh" "win10.sh" "raylib.sh" "debug.sh" "gitter.sh" "gcgccsys.sh" "c.sh" "screenkey-toogle.sh" "clipboard-daemon.sh" "ghostty.sh" "tmux.sh" "toggle_focus.sh" "clean.sh" ".git/" "screenkey.sh" "record.sh" "tmux_sessionizer.sh" "cpp.sh" "json_lock.sh")
+
+ ("/home/csode/Videos/Recordings/" (26690 21485 141315 155000) "record_window_2025-06-05_21-48-37.mp4" "record_window_2025-06-04_19-34-26.mp4" "record_window_2025-06-05_22-29-39.mp4" "record_window_2025-06-04_12-23-59.mp4" "test_20250605_222803.mp4" "record_window_2025-06-05_20-20-58-120fps.mp4" "record_window_2025-06-05_21-51-55.mp4" "record_window_2025-06-05_22-31-31.mp4" "record_2025-06-04_12-30-13.mp4" "record_window_2025-06-05_22-35-06.mp4" "record_2025-06-04_12-33-17.mp4" "record_2025-06-05_21-44-08.mp4" "record_window_2025-06-05_22-30-01.mp4" "./" "record_2025-06-04_17-02-03.mp4" "record_window_2025-06-05_22-11-55.mp4" "record_window_2025-06-05_22-35-25.mp4" "record_window_2025-06-05_22-25-32.mp4" "record_window_2025-06-05_21-44-14.mp4" "record_window_2025-06-05_20-20-58.mp4" "record_window_2025-06-05_22-33-23.mp4" "../" "record_window_2025-06-05_22-20-11.mp4" "test_20250605_222822.mp4" "record_window_2025-06-05_22-29-24.mp4" "record_window_2025-06-04_13-13-33.mp4")
+
+ ("/home/csode/devenv/dotfiles/waybar/" (26690 22457 398414 679000) "style.css" "theme.css" "scripts/" "./" "config.jsonc" "../" "Gruvbox-Material-Icon-Pack/" "themes/")
+
+ ("/home/csode/Videos/" (26690 13917 265996 739000) "neovim.mp4" "untitled.mp4" "Recordings/" "./" "record_full_2025-06-04_12-16-37.mp4" "main.mp4" "../" "record_full_2025-06-04_12-20-10.mp4")
+
+ ("/home/csode/media/" (26686 22689 606476 465000) "video/" "Pictures.kra" "2025-05-14-022758_hyprshot.png" "2025-05-15 11-34-31.mkv" "2025-05-14-020919_hyprshot.png" "2025-05-14-023122_hyprshot.png" "2025-05-15-015401_hyprshot.png" "2025-05-14-024900_hyprshot.png" "./" "Picture/" "ghostty/" "emacs/" "2025-05-14-020906_hyprshot.png" "2025-05-14-023813_hyprshot.png" "../" "2025-05-14-020925_hyprshot.png" "2025-05-14-020858_hyprshot.png" "2025-05-15 11-43-25.mkv" "2025-05-15-015103_hyprshot.png")
+
+ ("/home/csode/devenv/dotfiles/alacritty/" (26690 17612 521069 61000) "alacritty.toml" "./" "../")
+
+ ("/home/csode/devenv/dotfiles/hypr/modules/" (26690 17087 617844 961000) "general.conf" "monitors.conf" "input.conf" "./" "env.conf" "rules.conf" "../" "binds.conf")
 
  ("/home/csode/firefox/" (26689 2041 941925 70000) "index.html" "./" "../" ".git/")
 
  ("/home/csode/Programming/website/html/" (26689 1272 896979 175000) "test.html" "index.html" "./" "../")
-
- ("/home/csode/.mozilla/firefox/y70ci8ul.default-release/chrome/" (26688 59731 778444 389000) "./" "userContent.css" "../" "userChrome.css")
 
  ("/home/csode/.mozilla/firefox/y70ci8ul.default-release/" (26688 58965 967412 297000) "bookmarkbackups/" "places.sqlite" "storage-sync-v2.sqlite" "content-prefs.sqlite" "formhistory.sqlite" "pkcs11.txt" "prefs.js" "serviceworker.txt" "crashes/" "extensions/" "chrome/" "AlternateServices.bin" "xulstore.json" "synced-tabs.db-wal" "webappsstore.sqlite-wal" "times.json" "sessionCheckpoints.json" "storage/" "security_state/" "logins.json" "gmp-gmpopenh264/" ".parentlock" "datareporting/" "gmp/" "extensions.json" "gmp-widevinecdm/" "broadcast-listeners.json" "permissions.sqlite" "features/" "extension-settings.json" "containers.json" "synced-tabs.db-shm" "bounce-tracking-protection.sqlite" "signedInUser.json" "storage.sqlite" "lock" "saved-telemetry-pings/" "logins-backup.json" "webappsstore.sqlite" "compatibility.ini" "autofill-profiles.json" "./" "extension-store/" "cookies.sqlite-wal" "ExperimentStoreData.json" "domain_to_categories.sqlite" "storage-sync-v2.sqlite-shm" "search.json.mozlz4" "extension-preferences.json" "key4.db" "places.sqlite-wal" "favicons.sqlite" "suggest.sqlite-shm" "cookies.sqlite" "synced-tabs.db" "sessionstore-backups/" "suggest.sqlite-wal" "../" "notificationstore.json" "shield-preference-experiments.json" "favicons.sqlite-wal" "suggest.sqlite" "storage-sync-v2.sqlite-wal" "cert9.db" "protections.sqlite" "handlers.json" "addons.json" "extension-store-menus/" "minidumps/" "addonStartup.json.lz4" "enumerate_devices.txt" "domain_to_categories.sqlite-journal" "SiteSecurityServiceState.bin" "settings/" "weave/")
 
@@ -110,15 +146,11 @@
 
  ("/home/csode/Programming/chess/build/" (26676 58570 47840 113000) "compile_commands.json" "cmake_install.cmake" "assets/" "CMakeFiles/" "chess" "./" "Makefile" "CMakeCache.txt" "../")
 
- ("/home/csode/Programming/bit/" (26678 625 900346 150000) "scripts/" "LICENSE.org" "./" ".cache/" "Makefile" "CMakeLists.txt" "README.org" "../" "test/" ".gitignore" "install.sh" "docs/" "src/" ".git/" "build/" "includes/")
-
  ("/home/csode/nvim/lua/csode/local_plugins/" (26686 21767 167751 304000) "nvim_compile.lua" "./" "markdown_link_nav.lua" "todo.lua" "../")
 
  ("/home/csode/devenv/dotfiles/i3/" (26687 20897 849675 778000) "README.md" "./" "../" "config")
 
  ("/home/csode/Programming/echo-server/" (26681 18552 585067 53000) "thirdparty/" "client.h" "README.md" "index.html" "server.c" "./" "client.c" "bin/" "Makefile" "todo.md" "../" ".gitignore" ".git/")
-
- ("/home/csode/.config/emacs/" (26688 52173 989912 281000) "projects" "config.org" "early-init.el" "scripts/" "auto-save-list/" "elpa/" "config.el" "elpaca/" "snippets/" "./" "recentf" "tramp" "sessions" "transient/" "images/" "projectile-bookmarks.eld" "local/" "../" ".lsp-session-v1" "ido.last" "init.el" "eshell/" "themes/" "eln-cache/")
 
  ("/home/csode/Programming/nwm/src/" (26687 23705 955846 277000) "nwm.hpp" "nwm.cpp" "./" "../" "test.cpp")
 
@@ -128,27 +160,13 @@
 
  ("/home/csode/Programming/website/js/" (26688 50744 297870 779000) "app.js" "./" "../")
 
- ("/home/csode/.config/" (26688 34072 721987 740000) "trashrc" "nvim/" "kdenliverc" "krusaderrc" "mpv/" "Thunar/" "autostart/" "trizen/" "systemd/" "fastfetch/" "pulse/" "xfce4/" "coc/" "vivaldi/" "QtProject/" "starship.toml" "discord/" "kde.org/" "kdenlive-layoutsrc" "QtProject.conf" "kiorc" "procps/" "GIMP/" "spotify/" "kritadisplayrc" "gtk-3.0/" "obs-studio/" "dolphinrc" "wal/" "htop/" "vlc/" "gtk-4.0/" "./" "i3/" "kdeglobals" "rofi/" "hypr/" "Proton/" "copyq/" "virt-viewer/" "wezterm/" "chromium/" "pavucontrol.ini" "obsidian/" "Windsurf/" "konachan-wallpaper/" "ghostty/" "emacs/" "wallpaper_switcher/" "mimeapps.list" "Vial/" "kitty/" "nwm/" "test.sh" "waybar/" ".zshrc" "alacritty/" "../" "Electron/" "spicetify/" "polybar/" "fish" "session/" "neofetch/" "xdg-desktop-portal/" "kritarc" "config" "dunst/" "greenclip.toml" "picom.conf" "swaylock/" "kdeconnect/" "dconf/")
-
  ("/home/csode/devenv/patches/dwm/" (26686 22007 670234 40000) "dwm.c.orig" "config.mk" "swallow" "drw.h" "README.md" "bread_dwm.png" "dwm.o" "dwm.png" "patches/" "drw.o" "util.o" "LICENSE" "config.def.h" "dwm.1" "./" "dwm.c" "transient.c" "dwm.c.rej" "dwm" "Makefile" "util.h" "../" "util.c" "config.def.h.rej" "vanitygaps.c" "config.h" "drw.c" ".git/" "config.def.h.orig")
 
  ("/home/csode/devenv/dotfiles/dunst/" (26687 33473 688855 594000) "dunstrc" "./" "../")
 
- ("/home/csode/scripts/" (26688 34259 186227 231000) "power.sh" "nvim_sessionizer.sh" "java.sh" "screenshot.sh" "session_switch.sh" "wch.sh" "git.sh" "README.md" "pkill.sh" "tmux_sessionize.sh" "bluetooth.sh" "select.sh" "win.qcow2" "file.sh" "todo-popup.sh" "take-screenshot.sh" "kill_session.sh" "wayland_wallpaper.sh" "lazygit.sh" "wallpaper.sh" "neovim.sh" "session.sh" "look-screen.sh" "emacs.sh" "./" "package.sh" "fzf_from.sh" "cat" "nff.sh" "preview.sh" "remap_caps_escape.sh" "run.sh" "rofi.sh" "set-wallpaper.sh" "session_killer.sh" "pywal" "winrun.sh" "test.sh" "record_test.sh" "sysmaintenance.sh" "../" "node.sh" "fzf.sh" "win10.sh" "raylib.sh" "gitter.sh" "gcgccsys.sh" "c.sh" "screenkey-toogle.sh" "clipboard-daemon.sh" "ghostty.sh" "tmux.sh" "toggle_focus.sh" "clean.sh" ".git/" "screenkey.sh" "record.sh" "tmux_sessionizer.sh" "cpp.sh" "json_lock.sh")
-
- ("/home/csode/devenv/dotfiles/hypr/" (26688 34944 582612 90000) "modules/" "scripts/" "imgs/" "hyprland.conf" "./" "hyprlock.conf" "env.conf" "../" "txt.txt" "themes/" "pyprland.toml")
-
- ("/home/csode/Programming/" (26688 49504 686751 64000) "echo-server/" "bit/" "chess/" "./" "server/" "nwm/" "../" "website/" "tme/")
-
- ("/home/csode/Downloads/" (26688 49442 14858 438000) "4341020.png" "favicon_io/" "wp11058350-gruvbox-wallpapers.png" "wp11058332-gruvbox-wallpapers.png" "./" "../" "Vial-v0.7.3-x86_64.AppImage" "favicon_io.zip")
-
  ("/home/csode/Programming/website/css/" (26688 48393 550214 219000) "style.css" "./" "../")
 
- ("/home/csode/devenv/dotfiles/hypr/modules/" (26687 50237 257305 421000) "general.conf" "monitors.conf" "input.conf" "./" "binds.conf.bak" "env.conf" "rules.conf" "../" "binds.conf")
-
  ("/home/csode/devenv/scripts/" (26687 20901 696650 858000) "autostart" "./" "rerun" "../")
-
- ("/home/csode/Programming/nwm/" (26687 23705 954846 284000) "thirdparty/" "README.md" "./" "Makefile" "nwm" "todo.md" "../" "src/" ".git/")
 
  ("/home/csode/.config/emacs/elpaca/" (26674 26737 261946 648000) "repos/" "./" "cache/" "../" "builds/")
 

@@ -349,16 +349,6 @@ force_link() {
 edit_dev() {
     nvim "$SCRIPT_NAME"
 }
-clone_nvim() {
-    if [[ ! -d "$NVIM_DIR" ]]; then
-        dialog --title "Cloning Nvim" --infobox "Cloning Neovim config..." "$HEIGHT" "$WIDTH"
-        git clone "$NVIM_URL" "$NVIM_DIR"
-    fi
-    
-    # Force link neovim config
-    force_link "$NVIM_DIR" "$HOME/.config/nvim"
-}
-
 full_setup() {
     get_sudo_password
 
@@ -380,10 +370,6 @@ full_setup() {
     current=$((current + 1))
     dialog --title "Full Setup ($current/$steps)" --infobox "Installing all packages..." "$HEIGHT" "$WIDTH"
     install_all_packages_silent
-
-    current=$((current + 1))
-    dialog --title "Full Setup ($current/$steps)" --infobox "Installing neovim config..." "$HEIGHT" "$WIDTH"
-    clone_nvim
 
     current=$((current + 1))
     dialog --title "Full Setup ($current/$steps)" --infobox "Setting up dotfiles and package tracking..." "$HEIGHT" "$WIDTH"
@@ -475,7 +461,6 @@ init_packages_silent() {
     "alacritty",
     "fish",
     "git",
-    "neovim",
     "emacs",
     "spotify",
     "discord",
@@ -860,7 +845,6 @@ show_main_menu() {
         5 "Clean system" \
         6 "Symlink dotfiles" \
         7 "Symlink hidden config files" \
-        8 "Clone/Install Neovim config" \
         9 "Show file locations" \
         2>&1 >/dev/tty)
 
@@ -878,8 +862,7 @@ show_main_menu() {
     5) clean_packages ;;
     6) link_dotfiles ;;
     7) link_hidden_config ;;
-    8) clone_nvim ;;
-    9) show_file_locations ;;
+    8) show_file_locations ;;
     esac
 }
 

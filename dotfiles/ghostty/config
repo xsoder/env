@@ -8,7 +8,6 @@ font-size = 18
 font-family = JetBrains Mono Nerd Font
 shell-integration-features = no-cursor,no-sudo,no-title
 window-decoration=none
-
 # what is a prefix?
 # keybind = ctrl+d=scroll_page_fractional:0.5
 # keybind = ctrl+u=scroll_page_fractional:-0.5

@@ -1,24 +1,24 @@
-@define-color bg-hover #272E32;
-@define-color lbg #3c3836;
-@define-color bg #282828;
-@define-color blue #83a598;
-@define-color sky #458588;
-@define-color red #fb4934;
-@define-color pink #cc241d;
-@define-color lavender #d3869b;
+@define-color bg-hover #1a1a1a;
+@define-color lbg #252525;
+@define-color bg #181818;
+@define-color blue #5f87af;
+@define-color sky #4a708b;
+@define-color red #cc241d;
+@define-color pink #af4b57;
+@define-color lavender #b294bb;
 @define-color rosewater #b16286;
 @define-color flamingo #b16286;
-@define-color fg #fbf1c7;
-@define-color green #8ec08c;
-@define-color active-green #689d6a;
-@define-color dark-fg #a89984;
-@define-color peach #f2966b;
+@define-color fg #e4e4e4;
+@define-color green #87af87;
+@define-color active-green #5f875f;
+@define-color dark-fg #8a8a8a;
+@define-color peach #d7875f;
 @define-color border @lavender;
-@define-color gray2 #928374;
-@define-color black4 #1d2021;
-@define-color black3 #32302f;
-@define-color maroon #cc241d;
-@define-color yellow #d79921;
+@define-color gray2 #6c6c6c;
+@define-color black4 #121212;
+@define-color black3 #1e1e1e;
+@define-color maroon #af4b57;
+@define-color yellow #d7af5f;
 
 * {
   min-height: 0;
@@ -72,7 +72,6 @@ window#waybar {
   padding: 1px;
   background-color: @bg;
   color: @bg;
-
 }
 
 #workspaces button {
@@ -87,12 +86,10 @@ window#waybar {
 #workspaces button.active {
     background-color:@blue;
     color: @bg;
-    /*color: @bg;*/
-
 }
 
 #workspaces button.urgent {
-	color: #F38BA8;
+	color: #af4b57;
 }
 
 #workspaces button:hover {
@@ -162,7 +159,6 @@ window#waybar {
     padding-right: 12px;
     border-radius: 3px;
     background-color: @bg;
-
 }
 
 #custom-gpu-temp,
@@ -199,7 +195,6 @@ window#waybar {
   border-bottom-right-radius: 0px;
   border-top-left-radius: 3px;
   border-bottom-left-radius: 3px;
-
 }
 
 #battery,
@@ -240,17 +235,17 @@ window#waybar {
     padding: 0 3px;
     margin: 0 0px;
     color: #ffffff;
-    background-color: rgba(120,118,117,0.3);
+    background-color: rgba(80,80,80,0.3);
 }
 #taskbar button {
     border-radius: 3px 3px 3px 3px;
     padding: 0 0 0 3px;
     margin: 3px 1;
     color: #ffffff;
-    background-color: rgba(120,118,117,0.1);
+    background-color: rgba(80,80,80,0.1);
 }
 #taskbar button.active {
-    background-color: rgba(120,118,117,0.8);
+    background-color: rgba(80,80,80,0.8);
 }
 
 #mode {
@@ -285,6 +280,17 @@ window#waybar {
   border-color: @lbg;
 }
 #custom-record {
+  margin: 5px 5px 2px 5px;
+  padding-left: 10px;
+  padding-right: 12px;
+  border-radius: 3px;
+  background-color: @bg;
+  color: @peach;
+  border-bottom: 0px solid @bg;
+  border-right: 0px solid @bg;
+  border-color: @lbg;
+}
+#custom-lock {
   margin: 5px 5px 2px 5px;
   padding-left: 10px;
   padding-right: 12px;

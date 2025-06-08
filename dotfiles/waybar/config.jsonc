@@ -2,7 +2,8 @@
 		"layer": "top",
 		"modules-left": ["hyprland/workspaces", "temperature", "hyprland/window"],
 		/*"modules-center": ["hyprland/window"],*/
-		"modules-right": ["tray", "cpu", "memory", "idle_inhibitor","custom/app","custom/record","custom/screenshot", "clock", "pulseaudio", "bluetooth"],
+		"modules-right": ["tray", "cpu", "memory", "idle_inhibitor","custom/app","custom/screenshot", "clock", "custom/lock", "pulseaudio", "bluetooth"],
+
 
   "hyprland/window": {
 	    "format": "{title}",
@@ -109,10 +110,10 @@
         "on-click": "~/scripts/screenshot.sh",
         "interval": 9999
     },
-    "custom/record": {
-        "format": "󰖯",
-        "tooltip": "Take Screenshot",
-        "on-click": "~/scripts/record_test.sh",
+    "custom/lock": {
+        "format": "⏻",
+        "tooltip": "Power Button",
+        "on-click": "wlogout",
         "interval": 9999
     },
     "custom/app": {
