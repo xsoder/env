@@ -1,1 +1,0 @@
-/home/csode/.config/emacs/elpaca/repos/emacs-theme-gruvbox/gruvbox-dark-medium-theme.el

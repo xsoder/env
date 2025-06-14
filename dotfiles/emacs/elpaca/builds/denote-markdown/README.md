@@ -1,1 +1,0 @@
-/home/csode/.config/emacs/elpaca/repos/denote-markdown/README.md

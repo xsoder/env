@@ -1,1 +1,0 @@
-/home/csode/.config/emacs/elpaca/repos/themes/themes/doom-one-light-theme.el

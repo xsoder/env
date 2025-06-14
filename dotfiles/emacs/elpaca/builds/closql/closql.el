@@ -1,1 +1,0 @@
-/home/csode/.config/emacs/elpaca/repos/closql/closql.el

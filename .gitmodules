@@ -1,0 +1,6 @@
+[submodule "dotfiles/nvim"]
+	path = dotfiles/nvim
+	url = https://github.com/xsoder/nvim.git
+[submodule "dotfiles/emacs"]
+	path = dotfiles/emacs
+	url = https://gitlab.com/tadihailukebe/emacs.git

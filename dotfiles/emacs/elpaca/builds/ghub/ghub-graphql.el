@@ -1,1 +1,0 @@
-/home/csode/.config/emacs/elpaca/repos/ghub/lisp/ghub-graphql.el
