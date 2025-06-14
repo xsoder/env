@@ -7,3 +7,4 @@ dex --autostart --environment i3 &
 xss-lock --transfer-sleep-lock -- i3lock --nofork &  
 feh --bg-scale ~/devenv/wallpaper/dark-mountain-wallpapers.jpg &
 xclip -selection clipboard -loops 0 &
+picom &

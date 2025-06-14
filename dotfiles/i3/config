@@ -103,7 +103,7 @@ for_window [class="Virt-viewer"] fullscreen enable, floating enable
 for_window [class="Emacs"] move to workspace $ws2, fullscreen enable
 for_window [class="firefox"] move to workspace $ws3, fullscreen enable
 for_window [class="dolphin"] move to workspace $ws4
-for_window [class="ghostty"] fullscreen enable
+for_window [class="ghostty"] move to workspace $ws1
 
 
 

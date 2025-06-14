@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+# Directory containing wallpapers
+WALLPAPER_DIR="$HOME/devenv/wallpaper/gruvbox/"
+
+# Time between wallpaper changes (in seconds)
+INTERVAL=300  # 5 minutes
+
+# Check if wallpaper directory exists
+if [ ! -d "$WALLPAPER_DIR" ]; then
+    echo "Directory $WALLPAPER_DIR not found!"
+    exit 1
+fi
+
+# Get list of image files
+mapfile -t wallpapers < <(find "$WALLPAPER_DIR" -type f \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" \) | sort)
+
+# Check if we found any wallpapers
+if [ ${#wallpapers[@]} -eq 0 ]; then
+    echo "No image files found in $WALLPAPER_DIR."
+    exit 1
+fi
+
+# Infinite loop to cycle wallpapers
+while true; do
+    for wallpaper in "${wallpapers[@]}"; do
+        feh --bg-scale "$wallpaper"
+        echo "Set wallpaper: $wallpaper"
+        sleep "$INTERVAL"
+    done
+done
+
