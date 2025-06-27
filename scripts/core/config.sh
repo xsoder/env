@@ -12,6 +12,7 @@ SUDO_PASS=""
 TMP_OUTPUT="/tmp/package-install-output.log"
 NVIM_URL="https://github.com/xsoder/nvim.git"
 SCRIPT_NAME="$DOTFILES_DIR/script"
+export USER_GID=`id -g`; sudo --preserve-env=USER_GID sh -c 'echo "KERNEL==\"hidraw*\", SUBSYSTEM==\"hidraw\", ATTRS{serial}==\"*vial:f64c2b3c*\", MODE=\"0660\", GROUP=\"$USER_GID\", TAG+=\"uaccess\", TAG+=\"udev-acl\"" > /etc/udev/rules.d/99-vial.rules && udevadm control --reload && udevadm trigger'
 
 # Common functions
 get_sudo_password() {
@@ -42,15 +43,15 @@ run_with_sudo() {
 force_link() {
     local source="$1"
     local target="$2"
-    
+
     # Remove existing target (file, directory, or symlink)
     if [[ -e "$target" || -L "$target" ]]; then
         rm -rf "$target"
     fi
-    
+
     # Create target directory if it doesn't exist
     mkdir -p "$(dirname "$target")"
-    
+
     # Create the symlink
     ln -sf "$source" "$target"
 }
@@ -58,16 +59,16 @@ force_link() {
 # Package tracking functions
 add_to_json() {
     local pkg="$1"
-    
+
     if [[ ! -f "$PACKAGES_JSON" ]]; then
         mkdir -p "$(dirname "$PACKAGES_JSON")"
         echo '{"packages":[]}' > "$PACKAGES_JSON"
     fi
-    
+
     if jq -e --arg pkg "$pkg" '.packages[] | select(. == $pkg)' "$PACKAGES_JSON" >/dev/null 2>&1; then
         return 0
     fi
-    
+
     local updated
     updated=$(jq --arg pkg "$pkg" '.packages += [$pkg] | .packages |= sort | .packages |= unique' "$PACKAGES_JSON")
     echo "$updated" > "$PACKAGES_JSON"
@@ -75,11 +76,11 @@ add_to_json() {
 
 remove_from_json() {
     local pkg="$1"
-    
+
     if [[ ! -f "$PACKAGES_JSON" ]]; then
         return 0
     fi
-    
+
     local updated
     updated=$(jq --arg pkg "$pkg" '.packages |= map(select(. != $pkg))' "$PACKAGES_JSON")
     echo "$updated" > "$PACKAGES_JSON"
@@ -87,4 +88,4 @@ remove_from_json() {
 
 # Export functions and variables
 export -f get_sudo_password run_with_sudo force_link add_to_json remove_from_json
-export WIDTH HEIGHT CONFIG_DIR DOTFILES_DIR NVIM_DIR PACKAGE_MANAGER PACKAGES_JSON SUDO_PASS TMP_OUTPUT NVIM_URL SCRIPT_NAME 
+export WIDTH HEIGHT CONFIG_DIR DOTFILES_DIR NVIM_DIR PACKAGE_MANAGER PACKAGES_JSON SUDO_PASS TMP_OUTPUT NVIM_URL SCRIPT_NAME

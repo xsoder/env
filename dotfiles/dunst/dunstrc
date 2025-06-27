@@ -1,11 +1,9 @@
 [global]
 font = Iosevka 16
-frame_width = 2
-frame_color = "#181818"
-separator_color = frame
-corner_radius = 10
-padding = 10
-horizontal_padding =  10
+frame_width = 4
+corner_radius = 0
+padding = 0
+horizontal_padding =  0
 
 # Transparency
 transparency = 0 # roughly 85% opacity
@@ -13,22 +11,6 @@ transparency = 0 # roughly 85% opacity
 # Timeouts
 timeout = 5
 idle_threshold = 120
-
-# Notification position
-geometry = "400x7-30+50"
-origin = center
-
-# Progress bar (optional)
-progress_bar = true
-progress_bar_height = 8
-progress_bar_min_width = 150
-progress_bar_max_width = 300
-progress_bar_corner_radius = 3
-progress_bar_frame_width = 1
-
-# Icons (optional)
-icon_position = left
-max_icon_size = 64
 
 # History
 history_length = 20
@@ -41,21 +23,3 @@ ellipsis = "..."
 mouse_left_click = close_current
 mouse_middle_click = do_action
 mouse_right_click = close_all
-
-[urgency_low]
-frame_color = "#454545"
-background = "#282828"
-foreground = "#95a99f"
-timeout = 4
-
-[urgency_normal]
-frame_color = "#454545"
-background = "#181818"
-foreground = "#e4e4ef"
-timeout = 6
-
-[urgency_critical]
-frame_color = "#f43841"
-background = "#181818"
-foreground = "#f43841"
-timeout = 0

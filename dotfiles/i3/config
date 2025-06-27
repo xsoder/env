@@ -1,8 +1,8 @@
 set $mod Mod1
 
-# gaps inner 8
-# gaps outer 8
-font pango:Iosevka 16
+# gaps inner 6
+# gaps outer 4
+font pango:Iosevka 14
 
 ## KEYBIND BRIGHTNESS AND VOLUME
 set $refresh_i3status killall -SIGUSR1 i3status
@@ -13,12 +13,12 @@ bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl set 10%-
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
 bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle && $refresh_i3status
 
-exec xsetroot -cursor_name left_ptr &         
+exec xsetroot -cursor_name left_ptr &
 #AUTO START
 exec --no-startup-id bash -c 'cd /home/csode/devenv/scripts && bash autostart'
 exec_always --no-startup-id bash -c 'cd /home/csode/devenv/scripts && bash rerun'
 
-## WINDOW NAVIGATION 
+## WINDOW NAVIGATION
 floating_modifier $mod
 bindsym $mod+Down focus down
 bindsym $mod+Up focus up
@@ -67,7 +67,7 @@ bindsym $mod+8 workspace number $ws8
 bindsym $mod+9 workspace number $ws9
 bindsym $mod+0 workspace number $ws10
 
-## MOVE FOCUSED 
+## MOVE FOCUSED
 bindsym $mod+Shift+1 move container to workspace number $ws1
 bindsym $mod+Shift+2 move container to workspace number $ws2
 bindsym $mod+Shift+3 move container to workspace number $ws3
@@ -79,51 +79,49 @@ bindsym $mod+Shift+8 move container to workspace number $ws8
 bindsym $mod+Shift+9 move container to workspace number $ws9
 bindsym $mod+Shift+0 move container to workspace number $ws10
 
-## BORDER RULE
-set $blue_focused #31748f     
-set $grey_unfocused #6e6a86     
+mode "resize" {
+        # These bindings trigger as soon as you enter the resize mode
 
-client.focused           $blue_focused  $blue_focused  #e0def4  $blue_focused  $blue_focused
-client.focused_inactive  $grey_unfocused  $grey_unfocused  #908caa  $grey_unfocused  $grey_unfocused
-client.unfocused         $grey_unfocused  $grey_unfocused  #6e6a86  $grey_unfocused  $grey_unfocused
-client.urgent            $blue_focused  $blue_focused  #e0def4  $blue_focused  $blue_focused
-client.placeholder       $grey_unfocused  $grey_unfocused  #e0def4  $grey_unfocused  $grey_unfocused
-client.background        $grey_unfocused
+        # Pressing left will shrink the window’s width.
+        # Pressing right will grow the window’s width.
+        # Pressing up will shrink the window’s height.
+        # Pressing down will grow the window’s height.
+        bindsym h resize shrink width 10 px or 10 ppt
+        bindsym j resize grow height 10 px or 10 ppt
+        bindsym k resize shrink height 10 px or 10 ppt
+        bindsym l resize grow width 10 px or 10 ppt
 
+        # same bindings, but for the arrow keys
+        bindsym Left resize shrink width 10 px or 10 ppt
+        bindsym Down resize grow height 10 px or 10 ppt
+        bindsym Up resize shrink height 10 px or 10 ppt
+        bindsym Right resize grow width 10 px or 10 ppt
+
+        # back to normal: Enter or Escape
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+
+bindsym $mod+r mode "resize"
 # Set border pixel width (optional, adjust as you prefer)
 bar {
         status_command i3status
 }
 
-
-## WINDOW RULE
-for_window [class=".*"] border pixel 0
-for_window [class="obs"] move to workspace $ws9
-for_window [class="Virt-viewer"] fullscreen enable, floating enable
-for_window [class="Emacs"] move to workspace $ws2, fullscreen enable
-for_window [class="firefox"] move to workspace $ws3, fullscreen enable
-for_window [class="dolphin"] move to workspace $ws4
-for_window [class="ghostty"] move to workspace $ws1
-
-
-
 ## APPLICATION KEYBIND
-bindsym $mod+b workspace $ws3; , exec firefox
-bindsym $mod+Shift+f workspace $ws4;exec dolphin
-bindsym $mod+Return ; exec ghostty
-bindsym $mod+bracketleft workspace prev
+bindsym $mod+b ; exec firefox
+bindsym $mod+Shift+f; exec pcfman
+bindsym $mod+Return ;exec st
 bindsym $mod+Tab focus next
 bindsym $mod+Shift+Tab focus prev
 bindsym $mod+bracketright workspace next
-bindsym $mod+o workspace $ws9 exec obs
-bindsym $mod+c workspace $ws2, exec emacsclient -c -a "emacs"
-
-
+bindsym $mod+bracketleft workspace prev
+bindsym $mod+c exec emacsclient -c -a "emacs"
 ## CUSTOM SCRIPTS
+
+bindsym $mod+t exec --no-startup-id ~/devenv/scripts/devenv
 bindsym $mod+Shift+z exec --no-startup-id bash -c 'cd /home/csode/packages/boomer && ./boomer'
-bindsym $mod+Shift+y exec --no-startup-id ~/work/script/select
 bindsym $mod+Shift+t exec --no-startup-id ~/scripts/select.sh
-bindsym $mod+y exec --no-startup-id ~/scripts/toggle_focus.sh
-bindsym $mod+t exec --no-startup-id ~/scripts/todo-popup.sh
-bindsym $mod+Shift+s exec ~/work/script/screenshot
-bindsym $mod+Shift+p exec --no-startup-id bash -c 'cd /home/csode/work/script && bash screenshot ato ato'
+bindsym $mod+Shift+s exec ~/scripts/screenshot.sh
+bindsym $mod+y exec --no-startup-id wine start /unix "/home/csode/.wine/drive_c/Program Files/Image-Line/FL Studio 21/FL64.exe"
+

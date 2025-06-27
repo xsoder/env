@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 # Directory containing wallpapers
-WALLPAPER_DIR="$HOME/devenv/wallpaper/gruvbox/"
+WALLPAPER_DIR="$HOME/devenv/wallpaper/eyehelp/"
 
 # Time between wallpaper changes (in seconds)
-INTERVAL=300  # 5 minutes
+INTERVAL=60  # 5 minutes
 
 # Check if wallpaper directory exists
 if [ ! -d "$WALLPAPER_DIR" ]; then

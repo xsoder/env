@@ -1,28 +1,15 @@
 # alacritty.toml
 [window]
-opacity = 1.0                # Fully opaque (no background-opacity in original)
-decorations = "none"          # Matches: window-decoration = none
-blur = false                  # Matches: background-blur = false
+opacity = 0.8                # Slightly opaque background
+decorations = "none"          # No window decorations
+blur = false                  # No background blur
+
 [font]
-size = 20.0                   # Matches: font-size = 18
-normal.family = "Iosevka"  # Matches: font-family
+size = 15.0                   # Font size
+normal.family = "JetBrains mono"     # Font family
+
 [colors]
-# Gruber Darker theme
-primary.background = "#181818"
-primary.foreground = "#e4e4ef"
-normal.black   = "#181818"
-normal.red     = "#f43841"
-normal.green   = "#73c936"
-normal.yellow  = "#ffdd33"
-normal.blue    = "#96a6c8"
-normal.magenta = "#9e95c7"
-normal.cyan    = "#95a99b"
-normal.white   = "#e4e4ef"
-bright.black   = "#52494e"
-bright.red     = "#ff4f58"
-bright.green   = "#73c936"
-bright.yellow  = "#ffdd33"
-bright.blue    = "#96a6c8"
-bright.magenta = "#cc8c3c"
-bright.cyan    = "#95a99b"
-bright.white   = "#f4f4ff"
+# Minimal Vague2k color scheme (4 colors, no bright)
+primary.background = "#000000" # Dark background
+primary.foreground = "#e4e4e4" # Light foreground
+
