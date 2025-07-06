@@ -9,13 +9,10 @@ export EDITOR=vim
 export PATH="$HOME/.local/bin:$HOME/.cargo/bin:$HOME/.emacs.d/bin:$HOME/.config/emacs/bin:$HOME/.nimble/bin:$HOME/packages/nim-2.2.4/bin:$HOME/.npm-global/bin:$HOME/packages/zig:$PATH"
 
 # Aliases
-alias cpp="~/scripts/cpp.sh"
-alias ccg="~/scripts/cpp.sh"
 alias gitter="~/scripts/gitter.sh"
 alias raylib="source ./.env/raylib.sh"
 alias timer="bash ~/scripts/timer.sh"
 alias harpoon="bash ~/scripts/tmux_harpoon.sh"
-alias DEV="cd ~/devenv"
 # Auto start X server on VT1
 if [[ -z "$DISPLAY" && "$XDG_VTNR" -eq 1 ]]; then
     exec startx
@@ -47,3 +44,7 @@ gpwd() {
 }
 alias gpasd="gpwd"
 alias cme="~/devenv/scripts/cme"
+sowon() {
+  cd /home/csode/packages/bin && ./sowon "$@"
+}
+
