@@ -120,8 +120,7 @@ bindsym $mod+c exec emacsclient -c -a "emacs"
 ## CUSTOM SCRIPTS
 
 bindsym $mod+t exec --no-startup-id ~/devenv/scripts/devenv
-bindsym $mod+Shift+z exec --no-startup-id bash -c 'cd /home/csode/packages/boomer && ./boomer'
+bindsym $mod+Shift+z exec --no-startup-id bash -c 'cd /home/csode/packages/bin && ./boomer'
 bindsym $mod+Shift+t exec --no-startup-id ~/scripts/select.sh
 bindsym $mod+Shift+s exec ~/scripts/screenshot.sh
-bindsym $mod+y exec --no-startup-id wine start /unix "/home/csode/.wine/drive_c/Program Files/Image-Line/FL Studio 21/FL64.exe"
-
+bindsym $mod+p exec ~/scripts/fullscreen.sh

@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
-nm-applet &                              
-dunst &                                   
-blueman-applet &                          
-/usr/bin/emacs --daemon &                
-dex --autostart --environment i3 &       
-xss-lock --transfer-sleep-lock -- i3lock --nofork &  
-feh --bg-scale ~/devenv/wallpaper/dark-mountain-wallpapers.jpg &
+nm-applet &
+dunst &
+blueman-applet &
+/usr/bin/emacs --daemon &
+dex --autostart --environment i3 &
+xss-lock --transfer-sleep-lock -- i3lock --nofork &
 xclip -selection clipboard -loops 0 &
+# feh --bg-scale ~/devenv/wallpaper/dark-mountain-wallpapers.jpg &
 picom &

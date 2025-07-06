@@ -14,10 +14,11 @@ alias ccg="~/scripts/cpp.sh"
 alias gitter="~/scripts/gitter.sh"
 alias packages="~/scripts/package.sh"
 alias dev="bash ~/devenv/script"
+alias fzfm="bash ~/scripts/fzfm.sh"
 alias timer="bash ~/scripts/timer.sh"
+alias harpoon="bash ~/scripts/tmux_harpoon.sh"
 alias DEV="cd ~/devenv"
 alias luamake="/home/csode/packages/lua-language-server/3rd/luamake/luamake"
-
 # Auto start X server on VT1
 if [[ -z "$DISPLAY" && "$XDG_VTNR" -eq 1 ]]; then
     exec startx
