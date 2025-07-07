@@ -3,4 +3,4 @@
 	url = https://github.com/xsoder/nvim.git
 [submodule "dotfiles/emacs"]
 	path = dotfiles/emacs
-	url = https://gitlab.com/tadihailukebe/emacs.git
+	url = git@github.com:xsoder/emacs.git
